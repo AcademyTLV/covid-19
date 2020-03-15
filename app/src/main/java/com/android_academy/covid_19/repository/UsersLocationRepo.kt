@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 interface IUsersLocationRepo {
     suspend fun getLocation()
-    suspend fun getUserLocations() : Flow<List<UserLocationModel>>
+    suspend fun getUserLocations(): Flow<List<UserLocationModel>>
     suspend fun saveLocation(location: RoomUserLocationEntity)
 }
 

@@ -20,7 +20,8 @@ class UsersLocationListFragment : Fragment() {
     private var columnCount = 1
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_users_location_list_list, container, false)
@@ -28,7 +29,7 @@ class UsersLocationListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUserLocations(viewLifecycleOwner) { locations : List<UserLocationModel> ->
+        viewModel.getUserLocations(viewLifecycleOwner) { locations: List<UserLocationModel> ->
             list.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = UsersLocationListRecyclerViewAdapter(locations)
