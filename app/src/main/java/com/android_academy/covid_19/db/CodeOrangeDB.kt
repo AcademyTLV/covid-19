@@ -9,6 +9,7 @@ import androidx.room.TypeConverters
 import com.android_academy.covid_19.db.dao.InfectionLocationsDao
 import com.android_academy.covid_19.db.dao.RoomInfectedLocationEntity
 import com.android_academy.covid_19.db.dao.RoomLocationEntity
+import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.util.Converters
 import com.android_academy.covid_19.db.util.DBConstants.DB_NAME
 
@@ -35,4 +36,5 @@ abstract class CodeOrangeDB : RoomDatabase() {
     }
 
     abstract fun infectionPointsDao(): InfectionLocationsDao
+    abstract fun userLocationsDao(): UserLocationsDao
 }

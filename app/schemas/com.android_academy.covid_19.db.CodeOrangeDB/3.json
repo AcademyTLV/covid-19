@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "1c06a57ed6bf0abe9365f65819c84e1f",
+    "identityHash": "e0a7d1f8959b76f526cc03ecbfe4ffc4",
     "entities": [
       {
         "tableName": "infected_locations_table_name",
@@ -56,13 +56,13 @@
       },
       {
         "tableName": "users_locations_table_name",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `lat` REAL NOT NULL, `lon` REAL NOT NULL, `accuracy` REAL NOT NULL, `speed` REAL NOT NULL, `time` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `lat` REAL NOT NULL, `lon` REAL NOT NULL, `accuracy` REAL NOT NULL, `speed` REAL NOT NULL, `time` INTEGER NOT NULL, `provider` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "lat",
@@ -91,7 +91,13 @@
           {
             "fieldPath": "time",
             "columnName": "time",
-            "affinity": "REAL",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "provider",
+            "columnName": "provider",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -108,7 +114,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1c06a57ed6bf0abe9365f65819c84e1f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e0a7d1f8959b76f526cc03ecbfe4ffc4')"
     ]
   }
 }

@@ -88,6 +88,16 @@ dependencies {
         exclude module: "okhttp"
     }
 
+    /* Workmanager */
+    implementation "android.arch.work:work-runtime-ktx:2.3.2"
+
+    /* Location */
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+
+    implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
+
+
+
     /* Koin */
     implementation "org.koin:koin-java:$koin"
     implementation "org.koin:koin-test:$koin"
