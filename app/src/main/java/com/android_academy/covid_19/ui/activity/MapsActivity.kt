@@ -1,7 +1,8 @@
-package com.android_academy.covid_19
+package com.android_academy.covid_19.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.android_academy.covid_19.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
