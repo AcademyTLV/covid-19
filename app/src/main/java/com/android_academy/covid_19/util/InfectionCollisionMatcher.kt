@@ -63,16 +63,12 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         val myStartTime = myLocation.time - 8 * 60_000
         val myEndTime = myLocation.time + 8 * 60_000
 
-        val coronaStartTime = corona.startTime.time
-        val coronaEndTime = corona.endTime.time
+        val coronaStartTime = corona.startTime.time - timeThreshold * 60 * 1_000
+        val coronaEndTime = corona.endTime.time +  timeThreshold * 60 * 1_000
 
-        var didFindMatch = false
-        listOf(myStartTime, myEndTime).forEach { first ->
-            listOf(coronaStartTime, coronaEndTime).forEach { second ->
-                didFindMatch = didFindMatch || (abs(first - second) < timeThreshold)
-            }
-        }
+        if(myStartTime in (coronaStartTime + 1) until coronaEndTime) return true
+        if(myEndTime in (coronaStartTime + 1) until coronaEndTime) return true
 
-        return didFindMatch
+        return false
     }
 }
