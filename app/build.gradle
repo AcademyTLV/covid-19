@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: "com.diffplug.gradle.spotless"
-
+apply plugin: "kotlin-kapt"
 
 spotless {
     java {
@@ -30,8 +30,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_URL", '"https://ourBaseUrlHere.com"'
     }
 
     buildTypes {
@@ -50,7 +50,9 @@ android {
 
 dependencies {
     def koin = "2.0.1"
-
+    def roomVersion = "2.2.4"
+    def loggingInterceptor = "3.9.1"
+    def retrofit = "2.7.2"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -70,8 +72,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
 
+    /* Network */
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation("com.squareup.okhttp3:logging-interceptor:$loggingInterceptor") {
+        exclude module: "okhttp"
+    }
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit") {
+        exclude module: "okhttp"
+    }
 
     /* Koin */
     implementation "org.koin:koin-java:$koin"
@@ -82,4 +91,8 @@ dependencies {
 
     implementation 'com.google.androidbrowserhelper:androidbrowserhelper:1.1.0'
 
+    /* Room DB */
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 }
