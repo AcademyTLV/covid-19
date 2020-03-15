@@ -2,17 +2,24 @@ package com.android_academy.covid_19.repository
 
 import android.location.Location
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.dao.toRoomLocationEntity
 import com.android_academy.covid_19.providers.ILocationManager
+import com.android_academy.covid_19.providers.LocationModel
+import com.android_academy.covid_19.providers.fromRoomEntity
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 interface IUsersLocationRepo {
     suspend fun getLocation()
+    suspend fun getUserLocations() : Flow<List<LocationModel>>
     suspend fun saveLocation(location: RoomUserLocationEntity)
 }
 
@@ -27,6 +34,10 @@ class UsersLocationRepo(
         onLocationReceived(location)
     }
 
+    override suspend fun getUserLocations(): Flow<List<LocationModel>> {
+        return usersLocDao.getUserLocations().map { userLocations -> userLocations.map { fromRoomEntity(it) } }
+    }
+
     private fun onLocationReceived(location: Location?) = scope.launch(CoroutineExceptionHandler { _, throwable ->
         Log.e(logTag, "Exception something something ${throwable.message}")
     }) {
@@ -39,4 +50,6 @@ class UsersLocationRepo(
         Log.d(logTag, "Saving location $location")
         usersLocDao.saveLocation(location)
     }
+
+
 }
