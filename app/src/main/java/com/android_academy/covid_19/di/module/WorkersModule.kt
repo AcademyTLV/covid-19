@@ -12,7 +12,11 @@ import org.koin.dsl.module
 val workersModule = module {
 
     factory<IUsersLocationRepo> {
-        UsersLocationRepo(usersLocDao = get(), locationManager = get(), scope = CoroutineScope(Dispatchers.IO))
+        UsersLocationRepo(
+            usersLocDao = get(),
+            locationManager = get(),
+            scope = CoroutineScope(Dispatchers.IO)
+        )
     }
 
     factory<ILocationManager> {

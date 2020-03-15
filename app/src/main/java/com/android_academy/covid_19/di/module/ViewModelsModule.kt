@@ -10,6 +10,7 @@ import org.koin.dsl.module
 val viewModelsModule = module {
     viewModel<MainViewModelImpl> {
         MainViewModelImpl()
+
     }
 
     viewModel<UsersLocationListViewModelImpl> {
