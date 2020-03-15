@@ -1,34 +1,58 @@
 package com.android_academy.covid_19.ui.activity
 
+import android.Manifest
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
+import com.android_academy.covid_19.providers.LocationUpdateWorker
 import com.android_academy.covid_19.ui.fragment.main.MainFragment
 import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget
 import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget.GoogleLoginView
 import com.android_academy.covid_19.ui.fragment.main.MainViewModel
 import com.android_academy.covid_19.ui.fragment.main.MainViewModelImpl
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModel<MainViewModelImpl>()
 
+    val quickPermissionsOption = QuickPermissionsOptions(
+        handleRationale = false,
+        rationaleMessage = "Custom rational message",
+        permanentlyDeniedMessage = "Custom permanently denied message",
+        rationaleMethod = { req -> rationaleCallback(req) },
+        permanentDeniedMethod = { req -> rationaleCallback(req) }
+    )
+
+    private fun rationaleCallback(req: QuickPermissionsRequest) {
+        Toast.makeText(this, "Give me fucking permission!", Toast.LENGTH_LONG).show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         initViews(savedInstanceState)
         initObservers()
+        location()
+    }
+
+    fun location() = runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,options =  quickPermissionsOption) {
+        LocationUpdateWorker.schedule()
     }
 
     private fun initObservers() {

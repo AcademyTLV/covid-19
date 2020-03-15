@@ -32,6 +32,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_URL", '"https://ourBaseUrlHere.com"'
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -81,6 +87,16 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofit") {
         exclude module: "okhttp"
     }
+
+    /* Workmanager */
+    implementation "android.arch.work:work-runtime-ktx:2.3.2"
+
+    /* Location */
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+
+    implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
+
+
 
     /* Koin */
     implementation "org.koin:koin-java:$koin"
