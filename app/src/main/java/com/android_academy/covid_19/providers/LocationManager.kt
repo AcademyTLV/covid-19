@@ -18,7 +18,7 @@ interface ILocationManager {
 
 class LocationManager(private val appContext: Context) : ILocationManager {
 
-    override suspend fun getUpdatedLocation() : Location? {
+    override suspend fun getUpdatedLocation(): Location? {
 
         return suspendCoroutine {
             val permission =
