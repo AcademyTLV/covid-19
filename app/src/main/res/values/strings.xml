@@ -2,6 +2,15 @@
     <string name="app_name">Covid-19</string>
     <string name="title_activity_maps">Map</string>
     <string name="btn_login_to_google">Login To Google</string>
+    <string name="Location_dialog_title">אשר גישה למיקומך</string>
+    <string name="location_dialog_description">
+        - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
+
+- מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
+
+- המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
+    </string>
+    <string name="positive_location_permission_button">כן, אני מעוניין</string>
     <string name="change_status">change status</string>
     <string name="emergency_call">101</string>
 </resources>
