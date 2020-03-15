@@ -48,6 +48,4 @@ class UsersLocationRepo(
         Log.d(logTag, "Saving location $location")
         usersLocDao.saveLocation(location)
     }
-
-
 }
