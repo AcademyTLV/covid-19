@@ -8,13 +8,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.android_academy.covid_19.db.dao.InfectionLocationsDao
 import com.android_academy.covid_19.db.dao.RoomInfectedLocationEntity
-import com.android_academy.covid_19.db.dao.RoomLocationEntity
+import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.util.Converters
 import com.android_academy.covid_19.db.util.DBConstants.DB_NAME
 
 @Database(
-    entities = [RoomInfectedLocationEntity::class, RoomLocationEntity::class],
+    entities = [RoomInfectedLocationEntity::class, RoomUserLocationEntity::class],
     version = 3
 )
 @TypeConverters(Converters::class)

@@ -25,7 +25,7 @@ data class RoomInfectedLocationEntity(
 )
 
 @Entity(tableName = USERS_LOCATIONS_TABLE_NAME)
-data class RoomLocationEntity(
+data class RoomUserLocationEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     @ColumnInfo(name = "lat")
@@ -42,7 +42,7 @@ data class RoomLocationEntity(
     val provider: String
 )
 
-fun Location.toRoomLocationEntity() = RoomLocationEntity(
+fun Location.toRoomLocationEntity() = RoomUserLocationEntity(
     lat = this.latitude,
     lon = this.longitude,
     accuracy = this.accuracy,

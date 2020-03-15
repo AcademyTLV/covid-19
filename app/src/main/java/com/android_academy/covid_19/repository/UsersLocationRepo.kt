@@ -2,7 +2,7 @@ package com.android_academy.covid_19.repository
 
 import android.location.Location
 import android.util.Log
-import com.android_academy.covid_19.db.dao.RoomLocationEntity
+import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.dao.toRoomLocationEntity
 import com.android_academy.covid_19.providers.ILocationManager
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 interface IUsersLocationRepo {
     suspend fun getLocation()
-    suspend fun saveLocation(location: RoomLocationEntity)
+    suspend fun saveLocation(location: RoomUserLocationEntity)
 }
 
 class UsersLocationRepo(
@@ -32,7 +32,7 @@ class UsersLocationRepo(
         }
     }
 
-    override suspend fun saveLocation(location: RoomLocationEntity) {
+    override suspend fun saveLocation(location: RoomUserLocationEntity) {
         Log.d(logTag, "Saving location $location")
         usersLocDao.saveLocation(location)
     }
