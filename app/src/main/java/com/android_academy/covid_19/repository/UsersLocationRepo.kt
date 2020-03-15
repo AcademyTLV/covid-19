@@ -2,13 +2,11 @@ package com.android_academy.covid_19.repository
 
 import android.location.Location
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.dao.toRoomLocationEntity
 import com.android_academy.covid_19.providers.ILocationManager
-import com.android_academy.covid_19.providers.LocationModel
+import com.android_academy.covid_19.providers.UserLocationModel
 import com.android_academy.covid_19.providers.fromRoomEntity
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -19,7 +17,7 @@ import kotlinx.coroutines.launch
 
 interface IUsersLocationRepo {
     suspend fun getLocation()
-    suspend fun getUserLocations() : Flow<List<LocationModel>>
+    suspend fun getUserLocations() : Flow<List<UserLocationModel>>
     suspend fun saveLocation(location: RoomUserLocationEntity)
 }
 
@@ -34,7 +32,7 @@ class UsersLocationRepo(
         onLocationReceived(location)
     }
 
-    override suspend fun getUserLocations(): Flow<List<LocationModel>> {
+    override suspend fun getUserLocations(): Flow<List<UserLocationModel>> {
         return usersLocDao.getUserLocations().map { userLocations -> userLocations.map { fromRoomEntity(it) } }
     }
 

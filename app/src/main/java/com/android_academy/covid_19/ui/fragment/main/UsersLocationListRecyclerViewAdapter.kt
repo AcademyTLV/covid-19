@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android_academy.covid_19.R
-import com.android_academy.covid_19.providers.LocationModel
+import com.android_academy.covid_19.providers.UserLocationModel
 import kotlinx.android.synthetic.main.fragment_users_location_list.view.*
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -16,7 +16,7 @@ import java.util.Date
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class UsersLocationListRecyclerViewAdapter(private val locations: List<LocationModel>) :
+class UsersLocationListRecyclerViewAdapter(private val locations: List<UserLocationModel>) :
     RecyclerView.Adapter<UsersLocationListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

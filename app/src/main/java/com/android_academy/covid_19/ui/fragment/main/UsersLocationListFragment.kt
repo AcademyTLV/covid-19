@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_academy.covid_19.R
-import com.android_academy.covid_19.providers.LocationModel
+import com.android_academy.covid_19.providers.UserLocationModel
 import com.android_academy.covid_19.repository.IUsersLocationRepo
 import kotlinx.android.synthetic.main.fragment_users_location_list_list.*
 import org.koin.android.ext.android.inject
@@ -28,7 +28,7 @@ class UsersLocationListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUserLocations(viewLifecycleOwner) { locations : List<LocationModel> ->
+        viewModel.getUserLocations(viewLifecycleOwner) { locations : List<UserLocationModel> ->
             list.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = UsersLocationListRecyclerViewAdapter(locations)

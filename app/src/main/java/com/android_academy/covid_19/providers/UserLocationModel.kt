@@ -2,7 +2,7 @@ package com.android_academy.covid_19.providers
 
 import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 
-data class LocationModel(
+data class UserLocationModel(
     val id: Int? = null,
     val lat: Double,
     val lon: Double,
@@ -12,7 +12,7 @@ data class LocationModel(
     val provider: String
 )
 
-fun fromRoomEntity(roomEntity: RoomUserLocationEntity) = LocationModel(
+fun fromRoomEntity(roomEntity: RoomUserLocationEntity) = UserLocationModel(
     id = roomEntity.id,
     lat = roomEntity.lat,
     lon = roomEntity.lon,

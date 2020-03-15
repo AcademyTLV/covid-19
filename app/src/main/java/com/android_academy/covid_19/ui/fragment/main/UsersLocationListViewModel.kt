@@ -5,12 +5,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.android_academy.covid_19.providers.LocationModel
+import com.android_academy.covid_19.providers.UserLocationModel
 import com.android_academy.covid_19.repository.IUsersLocationRepo
 import kotlinx.coroutines.launch
 
 interface UsersLocationViewModel {
-    fun getUserLocations(lifecycleOwner: LifecycleOwner, observer: (List<LocationModel>) -> Unit)
+    fun getUserLocations(lifecycleOwner: LifecycleOwner, observer: (List<UserLocationModel>) -> Unit)
 }
 
 class UsersLocationListViewModelImpl(private val usersLocRepo: IUsersLocationRepo) : ViewModel(),
@@ -18,7 +18,7 @@ class UsersLocationListViewModelImpl(private val usersLocRepo: IUsersLocationRep
 
     override fun getUserLocations(
         lifecycleOwner: LifecycleOwner,
-        observer: (List<LocationModel>) -> Unit
+        observer: (List<UserLocationModel>) -> Unit
     ) {
         viewModelScope.launch {
             usersLocRepo.getUserLocations().asLiveData().observe(lifecycleOwner, Observer {
