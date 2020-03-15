@@ -1,5 +1,6 @@
 package com.android_academy.covid_19.network.service
 
+import com.android_academy.covid_19.db.dao.RoomInfectedLocationEntity
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
@@ -16,4 +17,8 @@ data class InfectedLocationModel(
     val lon: Double,
     @SerializedName("radius")
     val radius: Double
-)
+) {
+    fun toDBModel(): RoomInfectedLocationEntity {
+        return RoomInfectedLocationEntity(id, startTime, endTime, lat, lon, radius)
+    }
+}

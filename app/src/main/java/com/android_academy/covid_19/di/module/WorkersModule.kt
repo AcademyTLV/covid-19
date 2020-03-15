@@ -18,8 +18,7 @@ val workersModule = module {
         UsersLocationRepo(usersLocDao = get(), locationManager = get(), scope = CoroutineScope(Dispatchers.IO))
     }
 
-    factory<ILocationManager>{
+    factory<ILocationManager> {
         LocationManager(androidContext())
     }
-
 }
