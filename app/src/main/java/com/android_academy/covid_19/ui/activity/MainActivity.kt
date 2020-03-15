@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
@@ -31,14 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModel<MainViewModelImpl>()
 
-    val quickPermissionsOption = QuickPermissionsOptions(
-        handleRationale = false,
-        rationaleMessage = "Custom rational message",
-        permanentlyDeniedMessage = "Custom permanently denied message",
-        rationaleMethod = { req -> rationaleCallback(req) },
-        permanentDeniedMethod = { req -> rationaleCallback(req) }
-    )
-
     private fun rationaleCallback(req: QuickPermissionsRequest) {
         Toast.makeText(this, "Give me fucking permission!", Toast.LENGTH_LONG).show()
     }
@@ -48,17 +39,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         initViews(savedInstanceState)
         initObservers()
-        location()
-    }
-
-    fun location() = runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,options =  quickPermissionsOption) {
-        LocationUpdateWorker.schedule()
     }
 
     private fun initObservers() {
         viewModel.apply {
             navigation.observe(this@MainActivity, onNavigationChanged())
+            startMyLocationPeriodicJob.observe(this@MainActivity, Observer {
+                it?.let {
+                    val options = QuickPermissionsOptions(
+                        handleRationale = false,
+                        rationaleMessage = "We need your location access, in order to be able to compare if you was near infected people",
+                        permanentlyDeniedMessage = "You will not be able to use an app without a location permission",
+                        rationaleMethod = { req -> rationaleCallback(req) },
+                        permanentDeniedMethod = { req -> rationaleCallback(req) }
+                    )
+                    onStartMyLocationPeriodicJob(options)
+                }
+            })
         }
+    }
+
+    private fun onStartMyLocationPeriodicJob(options: QuickPermissionsOptions) = runWithPermissions(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        options = options
+    ) {
+        LocationUpdateWorker.schedule()
+        viewModel.onStartedMyLocationPeriodicJob()
     }
 
     private fun onNavigationChanged(): Observer<in MainNavigationTarget> = Observer {

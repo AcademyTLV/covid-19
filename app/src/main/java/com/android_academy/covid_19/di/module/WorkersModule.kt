@@ -2,7 +2,6 @@ package com.android_academy.covid_19.di.module
 
 import com.android_academy.covid_19.providers.ILocationManager
 import com.android_academy.covid_19.providers.LocationManager
-import com.android_academy.covid_19.providers.LocationUpdateWorker
 import com.android_academy.covid_19.repository.IUsersLocationRepo
 import com.android_academy.covid_19.repository.UsersLocationRepo
 import kotlinx.coroutines.CoroutineScope
@@ -16,8 +15,7 @@ val workersModule = module {
         UsersLocationRepo(usersLocDao = get(), locationManager = get(), scope = CoroutineScope(Dispatchers.IO))
     }
 
-    factory<ILocationManager>{
+    factory<ILocationManager> {
         LocationManager(androidContext())
     }
-
 }
