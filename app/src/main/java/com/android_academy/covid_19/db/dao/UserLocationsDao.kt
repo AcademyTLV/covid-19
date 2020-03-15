@@ -9,9 +9,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserLocationsDao {
+
     /* Add right query here, filter on dates*/
     @Query("SELECT * FROM ${DBConstants.USERS_LOCATIONS_TABLE_NAME} ORDER BY time")
     fun getUserLocations(): Flow<List<RoomUserLocationEntity>>
+
+    /* Add right query here, filter on dates*/
+    @Query("SELECT * FROM ${DBConstants.USERS_LOCATIONS_TABLE_NAME} ORDER BY time")
+    fun getUserLocationsAsync(): List<RoomUserLocationEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveLocation(location: RoomUserLocationEntity)

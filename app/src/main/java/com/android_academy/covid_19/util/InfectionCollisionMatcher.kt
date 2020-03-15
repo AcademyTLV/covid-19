@@ -3,7 +3,6 @@ package com.android_academy.covid_19.util
 import android.location.Location
 import com.android_academy.covid_19.network.service.InfectedLocationModel
 import com.android_academy.covid_19.providers.UserLocationModel
-import kotlin.math.abs
 
 interface InfectionCollisionMatcher {
 
@@ -64,10 +63,10 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         val myEndTime = myLocation.time + 8 * 60_000
 
         val coronaStartTime = corona.startTime.time - timeThreshold * 60 * 1_000
-        val coronaEndTime = corona.endTime.time +  timeThreshold * 60 * 1_000
+        val coronaEndTime = corona.endTime.time + timeThreshold * 60 * 1_000
 
-        if(myStartTime in (coronaStartTime + 1) until coronaEndTime) return true
-        if(myEndTime in (coronaStartTime + 1) until coronaEndTime) return true
+        if (myStartTime in (coronaStartTime + 1) until coronaEndTime) return true
+        if (myEndTime in (coronaStartTime + 1) until coronaEndTime) return true
 
         return false
     }

@@ -2,4 +2,8 @@
     <string name="app_name">Covid-19</string>
     <string name="title_activity_maps">Map</string>
     <string name="btn_login_to_google">Login To Google</string>
+    <string name="channel_name">General Channel</string>
+    <string name="channel_description">Main notifications here</string>
+    <string name="ahtung">Oh My! We found a Corona virus correlation!</string>
+    <string name="open_app">Click here to see a details</string>
 </resources>
