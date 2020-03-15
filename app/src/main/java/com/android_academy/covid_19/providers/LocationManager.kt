@@ -8,26 +8,34 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.android_academy.covid_19.util.logTag
 import com.google.android.gms.location.LocationServices
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 interface ILocationManager {
 
-    fun getUpdatedLocation(block: (Location?) -> Unit)
+    suspend fun getUpdatedLocation(block: (Location?) -> Unit)
 }
 
 class LocationManager(private val appContext: Context) : ILocationManager {
 
-    override fun getUpdatedLocation(block: (Location?) -> Unit) {
+    override suspend fun getUpdatedLocation(block: (Location?) -> Unit) {
 
-        val permission =
-            ContextCompat.checkSelfPermission(appContext, Manifest.permission.ACCESS_FINE_LOCATION)
+        val location = suspendCoroutine<Location?> {
+            val permission =
+                ContextCompat.checkSelfPermission(
+                    appContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
 
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.getFusedLocationProviderClient(appContext).lastLocation.addOnSuccessListener { location ->
-                Log.d(logTag, "Got location $location")
-                block.invoke(location)
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                LocationServices.getFusedLocationProviderClient(appContext).lastLocation.addOnSuccessListener { location ->
+                    Log.d(logTag, "Got location $location")
+                    it.resume(location)
+                }
+            } else {
+                it.resume(null)
             }
-        } else {
-            block.invoke(null)
         }
+        block.invoke(location)
     }
 }
