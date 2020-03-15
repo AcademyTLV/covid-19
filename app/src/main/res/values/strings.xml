@@ -2,4 +2,6 @@
     <string name="app_name">Covid-19</string>
     <string name="title_activity_maps">Map</string>
     <string name="btn_login_to_google">Login To Google</string>
+    <string name="change_status">change status</string>
+    <string name="emergency_call">101</string>
 </resources>
