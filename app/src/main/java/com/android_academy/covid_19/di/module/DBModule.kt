@@ -10,7 +10,7 @@ import org.koin.dsl.module
 val dbModule = module {
 
     single<CodeOrangeDB> {
-        CodeOrangeDB.create(androidContext(), useInMemory = true)
+        CodeOrangeDB.create(androidContext())
     }
 
     factory<InfectionLocationsDao> {
