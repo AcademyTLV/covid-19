@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:padding="32dp"
+    android:paddingHorizontal="32dp"
+    android:paddingTop="8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.LocationPermissionFragment">
@@ -59,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@id/introFragmentDesc"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/positive_button"
+        android:id="@+id/positiveButton"
         android:layout_width="0dp"
         android:layout_height="66dp"
         android:layout_marginTop="32dp"
@@ -72,9 +73,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intro_fragment_options_title" />
 
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/was_positive_button"
+        android:id="@+id/wasPositiveButton"
         android:layout_width="0dp"
         android:layout_height="66dp"
         android:layout_marginTop="8dp"
@@ -82,9 +82,10 @@
         android:textColor="@color/gray90"
         app:cornerRadius="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/positive_button" />
+        app:layout_constraintTop_toBottomOf="@+id/positiveButton" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/notPositiveButton"
@@ -98,7 +99,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/was_positive_button" />
+        app:layout_constraintTop_toBottomOf="@+id/wasPositiveButton" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/introFragmentNextButton"

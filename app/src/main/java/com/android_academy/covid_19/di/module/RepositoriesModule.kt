@@ -2,8 +2,10 @@
 
 package com.android_academy.covid_19.di.module
 
+import com.android_academy.covid_19.repository.IUserMetaDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepoImpl
+import com.android_academy.covid_19.repository.UserMetaDataRepo
 import org.koin.dsl.module
 
 val reposModule = module {
@@ -13,5 +15,9 @@ val reposModule = module {
             dao = get(),
             service = get()
         )
+    }
+
+    factory<IUserMetaDataRepo> {
+        UserMetaDataRepo(usersMetaDataDao = get())
     }
 }

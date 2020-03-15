@@ -12,12 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.providers.LocationUpdateWorker
-import com.android_academy.covid_19.ui.fragment.main.MainFragment
+import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
 import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget
 import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget.GoogleLoginView
 import com.android_academy.covid_19.ui.fragment.main.MainViewModel
@@ -112,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViews(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, IntroFragment.newInstance())
                 .commitNow()
         }
     }

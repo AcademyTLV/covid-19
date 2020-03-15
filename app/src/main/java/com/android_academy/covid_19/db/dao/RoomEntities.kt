@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.android_academy.covid_19.db.util.DBConstants.INFECTED_LOCATIONS_TABLE_NAME
 import com.android_academy.covid_19.db.util.DBConstants.USERS_LOCATIONS_TABLE_NAME
+import com.android_academy.covid_19.db.util.DBConstants.USERS_METADATA_TABLE_NAME
 import java.util.Date
 
 @Entity(tableName = INFECTED_LOCATIONS_TABLE_NAME)
@@ -40,6 +41,14 @@ data class RoomUserLocationEntity(
     val time: Long,
     @ColumnInfo(name = "provider")
     val provider: String
+)
+
+@Entity(tableName = USERS_METADATA_TABLE_NAME)
+data class RoomUserMetaDataEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null,
+    @ColumnInfo(name = "type")
+    val type: String
 )
 
 fun Location.toRoomLocationEntity() = RoomUserLocationEntity(
