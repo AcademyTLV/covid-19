@@ -53,7 +53,7 @@ data class RoomUserLocationEntity(
 @Entity(tableName = USERS_METADATA_TABLE_NAME)
 data class RoomUserMetaDataEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,push
+    val id: Int? = null,
     @ColumnInfo(name = "type")
     val type: String
 )
