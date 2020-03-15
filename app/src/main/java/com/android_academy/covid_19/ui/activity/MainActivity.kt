@@ -21,6 +21,7 @@ import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget
 import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget.GoogleLoginView
 import com.android_academy.covid_19.ui.fragment.main.MainViewModel
 import com.android_academy.covid_19.ui.fragment.main.MainViewModelImpl
+import com.android_academy.covid_19.ui.fragment.main.UsersLocationListFragment
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViews(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, UsersLocationListFragment())
                 .commitNow()
         }
     }

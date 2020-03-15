@@ -6,13 +6,18 @@ import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.dao.toRoomLocationEntity
 import com.android_academy.covid_19.providers.ILocationManager
+import com.android_academy.covid_19.providers.UserLocationModel
+import com.android_academy.covid_19.providers.fromRoomEntity
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 interface IUsersLocationRepo {
     suspend fun getLocation()
+    suspend fun getUserLocations() : Flow<List<UserLocationModel>>
     suspend fun saveLocation(location: RoomUserLocationEntity)
 }
 
@@ -25,6 +30,10 @@ class UsersLocationRepo(
         val location = locationManager.getUpdatedLocation()
         Log.d(logTag, "got location $location")
         onLocationReceived(location)
+    }
+
+    override suspend fun getUserLocations(): Flow<List<UserLocationModel>> {
+        return usersLocDao.getUserLocations().map { userLocations -> userLocations.map { fromRoomEntity(it) } }
     }
 
     private fun onLocationReceived(location: Location?) = scope.launch(CoroutineExceptionHandler { _, throwable ->
