@@ -7,6 +7,7 @@ import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.dao.toRoomLocationEntity
 import com.android_academy.covid_19.providers.ILocationManager
 import com.android_academy.covid_19.util.logTag
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -21,12 +22,14 @@ class UsersLocationRepo(
     private val scope: CoroutineScope
 ) : IUsersLocationRepo {
     override suspend fun getLocation() {
-        locationManager.getUpdatedLocation { location ->
-            Log.d(logTag, "got location $location")
-            onLocationReceived(location) }
+        val location = locationManager.getUpdatedLocation()
+        Log.d(logTag, "got location $location")
+        onLocationReceived(location)
     }
 
-    private fun onLocationReceived(location: Location?) = scope.launch {
+    private fun onLocationReceived(location: Location?) = scope.launch(CoroutineExceptionHandler { _, throwable ->
+        Log.e(logTag, "Exception something something ${throwable.message}")
+    }) {
         location?.let { newLocation ->
             saveLocation(newLocation.toRoomLocationEntity())
         }

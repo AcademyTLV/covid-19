@@ -13,14 +13,14 @@ import kotlin.coroutines.suspendCoroutine
 
 interface ILocationManager {
 
-    suspend fun getUpdatedLocation(block: (Location?) -> Unit)
+    suspend fun getUpdatedLocation(): Location?
 }
 
 class LocationManager(private val appContext: Context) : ILocationManager {
 
-    override suspend fun getUpdatedLocation(block: (Location?) -> Unit) {
+    override suspend fun getUpdatedLocation() : Location? {
 
-        val location = suspendCoroutine<Location?> {
+        return suspendCoroutine {
             val permission =
                 ContextCompat.checkSelfPermission(
                     appContext,
@@ -36,6 +36,5 @@ class LocationManager(private val appContext: Context) : ILocationManager {
                 it.resume(null)
             }
         }
-        block.invoke(location)
     }
 }
