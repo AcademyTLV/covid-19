@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "6f7f0e34e098642d7b52a054aaa5b87f",
+    "identityHash": "898716e2b7d9109d31244e40ef90ee60",
     "entities": [
       {
         "tableName": "infected_locations_table_name",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `start_time` INTEGER NOT NULL, `end_time` INTEGER NOT NULL, `lat` REAL NOT NULL, `lon` REAL NOT NULL, `radius` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `start_time` INTEGER NOT NULL, `end_time` INTEGER NOT NULL, `lat` REAL NOT NULL, `lon` REAL NOT NULL, `radius` REAL NOT NULL, `name` TEXT, `comments` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -43,6 +43,18 @@
             "columnName": "radius",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -140,7 +152,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6f7f0e34e098642d7b52a054aaa5b87f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '898716e2b7d9109d31244e40ef90ee60')"
     ]
   }
 }
