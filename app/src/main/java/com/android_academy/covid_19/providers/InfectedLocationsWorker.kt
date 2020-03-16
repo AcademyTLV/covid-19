@@ -38,12 +38,15 @@ class InfectedLocationsWorker(
             locationRepo.getLocation()
 
             // get my cached locations for last 14 days
+            Timber.d("[InfectedLocationsWorker], doWork(): locationRepo.getUserLocationsAsync()")
             val myLocations: List<UserLocationModel> = locationRepo.getUserLocationsAsync()
 
             // get infected locations from server
+            Timber.d("[InfectedLocationsWorker], doWork(): infectionDataRepo.getInfectionLocationsAsync")
             val infectedLocations = infectionDataRepo.getInfectionLocationsAsync(0, 0)
 
             // run colliding algorithm
+            Timber.d("[InfectedLocationsWorker], doWork(): collisionMatcher.isColliding")
             val collidingUserLocations = collisionMatcher.isColliding(
                 infectedLocations,
                 myLocations,
@@ -53,11 +56,13 @@ class InfectedLocationsWorker(
 
             // if matches show notification
             if (collidingUserLocations.isNotEmpty()) {
+                Timber.d("[InfectedLocationsWorker], doWork(): collision is not empty. showing notification")
                 notificationManager.showCollisionFound(collidingUserLocations)
             }
 
             Result.success()
         } catch (e: Exception) {
+            Timber.e(e, "[InfectedLocationsWorker], doWork: failed with exception")
             Result.failure()
         }
     }

@@ -24,8 +24,8 @@ class InfectionDataRepoImpl(
         startDate: Long,
         endDate: Long
     ): LiveData<List<InfectedLocationModel>> = dao.getInfectedLocationsByDatesRange()
-        .map {
-            it.map { it.toInfectedLocationModel() }
+        .map { infectedLocRoom ->
+            infectedLocRoom.map { it.toInfectedLocationModel() }
         }
 
     override suspend fun getInfectionLocationsAsync(
@@ -35,9 +35,9 @@ class InfectionDataRepoImpl(
         // here in the future we need to call for a server only for delta,
         // but currently we call for a complete data from server
         // val lastInfectedLocation =  dao.getLastUpdatedInfectedLocation()
-        val fromServer = service.getInfectedLocationsMOH()
+        val fromServer = service.getInfectedLocations("covid-19",null, "carrier", "il")
         Timber.d("Got infected locations from server from server: $fromServer")
-        dao.saveInfectedLocations(fromServer.toInfectedLocationsResponse().locations.map { it.toDBModel() })
-        return fromServer.toInfectedLocationsResponse().locations
+        dao.saveInfectedLocations(fromServer.locations.map { it.toDBModel() })
+        return fromServer.locations
     }
 }

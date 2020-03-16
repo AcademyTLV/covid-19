@@ -23,11 +23,15 @@ data class RoomInfectedLocationEntity(
     @ColumnInfo(name = "lon")
     val lon: Double,
     @ColumnInfo(name = "radius")
-    val radius: Double
+    val radius: Double,
+    @ColumnInfo(name = "name")
+    val name: String?,
+    @ColumnInfo(name = "comments")
+    val comments: String?
 ) {
     fun toInfectedLocationModel(): InfectedLocationModel {
         return InfectedLocationModel(
-            id, startTime, endTime, lat, lon, radius
+            id, startTime, endTime, lat, lon, radius, name, comments
         )
     }
 }
