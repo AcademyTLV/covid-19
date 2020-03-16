@@ -18,10 +18,22 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <fragment
+        android:id="@+id/picker_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.android_academy.covid_19.ui.fragment.main.FiltersFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/filters_fragment" />
+
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/overlayContainer"
+        app:layout_constraintTop_toBottomOf="@+id/picker_fragment"
         tools:context=".ui.activity.MainActivity" />
 
     <FrameLayout

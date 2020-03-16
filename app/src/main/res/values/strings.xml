@@ -7,7 +7,6 @@
     <string name="ahtung">אוי! מצאנו מתאם לנגיף קורונה!</string>
     <string name="open_app">לחץ כאן כדי לראות פרטים</string>
     <string name="location_dialog_title">אשר גישה למיקומך</string>
-    <string name="positive_location_permission_button">כן, אני מעוניין</string>
     <string name="skip_location_permission_button">לא, איני מעוניין כרגע</string>
     <string name="location_dialog_description">
         - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
