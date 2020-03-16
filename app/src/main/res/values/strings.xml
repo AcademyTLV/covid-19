@@ -13,6 +13,7 @@
         We will take your location every 15 minutes and we will store it only on your device.\n
         The data will be not sent to anyone automatically not even to Ministry of Health.
     </string>
+
     <string name="positive_location_permission_button">Yes, I am interested</string>
     <string name="skip_location_permission_button">No, I am not interested for the moment</string>
     <string name="location_dialog_title">Please approve connection to your location</string>

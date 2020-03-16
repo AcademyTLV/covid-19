@@ -120,7 +120,11 @@ class MainActivity : AppCompatActivity() {
     private fun initViews(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
+<<<<<<< HEAD
                 // TODO : toggle to test intro fragment
+=======
+                // toggle to test intro fragment
+>>>>>>> 15ee720d33875d211fa556fe42392c70a2afea85
                 //.replace(R.id.container, IntroFragment.newInstance())
                 .replace(R.id.container, UsersLocationListFragment())
                 .commitNow()
