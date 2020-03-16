@@ -73,27 +73,37 @@
 
         <RadioButton
             android:id="@+id/positive"
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layoutDirection="rtl"
+            android:background="@drawable/radio_button_intro"
             android:text="@string/intro_fragment_positive_button" />
 
         <RadioButton
             android:id="@+id/was_positive"
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layoutDirection="rtl"
+            android:background="@drawable/radio_button_intro"
             android:text="@string/intro_fragment_was_positive_button" />
 
         <RadioButton
             android:id="@+id/negative"
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layoutDirection="rtl"
-            android:text="@string/intro_fragment_not_positive_button" />
+            android:background="@drawable/radio_button_intro"
+            android:text="@string/intro_fragment_not_positive_button"
+            />
 
     </RadioGroup>
 
@@ -109,7 +119,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/main"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
