@@ -15,18 +15,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-interface IUsersLocationRepo {
+interface UsersLocationRepo {
     suspend fun getLocation()
     suspend fun getUserLocations(): Flow<List<UserLocationModel>>
     suspend fun getUserLocationsAsync(): List<UserLocationModel>
     suspend fun saveLocation(location: RoomUserLocationEntity)
 }
 
-class UsersLocationRepo(
+class UsersLocationRepoImpl(
     private val usersLocDao: UserLocationsDao,
     private val locationManager: ILocationManager,
     private val scope: CoroutineScope
-) : IUsersLocationRepo {
+) : UsersLocationRepo {
     override suspend fun getLocation() {
         val location = locationManager.getUpdatedLocation()
         Log.d(logTag, "got location $location")

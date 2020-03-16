@@ -13,7 +13,9 @@ val viewModelsModule = module {
     viewModel<MainViewModelImpl> { (hasLocationPermission: Boolean) ->
         MainViewModelImpl(
             userMetaDataRepo = get(),
-            hasLocationPermissions = hasLocationPermission
+            hasLocationPermissions = hasLocationPermission,
+            usersLocationRepo = get(),
+            infectionDataRepo = get()
         )
     }
 

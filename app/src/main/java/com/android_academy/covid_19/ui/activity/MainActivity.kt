@@ -17,11 +17,14 @@ import com.android_academy.covid_19.ui.activity.MainNavigationTarget.Permissions
 import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
 import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
 import com.android_academy.covid_19.util.setSafeOnClickListener
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
@@ -31,9 +34,18 @@ import org.koin.core.parameter.parametersOf
 
 private const val LOCATION_SETTINGS_SCREEN_CODE = 1002
 
+private data class MarkerAndCircle(
+    val marker: Marker,
+    val circle: Circle
+)
+
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
+
+    private val myLocations = mutableMapOf<Int, MarkerAndCircle>()
+
+    private val coronaLocations = mutableMapOf<Int, MarkerAndCircle>()
 
     private val viewModel: MainViewModel by viewModel<MainViewModelImpl> {
         parametersOf(
@@ -64,6 +76,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initObservers() {
         viewModel.apply {
             navigation.observe(this@MainActivity, onNavigationChanged())
+            myLocations.observe(this@MainActivity, Observer { onMyLocationsChanged(it) })
+            coronaLocations.observe(this@MainActivity, Observer { onCoronaChanged(it) })
             blockingUIVisible.observe(this@MainActivity, Observer {
                 showBlockUI(it)
             })
@@ -87,6 +101,62 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             })
         }
+    }
+
+    private fun onMyLocationsChanged(markerOptions: List<LocationMarkerData>?) {
+        markerOptions?.forEach { options ->
+            myLocations[options.id]?.let {
+                it.marker.remove()
+                it.circle.remove()
+            }
+            myLocations[options.id] =
+                MarkerAndCircle(
+                    marker = map.addMarker(createMyLocationMarkerOptions(options)),
+                    circle = map.addCircle(createMyLocationCircleOptions(options))
+                )
+        }
+    }
+
+    private fun onCoronaChanged(markerOptions: List<LocationMarkerData>?) {
+        markerOptions?.forEach { options ->
+            coronaLocations[options.id]?.let {
+                it.marker.remove()
+                it.circle.remove()
+            }
+            coronaLocations[options.id] =
+                MarkerAndCircle(
+                    marker = map.addMarker(createCoronaLocationMarkerOptions(options)),
+                    circle = map.addCircle(createCoronaLocationCircleOptions(options))
+                )
+        }
+    }
+
+    private fun createMyLocationCircleOptions(options: LocationMarkerData): CircleOptions {
+        return CircleOptions()
+            .center(LatLng(options.lat, options.lon))
+            .radius(50.0)
+            .fillColor(R.color.colorPrimaryDark_30)
+    }
+
+    private fun createCoronaLocationCircleOptions(options: LocationMarkerData): CircleOptions {
+        return CircleOptions()
+            .center(LatLng(options.lat, options.lon))
+            .radius(50.0)
+            .fillColor(R.color.orange_30)
+    }
+
+    private fun createMyLocationMarkerOptions(options: LocationMarkerData): MarkerOptions {
+        return MarkerOptions()
+            .position(LatLng(options.lat, options.lon))
+            .title(options.title)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+    }
+
+    private fun createCoronaLocationMarkerOptions(options: LocationMarkerData): MarkerOptions {
+        return MarkerOptions()
+            .position(LatLng(options.lat, options.lon))
+            .title(options.title)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
     }
 
     private fun showBlockUI(show: Boolean) {
@@ -153,10 +223,5 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 }

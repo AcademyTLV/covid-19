@@ -1,14 +1,14 @@
 package com.android_academy.covid_19.repository
 
-import androidx.lifecycle.LiveData
 import com.android_academy.covid_19.db.dao.InfectionLocationsDao
 import com.android_academy.covid_19.network.service.InfectedLocationModel
 import com.android_academy.covid_19.network.service.InfectionDataService
-import com.android_academy.covid_19.util.map
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 interface InfectionDataRepo {
-    fun getInfectionLocations(startDate: Long, endDate: Long): LiveData<List<InfectedLocationModel>>
+    fun getInfectionLocations(): Flow<List<InfectedLocationModel>>
     suspend fun getInfectionLocationsAsync(
         startDate: Long,
         endDate: Long
@@ -20,13 +20,11 @@ class InfectionDataRepoImpl(
     private val service: InfectionDataService
 ) : InfectionDataRepo {
 
-    override fun getInfectionLocations(
-        startDate: Long,
-        endDate: Long
-    ): LiveData<List<InfectedLocationModel>> = dao.getInfectedLocationsByDatesRange()
-        .map { infectedLocRoom ->
-            infectedLocRoom.map { it.toInfectedLocationModel() }
-        }
+    override fun getInfectionLocations(): Flow<List<InfectedLocationModel>> =
+        dao.getAllInfectedLocations()
+            .map { infectedLocRoom ->
+                infectedLocRoom.map { it.toInfectedLocationModel() }
+            }
 
     override suspend fun getInfectionLocationsAsync(
         startDate: Long,

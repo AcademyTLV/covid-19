@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.providers.UserLocationModel
-import com.android_academy.covid_19.repository.IUsersLocationRepo
+import com.android_academy.covid_19.repository.UsersLocationRepo
 import kotlinx.android.synthetic.main.fragment_users_location_list_list.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class UsersLocationListFragment : Fragment() {
     private val viewModel: UsersLocationViewModel by viewModel<UsersLocationListViewModelImpl>()
 
-    private val usersLocationRepo: IUsersLocationRepo by inject()
+    private val usersLocationRepo: UsersLocationRepo by inject()
     private var columnCount = 1
 
     override fun onCreateView(

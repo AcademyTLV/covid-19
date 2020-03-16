@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android_academy.covid_19.providers.UserLocationModel
-import com.android_academy.covid_19.repository.IUsersLocationRepo
+import com.android_academy.covid_19.repository.UsersLocationRepo
 import kotlinx.coroutines.launch
 
 interface UsersLocationViewModel {
@@ -16,7 +16,7 @@ interface UsersLocationViewModel {
     )
 }
 
-class UsersLocationListViewModelImpl(private val usersLocRepo: IUsersLocationRepo) : ViewModel(),
+class UsersLocationListViewModelImpl(private val usersLocRepo: UsersLocationRepo) : ViewModel(),
     UsersLocationViewModel {
 
     override fun getUserLocations(

@@ -3,7 +3,7 @@ package com.android_academy.covid_19.providers
 import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 
 data class UserLocationModel(
-    val id: Int? = null,
+    val id: Int,
     val lat: Double,
     val lon: Double,
     val accuracy: Float,
@@ -13,7 +13,7 @@ data class UserLocationModel(
 )
 
 fun fromRoomEntity(roomEntity: RoomUserLocationEntity) = UserLocationModel(
-    id = roomEntity.id,
+    id = roomEntity.id!!,
     lat = roomEntity.lat,
     lon = roomEntity.lon,
     accuracy = roomEntity.accuracy,

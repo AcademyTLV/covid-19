@@ -7,7 +7,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.android_academy.covid_19.repository.IUsersLocationRepo
+import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,7 +20,7 @@ class LocationUpdateWorker(
     workParams: WorkerParameters
 ) : CoroutineWorker(appContext, workParams), KoinComponent {
 
-    private val locationRepo: IUsersLocationRepo by inject()
+    private val locationRepo: UsersLocationRepo by inject()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
