@@ -17,7 +17,8 @@ import kotlinx.coroutines.launch
 
 interface IUsersLocationRepo {
     suspend fun getLocation()
-    suspend fun getUserLocations() : Flow<List<UserLocationModel>>
+    suspend fun getUserLocations(): Flow<List<UserLocationModel>>
+    suspend fun getUserLocationsAsync(): List<UserLocationModel>
     suspend fun saveLocation(location: RoomUserLocationEntity)
 }
 
@@ -33,19 +34,29 @@ class UsersLocationRepo(
     }
 
     override suspend fun getUserLocations(): Flow<List<UserLocationModel>> {
-        return usersLocDao.getUserLocations().map { userLocations -> userLocations.map { fromRoomEntity(it) } }
+        return usersLocDao.getUserLocations()
+            .map { userLocations -> userLocations.map { fromRoomEntity(it) } }
     }
 
-    private fun onLocationReceived(location: Location?) = scope.launch(CoroutineExceptionHandler { _, throwable ->
-        Log.e(logTag, "Exception something something ${throwable.message}")
-    }) {
-        location?.let { newLocation ->
-            saveLocation(newLocation.toRoomLocationEntity())
+    override suspend fun getUserLocationsAsync(): List<UserLocationModel> =
+        usersLocDao.getUserLocationsAsync().map { fromRoomEntity(it) }
+
+    private fun onLocationReceived(location: Location?) =
+        scope.launch(CoroutineExceptionHandler { _, throwable ->
+            Log.e(logTag, "Exception something something ${throwable.message}")
+        }) {
+            location?.let { newLocation ->
+                saveLocation(newLocation.toRoomLocationEntity())
+            }
         }
-    }
 
     override suspend fun saveLocation(location: RoomUserLocationEntity) {
         Log.d(logTag, "Saving location $location")
         usersLocDao.saveLocation(location)
+    }
+
+    companion object {
+        const val DISTANCE_THRESHOLD = 30
+        const val TIME_THRESHOLD = 30L
     }
 }

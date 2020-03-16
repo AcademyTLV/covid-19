@@ -23,4 +23,8 @@
     <string name="intro_fragment_was_positive_button">לא אובחנתי כנשא</string>
     <string name="intro_fragment_next_button">הבא</string>
     <string name="intro_fragment_options2">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
+    <string name="channel_name">General Channel</string>
+    <string name="channel_description">Main notifications here</string>
+    <string name="ahtung">Oh My! We found a Corona virus correlation!</string>
+    <string name="open_app">Click here to see a details</string>
 </resources>
