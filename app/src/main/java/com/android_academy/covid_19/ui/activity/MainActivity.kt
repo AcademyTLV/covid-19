@@ -54,6 +54,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         initObservers()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.onScreenBecameVisible()
+    }
+
     private fun initMap() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -139,6 +144,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initViews() {
         goToSettingsButton.setSafeOnClickListener {
             viewModel.onGoToSettingsClick()
+        }
+
+        button_trigger_timeline.setOnClickListener {
+            viewModel.onTimelineTriggerClicked()
         }
     }
 

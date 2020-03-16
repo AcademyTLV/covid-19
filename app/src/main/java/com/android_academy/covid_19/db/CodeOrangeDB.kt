@@ -17,7 +17,7 @@ import com.android_academy.covid_19.db.util.DBConstants.DB_NAME
 
 @Database(
     entities = [RoomInfectedLocationEntity::class, RoomUserLocationEntity::class, RoomUserMetaDataEntity::class],
-    version = 5
+    version = 7
 )
 @TypeConverters(Converters::class)
 abstract class CodeOrangeDB : RoomDatabase() {

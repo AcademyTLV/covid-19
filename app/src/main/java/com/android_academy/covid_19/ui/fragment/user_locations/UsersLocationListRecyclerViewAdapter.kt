@@ -28,7 +28,7 @@ class UsersLocationListRecyclerViewAdapter(private val locations: List<UserLocat
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = locations[position]
         holder.mIdView.text =
-            SimpleDateFormat.getDateTimeInstance().format(Date(item.time))
+            SimpleDateFormat.getDateTimeInstance().format(item.time?.let { Date(it) } ?: Date())
         holder.mContentView.text =
             "lat: ${item.lat} lon: ${item.lon}, speed: ${item.speed}, accuracy: ${item.accuracy}"
 
