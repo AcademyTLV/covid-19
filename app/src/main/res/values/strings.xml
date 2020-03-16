@@ -16,4 +16,5 @@
     <string name="date">תאריך</string>
     <string name="start_time">שעת התחלה</string>
     <string name="end_time">שעת סיום</string>
+    <string name="today_txt">היום</string>
 </resources>
