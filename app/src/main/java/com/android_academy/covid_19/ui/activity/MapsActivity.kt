@@ -3,6 +3,7 @@ package com.android_academy.covid_19.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.android_academy.covid_19.R
+import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,6 +23,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        askLocationPermission()
     }
 
     /**
@@ -40,5 +43,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    fun askLocationPermission() {
+        LocationPermissionFragment.newInstance().show(supportFragmentManager, LocationPermissionFragment.TAG)
     }
 }

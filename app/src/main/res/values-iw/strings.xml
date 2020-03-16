@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Covid-19</string>
+    <string name="title_activity_maps">מפה</string>
+    <string name="btn_login_to_google">התחבר לגוגל</string>
+    <string name="channel_name">הערוץ הכללי</string>
+    <string name="channel_description">התראות עיקריות כאן</string>
+    <string name="ahtung">אוי! מצאנו מתאם לנגיף קורונה!</string>
+    <string name="open_app">לחץ כאן כדי לראות פרטים</string>
+    <string name="location_dialog_title">אשר גישה למיקומך</string>
+    <string name="positive_location_permission_button">כן, אני מעוניין</string>
+    <string name="skip_location_permission_button">לא, איני מעוניין כרגע</string>
+    <string name="location_dialog_description">
+        - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
+\n\n
+- מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
+\n\n
+- המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
+    </string>
+    <string name="intro_fragment_title">ברוך הבא לצבע כתום</string>
+    <string name="intro_fragment_subtitle">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
+    <string name="intro_fragment_description">
+        האפליקציה מציגה לך דיווחים מאומתים של מיקומים וזמנים בהם היו חולי קורונה.
+
+        האפליקציה גם מאפשרת לך לשמור על מכשירך בצורה מאובטחת את רשימת המיקומים בהן ביקרת ולהצליב עבורך את אותם המקומות עם המקומות המדווחים כדי שתוכל לדעת אם אתה בקבוצת הסיכון ולפעול בהתאם.</string>
+    <string name="intro_fragment_options_title">בחר את אחת האפשרויות:</string>
+    <string name="intro_fragment_positive_button">אובחנתי בנשא של COVID-19</string>
+    <string name="intro_fragment_not_positive_button">החלמתי מהמחלה</string>
+    <string name="intro_fragment_was_positive_button">לא אובחנתי כנשא</string>
+    <string name="intro_fragment_next_button">הבא</string>
+    <string name="intro_fragment_options2">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
+
+
+</resources>
