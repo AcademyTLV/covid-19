@@ -26,6 +26,7 @@ import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -108,11 +109,11 @@ class MainActivity : AppCompatActivity() {
                     name: ComponentName,
                     client: CustomTabsClient
                 ) {
-                    Log.d("XXX", "onCustomTabsServiceConnected")
+                    Timber.d("onCustomTabsServiceConnected")
                 }
 
                 override fun onServiceDisconnected(p0: ComponentName?) {
-                    Log.d("XXX", "onServiceDisconnected")
+                    Timber.d("onServiceDisconnected")
                 }
             })
     }

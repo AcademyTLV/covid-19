@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.android_academy.covid_19.R
+import com.android_academy.covid_19.ui.fragment.main.UsersLocationListFragment
 import com.android_academy.covid_19.ui.fragment.main.UsersLocationListViewModelImpl
 import com.android_academy.covid_19.ui.fragment.main.UsersLocationViewModel
 import com.google.android.material.button.MaterialButton
@@ -38,6 +39,9 @@ class IntroFragment : Fragment() {
 
         introFragmentNextButton.setOnClickListener {
             viewModel.nextAndSave()
+
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.container, UsersLocationListFragment())?.commitNow()
         }
     }
 
@@ -47,6 +51,8 @@ class IntroFragment : Fragment() {
                 (it as MaterialButton).isChecked = false
             }
         }
+
+        introFragmentNextButton.isEnabled = true
 
         Utils.getTypeByButton(view.id)?.let {
             viewModel.onButtonChosen(it)

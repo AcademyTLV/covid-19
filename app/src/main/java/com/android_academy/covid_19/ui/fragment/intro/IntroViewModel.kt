@@ -1,10 +1,11 @@
 package com.android_academy.covid_19.ui.fragment.intro
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android_academy.covid_19.R
 import com.android_academy.covid_19.repository.IUserMetaDataRepo
 import kotlinx.coroutines.async
+import timber.log.Timber
 
 data class IntroModel(var chosenType: String? = null)
 
@@ -20,13 +21,13 @@ class IntroViewModelImpl(
 
     override fun onButtonChosen(chosenType: String) {
         introModel.chosenType = chosenType
-        Log.d(TAG, "chosen ${introModel.chosenType}")
+        Timber.d("chosen ${introModel.chosenType}")
     }
 
     override fun nextAndSave() {
-        Log.d(TAG, "beforeSave ${introModel.chosenType}")
+        Timber.d("beforeSave ${introModel.chosenType}")
         introModel.chosenType?.let {
-            Log.d(TAG, "clicked when chosen ${it}")
+            Timber.d("clicked when chosen ${it}")
             viewModelScope.async {
                 userMetaDataRepo.setUserType(it)
             }
@@ -36,11 +37,6 @@ class IntroViewModelImpl(
                 userMetaDataRepo.getUserMetaData()
             }
         }
-    }
-
-    companion object {
-
-        private const val TAG = "IntroViewModelImpl"
     }
 
 }

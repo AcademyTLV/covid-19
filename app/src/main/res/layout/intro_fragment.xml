@@ -109,7 +109,7 @@
         android:layout_width="0dp"
         android:layout_height="66dp"
         android:layout_marginBottom="16dp"
-        android:checkable="true"
+        android:enabled="false"
         android:text="@string/intro_fragment_next_button"
         android:textColor="@color/gray90"
         app:backgroundTint="@color/orange"
