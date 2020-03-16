@@ -16,6 +16,12 @@
 \n\n
 - המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
     </string>
+    <string name="change_status">שינוי סטאטוס</string>
+    <string name="emergency_call">101</string>
+    <string name="date">תאריך</string>
+    <string name="start_time">שעת התחלה</string>
+    <string name="end_time">שעת סיום</string>
+    <string name="today_txt">היום</string>
     <string name="intro_fragment_title">ברוך הבא לצבע כתום</string>
     <string name="intro_fragment_subtitle">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
     <string name="intro_fragment_description">
@@ -32,35 +38,35 @@
     <string name="decline_permission_bottom_sheet_dialog_btn">לא ניתן להשתמש באפליקציה ללא הרשאת מיקום</string>
     <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
     <!--    <string name="title_activity_maps">Map</string>-->
-<!--    <string name="btn_login_to_google">Login To Google</string>-->
-<!--    <string name="channel_name">General Channel</string>-->
-<!--    <string name="channel_description">Main notifications here</string>-->
-<!--    <string name="ahtung">Oh My! We found a Corona virus correlation!</string>-->
-<!--    <string name="open_app">Click here to see a details</string>-->
+    <!--    <string name="btn_login_to_google">Login To Google</string>-->
+    <!--    <string name="channel_name">General Channel</string>-->
+    <!--    <string name="channel_description">Main notifications here</string>-->
+    <!--    <string name="ahtung">Oh My! We found a Corona virus correlation!</string>-->
+    <!--    <string name="open_app">Click here to see a details</string>-->
 
-<!--    <string name="location_dialog_description">-->
-<!--        To be able to verify if you were in places where people which are \n-->
-<!--        infected with Corona virus please allow us to get location permission. \n-->
-<!--        We will take your location every 15 minutes and we will store it only on your device.\n-->
-<!--        The data will be not sent to anyone automatically not even to Ministry of Health.-->
-<!--    </string>-->
+    <!--    <string name="location_dialog_description">-->
+    <!--        To be able to verify if you were in places where people which are \n-->
+    <!--        infected with Corona virus please allow us to get location permission. \n-->
+    <!--        We will take your location every 15 minutes and we will store it only on your device.\n-->
+    <!--        The data will be not sent to anyone automatically not even to Ministry of Health.-->
+    <!--    </string>-->
 
-<!--    <string name="positive_location_permission_button">Yes, I am interested</string>-->
-<!--    <string name="skip_location_permission_button">No, I am not interested for the moment</string>-->
-<!--    <string name="location_dialog_title">Please approve connection to your location</string>-->
-<!--    <string name="intro_fragment_title">Welcome to the Orange color</string>-->
-<!--    <string name="intro_fragment_subtitle">The app which will help us to stop spreading the Corona virus in Israel</string>-->
-<!--    <string name="intro_fragment_description">-->
-<!--        The application is showing confirmed places and times where and when people sick with Corona virus visited.-->
-<!--        The application also allows you to store on in a secured mode and private the places where you visited and to connect to the places where the sick people where and to understand if you are in the potential sickness group.-->
-<!--    </string>-->
-<!--    <string name="intro_fragment_options_title">Please choose an option</string>-->
-<!--    <string name="intro_fragment_positive_button">I have confirmed COVID-19</string>-->
-<!--    <string name="intro_fragment_not_positive_button">I am healthy now</string>-->
-<!--    <string name="intro_fragment_was_positive_button">I was not confirmed with COVID-19</string>-->
-<!--    <string name="intro_fragment_next_button">Next</string>-->
-<!--    <string name="intro_fragment_options2">The app which will help us to stop spreading the Corona virus in Israel</string>-->
-<!--    <string name="something_went_wrong">Oops, something went wrong</string>-->
+    <!--    <string name="positive_location_permission_button">Yes, I am interested</string>-->
+    <!--    <string name="skip_location_permission_button">No, I am not interested for the moment</string>-->
+    <!--    <string name="location_dialog_title">Please approve connection to your location</string>-->
+    <!--    <string name="intro_fragment_title">Welcome to the Orange color</string>-->
+    <!--    <string name="intro_fragment_subtitle">The app which will help us to stop spreading the Corona virus in Israel</string>-->
+    <!--    <string name="intro_fragment_description">-->
+    <!--        The application is showing confirmed places and times where and when people sick with Corona virus visited.-->
+    <!--        The application also allows you to store on in a secured mode and private the places where you visited and to connect to the places where the sick people where and to understand if you are in the potential sickness group.-->
+    <!--    </string>-->
+    <!--    <string name="intro_fragment_options_title">Please choose an option</string>-->
+    <!--    <string name="intro_fragment_positive_button">I have confirmed COVID-19</string>-->
+    <!--    <string name="intro_fragment_not_positive_button">I am healthy now</string>-->
+    <!--    <string name="intro_fragment_was_positive_button">I was not confirmed with COVID-19</string>-->
+    <!--    <string name="intro_fragment_next_button">Next</string>-->
+    <!--    <string name="intro_fragment_options2">The app which will help us to stop spreading the Corona virus in Israel</string>-->
+    <!--    <string name="something_went_wrong">Oops, something went wrong</string>-->
 
 </resources>
 

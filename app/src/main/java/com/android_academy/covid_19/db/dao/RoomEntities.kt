@@ -51,9 +51,15 @@ data class RoomUserLocationEntity(
     @ColumnInfo(name = "speed")
     val speed: Float,
     @ColumnInfo(name = "time")
-    val time: Long,
+    val time: Long? = null,
     @ColumnInfo(name = "provider")
-    val provider: String
+    val provider: String,
+    @ColumnInfo(name = "name")
+    val name: String? = null,
+    @ColumnInfo(name = "timeStart")
+    val timeStart: Long? = null,
+    @ColumnInfo(name = "timeEnd")
+    val timeEnd: Long? = null
 )
 
 @Entity(tableName = USERS_METADATA_TABLE_NAME)
