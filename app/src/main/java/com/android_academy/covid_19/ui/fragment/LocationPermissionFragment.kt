@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.android_academy.covid_19.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class LocationPermissionFragment: BottomSheetDialogFragment() {
+class LocationPermissionFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

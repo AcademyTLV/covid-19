@@ -11,6 +11,9 @@
 - המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
     </string>
     <string name="positive_location_permission_button">כן, אני מעוניין</string>
-    <string name="change_status">change status</string>
+    <string name="change_status">שינוי סטאטוס</string>
     <string name="emergency_call">101</string>
+    <string name="date">תאריך</string>
+    <string name="start_time">שעת התחלה</string>
+    <string name="end_time">שעת סיום</string>
 </resources>
