@@ -20,9 +20,9 @@
     <string name="intro_fragment_title">Welcome to the Orange color</string>
     <string name="intro_fragment_subtitle">The app which will help us to stop spreading the Corona virus in Israel</string>
     <string name="intro_fragment_description">
-        האפליקציה מציגה לך דיווחים מאומתים של מיקומים וזמנים בהם היו חולי קורונה.
-
-        האפליקציה גם מאפשרת לך לשמור על מכשירך בצורה מאובטחת את רשימת המיקומים בהן ביקרת ולהצליב עבורך את אותם המקומות עם המקומות המדווחים כדי שתוכל לדעת אם אתה בקבוצת הסיכון ולפעול בהתאם.</string>
+        The application is showing confirmed places and times where and when people sick with Corona virus visited.
+        The application also allows you to store on in a secured mode and private the places where you visited and to connect to the places where the sick people where and to understand if you are in the potential sickness group.
+    </string>
     <string name="intro_fragment_options_title">Please choose an option</string>
     <string name="intro_fragment_positive_button">I have confirmed COVID-19</string>
     <string name="intro_fragment_not_positive_button">I am healthy now</string>
