@@ -25,8 +25,7 @@ class UserMetaDataRepoImpl(
 
     override suspend fun setCurrentUser(user: UserMetaData) = withContext(IO) {
         usersMetaDataDao
-            .getUser()
-            ?.toUserMetadata()
+            .setUser(user.toDB())
         Unit
     }
 
