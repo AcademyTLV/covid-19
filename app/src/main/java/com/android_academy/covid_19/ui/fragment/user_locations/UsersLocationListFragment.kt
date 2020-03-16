@@ -1,4 +1,4 @@
-package com.android_academy.covid_19.ui.fragment.main
+package com.android_academy.covid_19.ui.fragment.user_locations
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,7 +32,10 @@ class UsersLocationListFragment : Fragment() {
         viewModel.getUserLocations(viewLifecycleOwner) { locations: List<UserLocationModel> ->
             list.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = UsersLocationListRecyclerViewAdapter(locations)
+                adapter =
+                    UsersLocationListRecyclerViewAdapter(
+                        locations
+                    )
             }
         }
     }

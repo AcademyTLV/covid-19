@@ -8,6 +8,8 @@ import com.android_academy.covid_19.db.util.DBConstants.INFECTED_LOCATIONS_TABLE
 import com.android_academy.covid_19.db.util.DBConstants.USERS_LOCATIONS_TABLE_NAME
 import com.android_academy.covid_19.db.util.DBConstants.USERS_METADATA_TABLE_NAME
 import com.android_academy.covid_19.network.service.InfectedLocationModel
+import com.android_academy.covid_19.repository.model.UserMetaData
+import com.android_academy.covid_19.repository.model.UserType
 import java.util.Date
 
 @Entity(tableName = INFECTED_LOCATIONS_TABLE_NAME)
@@ -56,11 +58,25 @@ data class RoomUserLocationEntity(
 
 @Entity(tableName = USERS_METADATA_TABLE_NAME)
 data class RoomUserMetaDataEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    @PrimaryKey
+    val id: String,
     @ColumnInfo(name = "type")
     val type: String
-)
+) {
+    fun toUserMetadata(): UserMetaData {
+        return UserMetaData(
+            id = id,
+            type = UserType.from(type)
+        )
+    }
+}
+
+fun UserMetaData.toDB(): RoomUserMetaDataEntity {
+    return RoomUserMetaDataEntity(
+        id = id,
+        type = type.strValue
+    )
+}
 
 fun Location.toRoomLocationEntity() = RoomUserLocationEntity(
     lat = this.latitude,

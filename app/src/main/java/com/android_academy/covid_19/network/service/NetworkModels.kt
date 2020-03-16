@@ -4,7 +4,7 @@ import com.android_academy.covid_19.db.dao.RoomInfectedLocationEntity
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-data class InfectedLocations(@SerializedName("locations") val locations : List<InfectedLocationModel>)
+data class InfectedLocations(@SerializedName("locations") val locations: List<InfectedLocationModel>)
 
 data class InfectedLocationModel(
     @SerializedName("id")

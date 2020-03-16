@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "898716e2b7d9109d31244e40ef90ee60",
+    "identityHash": "9cb00f316c10d20c4f069b20d52d6fc8",
     "entities": [
       {
         "tableName": "infected_locations_table_name",
@@ -124,13 +124,13 @@
       },
       {
         "tableName": "users_metadata_table_name",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `type` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `type` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": false
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "type",
@@ -143,7 +143,7 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -152,7 +152,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '898716e2b7d9109d31244e40ef90ee60')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9cb00f316c10d20c4f069b20d52d6fc8')"
     ]
   }
 }

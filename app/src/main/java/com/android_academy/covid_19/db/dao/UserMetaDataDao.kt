@@ -10,8 +10,8 @@ import com.android_academy.covid_19.db.util.DBConstants
 interface UserMetaDataDao {
     /* get single user metadata */
     @Query("SELECT * FROM ${DBConstants.USERS_METADATA_TABLE_NAME} limit 1")
-    fun getUser(): RoomUserMetaDataEntity
+    suspend fun getUser(): RoomUserMetaDataEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setUser(user: RoomUserMetaDataEntity)
+    suspend fun setUser(user: RoomUserMetaDataEntity)
 }

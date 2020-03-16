@@ -1,4 +1,4 @@
-package com.android_academy.covid_19.ui.fragment.main
+package com.android_academy.covid_19.ui.fragment.user_locations
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
