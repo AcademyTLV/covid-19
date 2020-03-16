@@ -3,6 +3,8 @@ package com.android_academy.covid_19.ui.fragment.main
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -95,9 +97,9 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         }
 
         emergency_call.setOnClickListener {
-            // val intent = Intent(Intent.ACTION_DIAL);
-            // intent.data = Uri.parse("101")
-            // activity?.startActivity(intent)
+            val intent = Intent(Intent.ACTION_DIAL);
+            intent.data = Uri.parse("tel:101")
+            activity?.startActivity(intent)
         }
     }
 
