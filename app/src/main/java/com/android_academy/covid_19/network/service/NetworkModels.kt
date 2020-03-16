@@ -1,14 +1,11 @@
-package com.android_academy.covid_19.repository.model
+package com.android_academy.covid_19.network.service
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.android_academy.covid_19.db.util.DBConstants.INFECTED_LOCATIONS_TABLE_NAME
+import com.android_academy.covid_19.db.dao.RoomInfectedLocationEntity
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-@Entity(tableName = INFECTED_LOCATIONS_TABLE_NAME)
 data class InfectedLocationModel(
-    @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
     val id: Int,
     @SerializedName("start_time")
     val startTime: Date,
@@ -20,4 +17,8 @@ data class InfectedLocationModel(
     val lon: Double,
     @SerializedName("radius")
     val radius: Double
-)
+) {
+    fun toDBModel(): RoomInfectedLocationEntity {
+        return RoomInfectedLocationEntity(id, startTime, endTime, lat, lon, radius)
+    }
+}

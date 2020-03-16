@@ -33,6 +33,10 @@ val networkingModule = module {
             .build()
     }
 
+    single<Gson> {
+        Gson()
+    }
+
     factory<InfectionDataService> {
         val retrofit = get<Retrofit>()
         return@factory retrofit.create(InfectionDataService::class.java)
