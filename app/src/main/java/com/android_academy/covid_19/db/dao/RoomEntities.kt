@@ -8,7 +8,6 @@ import com.android_academy.covid_19.db.util.DBConstants.INFECTED_LOCATIONS_TABLE
 import com.android_academy.covid_19.db.util.DBConstants.USERS_LOCATIONS_TABLE_NAME
 import com.android_academy.covid_19.db.util.DBConstants.USERS_METADATA_TABLE_NAME
 import com.android_academy.covid_19.network.service.InfectedLocationModel
-import com.android_academy.covid_19.db.util.DBConstants.USERS_METADATA_TABLE_NAME
 import java.util.Date
 
 @Entity(tableName = INFECTED_LOCATIONS_TABLE_NAME)
