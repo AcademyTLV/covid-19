@@ -16,6 +16,13 @@
 \n\n
 - המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
     </string>
+    <string name="positive_location_permission_button">כן, אני מעוניין</string>
+    <string name="change_status">שינוי סטאטוס</string>
+    <string name="emergency_call">101</string>
+    <string name="date">תאריך</string>
+    <string name="start_time">שעת התחלה</string>
+    <string name="end_time">שעת סיום</string>
+    <string name="today_txt">היום</string>
     <string name="intro_fragment_title">ברוך הבא לצבע כתום</string>
     <string name="intro_fragment_subtitle">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
     <string name="intro_fragment_description">

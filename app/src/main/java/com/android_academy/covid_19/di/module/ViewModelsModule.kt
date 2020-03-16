@@ -2,6 +2,7 @@
 
 package com.android_academy.covid_19.di.module
 
+import com.android_academy.covid_19.ui.fragment.main.FiltersViewModelImpl
 import com.android_academy.covid_19.ui.activity.MainViewModelImpl
 import com.android_academy.covid_19.ui.fragment.intro.IntroViewModelImpl
 import com.android_academy.covid_19.ui.fragment.user_locations.UsersLocationListViewModelImpl
@@ -29,5 +30,9 @@ val viewModelsModule = module {
 
     viewModel<IntroViewModelImpl> {
         IntroViewModelImpl(userMetaDataRepo = get())
+    }
+
+    viewModel<FiltersViewModelImpl> {
+        FiltersViewModelImpl()
     }
 }
