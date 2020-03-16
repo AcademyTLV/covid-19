@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import com.android_academy.covid_19.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class LocationPermissionFragment: BottomSheetDialogFragment() {
+class LocationPermissionFragment : BottomSheetDialogFragment() {
 
-    val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+    val permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+    )
     val REQUEST_LOCATION = 100
 
     override fun onCreateView(
@@ -35,11 +37,9 @@ class LocationPermissionFragment: BottomSheetDialogFragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
     }
 
     private fun initView() {
-
     }
 
     companion object {

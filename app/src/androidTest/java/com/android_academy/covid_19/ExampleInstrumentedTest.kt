@@ -78,9 +78,17 @@ class ExampleInstrumentedTest {
 
     @Test
     fun when_location_colliding_return_true() {
-        val userLocationModel = UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, "")
+        val userLocationModel =
+            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, "")
         val coronaLocation =
-            InfectedLocationModel(0, Date(1584309374000), Date(1584316574000), 32.065405, 34.857194, 0.0)
+            InfectedLocationModel(
+                0,
+                Date(1584309374000),
+                Date(1584316574000),
+                32.065405,
+                34.857194,
+                0.0
+            )
         val colliding = InfectionCollisionMatcherImpl().isColliding(
             listOf(coronaLocation),
             listOf(userLocationModel),
@@ -92,9 +100,17 @@ class ExampleInstrumentedTest {
 
     @Test
     fun when_location_colliding_under_threshold_return_true() {
-        val userLocationModel = UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, "")
+        val userLocationModel =
+            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, "")
         val coronaLocation =
-            InfectedLocationModel(0, Date(1584309374000), Date(1584316574000), 32.065332, 34.857194, 0.0)
+            InfectedLocationModel(
+                0,
+                Date(1584309374000),
+                Date(1584316574000),
+                32.065332,
+                34.857194,
+                0.0
+            )
         val colliding = InfectionCollisionMatcherImpl().isColliding(
             listOf(coronaLocation),
             listOf(userLocationModel),
@@ -106,9 +122,17 @@ class ExampleInstrumentedTest {
 
     @Test
     fun when_no_location_colliding_return_false() {
-        val userLocationModel = UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, "")
+        val userLocationModel =
+            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, "")
         val coronaLocation =
-            InfectedLocationModel(0, Date(1584309374000), Date(1584316574000), 32.067423, 34.858986, 0.0)
+            InfectedLocationModel(
+                0,
+                Date(1584309374000),
+                Date(1584316574000),
+                32.067423,
+                34.858986,
+                0.0
+            )
         val colliding = InfectionCollisionMatcherImpl().isColliding(
             listOf(coronaLocation),
             listOf(userLocationModel),
