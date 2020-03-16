@@ -6,14 +6,29 @@
     <string name="channel_description">Main notifications here</string>
     <string name="ahtung">Oh My! We found a Corona virus correlation!</string>
     <string name="open_app">Click here to see a details</string>
+
     <string name="location_dialog_description">
         To be able to verify if you were in places where people which are \n
         infected with Corona virus please allow us to get location permission. \n
         We will take your location every 15 minutes and we will store it only on your device.\n
         The data will be not sent to anyone automatically not even to Ministry of Health.
     </string>
+
     <string name="positive_location_permission_button">Yes, I am interested</string>
     <string name="skip_location_permission_button">No, I am not interested for the moment</string>
     <string name="location_dialog_title">Please approve connection to your location</string>
+    <string name="intro_fragment_title">Welcome to the Orange color</string>
+    <string name="intro_fragment_subtitle">The app which will help us to stop spreading the Corona virus in Israel</string>
+    <string name="intro_fragment_description">
+        האפליקציה מציגה לך דיווחים מאומתים של מיקומים וזמנים בהם היו חולי קורונה.
+
+        האפליקציה גם מאפשרת לך לשמור על מכשירך בצורה מאובטחת את רשימת המיקומים בהן ביקרת ולהצליב עבורך את אותם המקומות עם המקומות המדווחים כדי שתוכל לדעת אם אתה בקבוצת הסיכון ולפעול בהתאם.</string>
+    <string name="intro_fragment_options_title">Please choose an option</string>
+    <string name="intro_fragment_positive_button">I have confirmed COVID-19</string>
+    <string name="intro_fragment_not_positive_button">I am healthy now</string>
+    <string name="intro_fragment_was_positive_button">I was not confirmed with COVID-19</string>
+    <string name="intro_fragment_next_button">Next</string>
+    <string name="intro_fragment_options2">The app which will help us to stop spreading the Corona virus in Israel</string>
+
 </resources>
 

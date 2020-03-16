@@ -17,5 +17,18 @@
 \n\n
 - המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
     </string>
+    <string name="intro_fragment_title">ברוך הבא לצבע כתום</string>
+    <string name="intro_fragment_subtitle">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
+    <string name="intro_fragment_description">
+        האפליקציה מציגה לך דיווחים מאומתים של מיקומים וזמנים בהם היו חולי קורונה.
+
+        האפליקציה גם מאפשרת לך לשמור על מכשירך בצורה מאובטחת את רשימת המיקומים בהן ביקרת ולהצליב עבורך את אותם המקומות עם המקומות המדווחים כדי שתוכל לדעת אם אתה בקבוצת הסיכון ולפעול בהתאם.</string>
+    <string name="intro_fragment_options_title">בחר את אחת האפשרויות:</string>
+    <string name="intro_fragment_positive_button">אובחנתי בנשא של COVID-19</string>
+    <string name="intro_fragment_not_positive_button">החלמתי מהמחלה</string>
+    <string name="intro_fragment_was_positive_button">לא אובחנתי כנשא</string>
+    <string name="intro_fragment_next_button">הבא</string>
+    <string name="intro_fragment_options2">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
+
 
 </resources>
