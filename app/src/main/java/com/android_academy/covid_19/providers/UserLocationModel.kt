@@ -8,8 +8,11 @@ data class UserLocationModel(
     val lon: Double,
     val accuracy: Float,
     val speed: Float,
-    val time: Long,
-    val provider: String
+    val time: Long? = null,
+    val timeStart: Long? = null,
+    val timeEnd: Long? = null,
+    val provider: String,
+    val name: String? = null
 )
 
 fun fromRoomEntity(roomEntity: RoomUserLocationEntity) = UserLocationModel(
@@ -19,5 +22,8 @@ fun fromRoomEntity(roomEntity: RoomUserLocationEntity) = UserLocationModel(
     accuracy = roomEntity.accuracy,
     speed = roomEntity.speed,
     time = roomEntity.time,
-    provider = roomEntity.provider
+    provider = roomEntity.provider,
+    name = roomEntity.name,
+    timeStart = roomEntity.timeStart,
+    timeEnd = roomEntity.timeEnd
 )

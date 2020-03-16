@@ -59,8 +59,9 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         //
         // val coronaStartTime = DateTime(corona.startTime)
         // val coronaEndTime = DateTime(corona.endTime)
-        val myStartTime = myLocation.time - 8 * 60_000
-        val myEndTime = myLocation.time + 8 * 60_000
+
+        val myStartTime = myLocation.timeStart ?: myLocation.time?.minus(8 * 60_000)
+        val myEndTime = myLocation.timeEnd ?: myLocation.time?.plus(8 * 60_000)
 
         val coronaStartTime = corona.startTime.time - timeThreshold * 60 * 1_000
         val coronaEndTime = corona.endTime.time + timeThreshold * 60 * 1_000
