@@ -16,7 +16,7 @@ data class UserLocationModel(
 )
 
 fun fromRoomEntity(roomEntity: RoomUserLocationEntity) = UserLocationModel(
-    id = roomEntity.id,
+    id = roomEntity.id!!,
     lat = roomEntity.lat,
     lon = roomEntity.lon,
     accuracy = roomEntity.accuracy,

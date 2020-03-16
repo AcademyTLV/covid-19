@@ -30,11 +30,9 @@
  */
 package com.android_academy.covid_19.util.kml;
 
-/**
- * Utility class to help parse Kml boolean entities.
- */
+/** Utility class to help parse Kml boolean entities. */
 public class KmlBoolean {
-    public static boolean parseBoolean(String text) {
-        return "1".equals(text) || "true".equals(text);
-    }
+  public static boolean parseBoolean(String text) {
+    return "1".equals(text) || "true".equals(text);
+  }
 }

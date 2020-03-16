@@ -18,40 +18,38 @@ package com.android_academy.covid_19.util.kml;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.data.Point;
 
-/**
- * Represents a KML Point. Contains a single coordinate.
- */
+/** Represents a KML Point. Contains a single coordinate. */
 public class KmlPoint extends Point {
-    private LatLng coordinates;
-    private final Double mAltitude;
+  private LatLng coordinates;
+  private final Double mAltitude;
 
-    /**
-     * Creates a new KmlPoint
-     *
-     * @param coordinates coordinates of the KmlPoint
-     */
-    public KmlPoint(LatLng coordinates) {
-        this(coordinates, null);
-    }
+  /**
+   * Creates a new KmlPoint
+   *
+   * @param coordinates coordinates of the KmlPoint
+   */
+  public KmlPoint(LatLng coordinates) {
+    this(coordinates, null);
+  }
 
-    /**
-     * Creates a new KmlPoint
-     *
-     * @param coordinates coordinates of the KmlPoint
-     * @param altitude    altitude of the KmlPoint
-     */
-    public KmlPoint(LatLng coordinates, Double altitude) {
-        super(coordinates);
-        this.coordinates = coordinates;
+  /**
+   * Creates a new KmlPoint
+   *
+   * @param coordinates coordinates of the KmlPoint
+   * @param altitude altitude of the KmlPoint
+   */
+  public KmlPoint(LatLng coordinates, Double altitude) {
+    super(coordinates);
+    this.coordinates = coordinates;
 
-        this.mAltitude = altitude;
-    }
+    this.mAltitude = altitude;
+  }
 
-    public LatLng getCoordinates() {
-        return coordinates;
-    }
+  public LatLng getCoordinates() {
+    return coordinates;
+  }
 
-    public Double getAltitude() {
-        return mAltitude;
-    }
+  public Double getAltitude() {
+    return mAltitude;
+  }
 }

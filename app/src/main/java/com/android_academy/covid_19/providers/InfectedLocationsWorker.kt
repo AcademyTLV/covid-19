@@ -6,9 +6,9 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.android_academy.covid_19.repository.IUsersLocationRepo
-import com.android_academy.covid_19.repository.InfectionDataRepo
 import com.android_academy.covid_19.repository.UsersLocationRepo
+import com.android_academy.covid_19.repository.InfectionDataRepo
+import com.android_academy.covid_19.repository.UsersLocationRepoImpl
 import com.android_academy.covid_19.ui.notification.CodeOrangeNotificationManager
 import com.android_academy.covid_19.util.InfectionCollisionMatcher
 import com.android_academy.covid_19.util.logTag
@@ -24,7 +24,7 @@ class InfectedLocationsWorker(
     workParams: WorkerParameters
 ) : CoroutineWorker(appContext, workParams), KoinComponent {
 
-    private val locationRepo: IUsersLocationRepo by inject()
+    private val locationRepo: UsersLocationRepo by inject()
 
     private val infectionDataRepo: InfectionDataRepo by inject()
 
@@ -51,8 +51,8 @@ class InfectedLocationsWorker(
             val collidingUserLocations = collisionMatcher.isColliding(
                 infectedLocations,
                 myLocations,
-                UsersLocationRepo.TIME_THRESHOLD,
-                UsersLocationRepo.DISTANCE_THRESHOLD
+                UsersLocationRepoImpl.TIME_THRESHOLD,
+                UsersLocationRepoImpl.DISTANCE_THRESHOLD
             )
 
             // if matches show notification

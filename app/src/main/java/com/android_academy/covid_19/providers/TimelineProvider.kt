@@ -2,7 +2,7 @@ package com.android_academy.covid_19.providers
 
 import android.os.Environment
 import android.os.Environment.getExternalStoragePublicDirectory
-import com.android_academy.covid_19.repository.IUsersLocationRepo
+import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.util.TIME_ZULU_FORMAT
 import com.android_academy.covid_19.util.kml.KmlLineString
 import com.android_academy.covid_19.util.kml.KmlParser
@@ -28,7 +28,7 @@ interface TimelineProvider {
 
 class TimelineProviderImpl(
     private val scope: CoroutineScope,
-    private val usersLocationRepo: IUsersLocationRepo
+    private val usersLocationRepo: UsersLocationRepo
 ) : TimelineProvider {
     override fun checkForExistingKMLFiles() {
         scope.launch(Dispatchers.IO) {
@@ -44,7 +44,7 @@ class TimelineProviderImpl(
                 val xmlPullParser = createXmlParser(bis)
                 val parser = KmlParser(xmlPullParser)
                 parser.parseKml()
-                if(parser.containers.size > 0) {
+                if (parser.containers.size > 0) {
                     parser.containers[0].placemarks.forEach lit@{
                         val locationList = convertToLocationList(it)
                         saveLocations(locationList)
@@ -82,7 +82,6 @@ class TimelineProviderImpl(
                     timeEnd = toDate?.time
                 )
             )
-
         }
         return list
     }
@@ -115,7 +114,7 @@ class TimelineProviderImpl(
 
     private fun getKmlFilesFromDownloads(): Array<File>? {
         val externalFilesDir =
-            getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         return externalFilesDir?.listFiles(FileFilter { pathname ->
             pathname.isFile && pathname.name.startsWith(
                 "history-",
