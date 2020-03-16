@@ -32,7 +32,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/introFragmentTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/introFragmentTitle" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/introFragmentDesc"
@@ -44,7 +44,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/introFragmentSubtitle"/>
+        app:layout_constraintTop_toBottomOf="@id/introFragmentSubtitle" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/intro_fragment_options_title"
@@ -57,7 +57,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/introFragmentDesc"/>
+        app:layout_constraintTop_toBottomOf="@id/introFragmentDesc" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/positiveButton"
@@ -114,7 +114,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/main" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,10 @@ import com.android_academy.covid_19.repository.IUsersLocationRepo
 import kotlinx.coroutines.launch
 
 interface UsersLocationViewModel {
-    fun getUserLocations(lifecycleOwner: LifecycleOwner, observer: (List<UserLocationModel>) -> Unit)
+    fun getUserLocations(
+        lifecycleOwner: LifecycleOwner,
+        observer: (List<UserLocationModel>) -> Unit
+    )
 }
 
 class UsersLocationListViewModelImpl(private val usersLocRepo: IUsersLocationRepo) : ViewModel(),

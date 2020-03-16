@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.intro_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class IntroFragment: Fragment() {
+class IntroFragment : Fragment() {
 
     private val viewModel: IntroViewModel by viewModel<IntroViewModelImpl>()
 
@@ -30,7 +30,6 @@ class IntroFragment: Fragment() {
         initView()
     }
 
-
     private fun initView() {
         arrayOf<Button>(wasPositiveButton, notPositiveButton, positiveButton).forEach {
             it.setOnClickListener(::onChosenType)
@@ -41,7 +40,7 @@ class IntroFragment: Fragment() {
         }
     }
 
-    private fun onChosenType(view : View) {
+    private fun onChosenType(view: View) {
         Utils.getTypeByButton(view.id)?.let {
             viewModel.onButtonChosen(it)
         }
