@@ -29,7 +29,9 @@
     <string name="intro_fragment_next_button">הבא</string>
     <string name="intro_fragment_options2">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
     <string name="something_went_wrong">אוי אוי! קרתה שגיאה</string>
-<!--    <string name="title_activity_maps">Map</string>-->
+    <string name="decline_permission_bottom_sheet_dialog_btn">לא ניתן להשתמש באפליקציה ללא הרשאת מיקום</string>
+    <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
+    <!--    <string name="title_activity_maps">Map</string>-->
 <!--    <string name="btn_login_to_google">Login To Google</string>-->
 <!--    <string name="channel_name">General Channel</string>-->
 <!--    <string name="channel_description">Main notifications here</string>-->
