@@ -1,20 +1,19 @@
 package com.android_academy.covid_19.ui.fragment
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.android_academy.covid_19.R
+import com.android_academy.covid_19.ui.activity.MainViewModelImpl
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.location_permission_fragment.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LocationPermissionFragment : BottomSheetDialogFragment() {
 
-    val permissions = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-    )
-    val REQUEST_LOCATION = 100
+    private val mainViewModel by sharedViewModel<MainViewModelImpl>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,24 +25,22 @@ class LocationPermissionFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-        requestPermissions(permissions, REQUEST_LOCATION)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    private fun initView() {
+        skipPermissionButton.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.decline_permission_bottom_sheet_dialog_btn),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+        givePermissionButton.setOnClickListener {
+            mainViewModel.onUserAcceptedLocationRequestExplanation()
+            dismiss()
+        }
     }
 
     companion object {
         val TAG = "LocationPermissionFragment"
         fun newInstance() =
-            LocationPermissionFragment()
+            LocationPermissionFragment().apply { isCancelable = false }
     }
 }
