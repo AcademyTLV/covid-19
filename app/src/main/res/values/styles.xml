@@ -18,4 +18,8 @@
         <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>
 
+    <style name="IntroNextButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="backgroundTint">@color/intro_fragment_next_button_tint_selector</item>
+    </style>
+
 </resources>

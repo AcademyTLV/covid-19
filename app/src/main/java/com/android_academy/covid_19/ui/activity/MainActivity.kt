@@ -16,18 +16,22 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.providers.LocationUpdateWorker
+import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
 import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
-import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget
-import com.android_academy.covid_19.ui.fragment.main.MainNavigationTarget.GoogleLoginView
-import com.android_academy.covid_19.ui.fragment.main.MainViewModel
-import com.android_academy.covid_19.ui.fragment.main.MainViewModelImpl
-import com.android_academy.covid_19.ui.fragment.main.UsersLocationListFragment
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private lateinit var map: GoogleMap
 
     private val viewModel: MainViewModel by viewModel<MainViewModelImpl>()
 
@@ -37,7 +41,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContentView(R.layout.activity_main)
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
         initViews(savedInstanceState)
         initObservers()
     }
@@ -45,6 +53,10 @@ class MainActivity : AppCompatActivity() {
     private fun initObservers() {
         viewModel.apply {
             navigation.observe(this@MainActivity, onNavigationChanged())
+            error.observe(this@MainActivity, Observer {
+                Toast.makeText(this@MainActivity, R.string.something_went_wrong, Toast.LENGTH_LONG)
+                    .show()
+            })
             startMyLocationPeriodicJob.observe(this@MainActivity, Observer {
                 it?.let {
                     val options = QuickPermissionsOptions(
@@ -71,7 +83,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun onNavigationChanged(): Observer<in MainNavigationTarget> = Observer {
         when (it) {
-            GoogleLoginView -> openLoginWebView()
+            MainNavigationTarget.IntroFragment -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.overlayContainer,
+                        IntroFragment.newInstance(),
+                        IntroFragment::class.java.simpleName
+                    )
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 
@@ -119,10 +140,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                //.replace(R.id.container, IntroFragment.newInstance())
-                .replace(R.id.container, UsersLocationListFragment())
-                .commitNow()
+            // supportFragmentManager.beginTransaction()
+            //     //.replace(R.id.container, IntroFragment.newInstance())
+            //     .replace(R.id.container,
+            //         UsersLocationListFragment()
+            //     )
+            //     .commitNow()
         }
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+
+        // Add a marker in Sydney and move the camera
+        val sydney = LatLng(-34.0, 151.0)
+        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    fun askLocationPermission() {
+        LocationPermissionFragment.newInstance()
+            .show(supportFragmentManager, LocationPermissionFragment.TAG)
     }
 }

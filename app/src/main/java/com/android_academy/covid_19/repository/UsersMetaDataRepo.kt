@@ -1,30 +1,43 @@
 package com.android_academy.covid_19.repository
 
-import com.android_academy.covid_19.db.dao.RoomUserMetaDataEntity
 import com.android_academy.covid_19.db.dao.UserMetaDataDao
+import com.android_academy.covid_19.db.dao.toDB
+import com.android_academy.covid_19.repository.model.UserMetaData
+import com.android_academy.covid_19.repository.model.UserType
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.withContext
 
-val USER_TYPES = arrayOf("positive", "was_positive", "not_positive")
-
-interface IUserMetaDataRepo {
-    suspend fun getUserMetaData(): RoomUserMetaDataEntity
-    suspend fun setUserMetaData(user: RoomUserMetaDataEntity)
-    suspend fun getUserType(): String
-    suspend fun setUserType(userType: String)
+interface UserMetaDataRepo {
+    suspend fun getCurrentUser(): UserMetaData?
+    suspend fun setCurrentUser(user: UserMetaData)
+    suspend fun setUserType(userType: UserType)
 }
 
-class UserMetaDataRepo(
+class UserMetaDataRepoImpl(
     private val usersMetaDataDao: UserMetaDataDao
-) : IUserMetaDataRepo {
+) : UserMetaDataRepo {
 
-    override suspend fun getUserMetaData(): RoomUserMetaDataEntity = usersMetaDataDao.getUser()
+    override suspend fun getCurrentUser(): UserMetaData? = withContext(IO) {
+        return@withContext usersMetaDataDao
+            .getUser()
+            ?.toUserMetadata()
+    }
 
-    override suspend fun getUserType(): String = getUserMetaData().type
+    override suspend fun setCurrentUser(user: UserMetaData) = withContext(IO) {
+        usersMetaDataDao
+            .setUser(user.toDB())
+        Unit
+    }
 
-    override suspend fun setUserMetaData(user: RoomUserMetaDataEntity) =
-        usersMetaDataDao.setUser(user)
-
-    override suspend fun setUserType(userType: String) {
-        if (userType !in USER_TYPES) return
-        return usersMetaDataDao.setUser(RoomUserMetaDataEntity(type = userType))
+    override suspend fun setUserType(userType: UserType) = withContext(IO) {
+        val currentUser = getCurrentUser()
+        currentUser?.let {
+            if (it.type == userType) {
+                return@withContext
+            } else {
+                val updated = it.copy(type = userType)
+                usersMetaDataDao.setUser(updated.toDB())
+            }
+        } ?: throw UnsupportedOperationException("No user found in DB")
     }
 }
