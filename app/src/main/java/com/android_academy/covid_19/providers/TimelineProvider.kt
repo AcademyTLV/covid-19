@@ -3,6 +3,7 @@ package com.android_academy.covid_19.providers
 import android.os.Environment
 import android.os.Environment.getExternalStoragePublicDirectory
 import com.android_academy.covid_19.repository.IUsersLocationRepo
+import com.android_academy.covid_19.util.TIME_ZULU_FORMAT
 import com.android_academy.covid_19.util.kml.KmlLineString
 import com.android_academy.covid_19.util.kml.KmlParser
 import com.android_academy.covid_19.util.kml.KmlPlacemark
@@ -101,12 +102,12 @@ class TimelineProviderImpl(
         val dateFromString =
             property.substringAfter("from ").substringBefore(" to ")
         val fromDate =
-            if (dateFromString.isNotEmpty()) SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(
+            if (dateFromString.isNotEmpty()) SimpleDateFormat(TIME_ZULU_FORMAT).parse(
                 dateFromString
             ) else null
         val dateToString = property.substringAfter(" to ").substringBefore(". ")
         val toDate =
-            if (dateToString.isNotEmpty()) SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(
+            if (dateToString.isNotEmpty()) SimpleDateFormat(TIME_ZULU_FORMAT).parse(
                 dateToString
             ) else null
         return Pair(fromDate, toDate)
@@ -137,5 +138,6 @@ class TimelineProviderImpl(
 
     companion object {
         const val TIMELINE_PROVIDER = "Timeline"
+        const val TIMELINE_URL = "https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i%s!2i%s!3i%s!2m3!1i%s!2i%s!3i%s"
     }
 }

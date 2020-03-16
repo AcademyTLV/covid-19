@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.android_academy.covid_19.providers.InfectedLocationsWorker
 import com.android_academy.covid_19.providers.LocationUpdateWorker
 import com.android_academy.covid_19.providers.TimelineProvider
+import com.android_academy.covid_19.providers.TimelineProviderImpl.Companion.TIMELINE_URL
 import com.android_academy.covid_19.repository.UserMetaDataRepo
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.IntroFragment
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
@@ -151,8 +152,8 @@ class MainViewModelImpl(
             val monthEnd = instance.get(Calendar.MONTH)
             val yearEnd = instance.get(Calendar.YEAR)
             Timber.d("[$logTag], fireTimelineDownloadEvents():fire intent for dates from $yearEnd-$monthEnd-$dayEnd to $yearStart-$monthStart-$dayStart ")
-            val url =
-                "https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i$yearEnd!2i$monthEnd!3i$dayEnd!2m3!1i$yearStart!2i$monthStart!3i$dayStart"
+            val url = String.format(TIMELINE_URL, yearEnd, monthEnd, dayEnd, yearStart, monthStart, dayStart)
+                // "https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i$yearEnd!2i$monthEnd!3i$dayEnd!2m3!1i$yearStart!2i$monthStart!3i$dayStart"
             startChromeFileDownload(url)
         }
     }

@@ -60,6 +60,7 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         // val coronaStartTime = DateTime(corona.startTime)
         // val coronaEndTime = DateTime(corona.endTime)
 
+        //if location coming from fuse it's has only single time, but from timeline it's actually frame of beginning and end
         val myStartTime = myLocation.timeStart ?: myLocation.time?.minus(8 * 60_000)
         val myEndTime = myLocation.timeEnd ?: myLocation.time?.plus(8 * 60_000)
 

@@ -11,9 +11,11 @@ import com.android_academy.covid_19.providers.fromRoomEntity
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 interface IUsersLocationRepo {
     suspend fun getLocation()
@@ -56,7 +58,7 @@ class UsersLocationRepo(
         usersLocDao.saveLocation(location)
     }
 
-    override suspend fun cleanOldTimeLineProviderLocation() {
+    override suspend fun cleanOldTimeLineProviderLocation() = withContext(Dispatchers.IO) {
         usersLocDao.deleteTimelineLocations()
     }
 
