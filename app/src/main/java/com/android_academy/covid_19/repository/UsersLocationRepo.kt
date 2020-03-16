@@ -20,6 +20,7 @@ interface IUsersLocationRepo {
     suspend fun getUserLocations(): Flow<List<UserLocationModel>>
     suspend fun getUserLocationsAsync(): List<UserLocationModel>
     suspend fun saveLocation(location: RoomUserLocationEntity)
+    suspend fun cleanOldTimeLineProviderLocation()
 }
 
 class UsersLocationRepo(
@@ -53,6 +54,10 @@ class UsersLocationRepo(
     override suspend fun saveLocation(location: RoomUserLocationEntity) {
         Log.d(logTag, "Saving location $location")
         usersLocDao.saveLocation(location)
+    }
+
+    override suspend fun cleanOldTimeLineProviderLocation() {
+        usersLocDao.deleteTimelineLocations()
     }
 
     companion object {

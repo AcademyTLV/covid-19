@@ -27,3 +27,15 @@ fun fromRoomEntity(roomEntity: RoomUserLocationEntity) = UserLocationModel(
     timeStart = roomEntity.timeStart,
     timeEnd = roomEntity.timeEnd
 )
+
+fun UserLocationModel.toRoomLocationEntity() = RoomUserLocationEntity(
+    lat = this.lat,
+    lon = this.lon,
+    accuracy = this.accuracy,
+    speed = this.speed,
+    time = this.time,
+    provider = this.provider,
+    name = this.name,
+    timeStart = this.timeStart,
+    timeEnd = this.timeEnd
+)

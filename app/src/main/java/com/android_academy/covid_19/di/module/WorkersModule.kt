@@ -2,6 +2,8 @@ package com.android_academy.covid_19.di.module
 
 import com.android_academy.covid_19.providers.ILocationManager
 import com.android_academy.covid_19.providers.LocationManager
+import com.android_academy.covid_19.providers.TimelineProvider
+import com.android_academy.covid_19.providers.TimelineProviderImpl
 import com.android_academy.covid_19.repository.IUsersLocationRepo
 import com.android_academy.covid_19.repository.UsersLocationRepo
 import kotlinx.coroutines.CoroutineScope
@@ -21,5 +23,12 @@ val workersModule = module {
 
     factory<ILocationManager> {
         LocationManager(androidContext())
+    }
+
+    factory<TimelineProvider> {
+        TimelineProviderImpl(
+            scope = CoroutineScope(Dispatchers.IO),
+            usersLocationRepo = get()
+        )
     }
 }
