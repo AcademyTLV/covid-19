@@ -1,7 +1,6 @@
 package com.android_academy.covid_19.ui.fragment
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

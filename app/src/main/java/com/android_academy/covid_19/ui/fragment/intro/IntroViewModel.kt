@@ -1,47 +1,48 @@
 package com.android_academy.covid_19.ui.fragment.intro
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android_academy.covid_19.repository.IUserMetaDataRepo
-import kotlinx.coroutines.async
-
-data class IntroModel(var chosenType: String? = null)
+import com.android_academy.covid_19.repository.UserMetaDataRepo
+import com.android_academy.covid_19.repository.model.UserMetaData
+import com.android_academy.covid_19.repository.model.UserType
+import com.android_academy.covid_19.ui.fragment.intro.IntroViewModel.NavigationTarget
+import com.android_academy.covid_19.ui.fragment.intro.IntroViewModel.NavigationTarget.Close
+import com.android_academy.covid_19.util.SingleLiveEvent
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.util.UUID
 
 interface IntroViewModel {
-    fun onButtonChosen(chosenType: String)
-    fun nextAndSave()
+
+    fun nextAndSave(chosenType: UserType)
+
+    val navigationTarget: LiveData<NavigationTarget>
+
+    sealed class NavigationTarget {
+        object Close : NavigationTarget()
+    }
 }
 
 class IntroViewModelImpl(
-    private val userMetaDataRepo: IUserMetaDataRepo,
-    private val introModel: IntroModel = IntroModel()
+    private val userMetaDataRepo: UserMetaDataRepo
 ) : ViewModel(), IntroViewModel {
 
-    override fun onButtonChosen(chosenType: String) {
-        introModel.chosenType = chosenType
-        Log.d(TAG, "chosen ${introModel.chosenType}")
-    }
+    override val navigationTarget = SingleLiveEvent<NavigationTarget>()
 
-    override fun nextAndSave() {
-        Log.d(TAG, "beforeSave ${introModel.chosenType}")
-        introModel.chosenType?.let {
-            Log.d(TAG, "clicked when chosen ${it}")
-            viewModelScope.async {
-                userMetaDataRepo.setUserType(it)
+    override fun nextAndSave(chosenType: UserType) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            Timber.e(throwable, "Failed to save user type")
+        }) {
+            val currentUser = userMetaDataRepo.getCurrentUser()
+            currentUser?.let {
+                userMetaDataRepo.setUserType(chosenType)
+            } ?: run {
+                val user = UserMetaData(UUID.randomUUID().toString(), chosenType)
+                userMetaDataRepo.setCurrentUser(user)
             }
-
-            // Need to test the value, but need to wait for promise to finish
-            val userPromise = viewModelScope.async {
-                userMetaDataRepo.getUserMetaData()
-            }
+            navigationTarget.value = Close
         }
     }
-
-    companion object {
-
-        private const val TAG = "IntroViewModelImpl"
-    }
-
 }
-

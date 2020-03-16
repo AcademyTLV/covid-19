@@ -3,20 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:paddingHorizontal="32dp"
-    android:paddingTop="8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
+    android:paddingHorizontal="32dp"
+    android:paddingTop="8dp"
     tools:context=".ui.fragment.LocationPermissionFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/introFragmentTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
         android:text="@string/intro_fragment_title"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,11 +26,11 @@
         android:id="@+id/introFragmentSubtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textDirection="rtl"
+        android:layout_marginTop="8dp"
         android:text="@string/intro_fragment_subtitle"
+        android:textDirection="rtl"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/introFragmentTitle" />
@@ -38,10 +39,10 @@
         android:id="@+id/introFragmentDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textDirection="rtl"
-        android:text="@string/intro_fragment_description"
-        android:textSize="14sp"
         android:layout_marginTop="24dp"
+        android:text="@string/intro_fragment_description"
+        android:textDirection="rtl"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/introFragmentSubtitle" />
@@ -50,74 +51,65 @@
         android:id="@+id/intro_fragment_options_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textDirection="rtl"
+        android:layout_marginTop="40dp"
         android:text="@string/intro_fragment_options_title"
+        android:textDirection="rtl"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/introFragmentDesc" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/positiveButton"
-        android:layout_width="0dp"
-        android:layout_height="66dp"
+    <RadioGroup
+        android:id="@+id/introRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/intro_fragment_positive_button"
-        android:textColor="@color/gray90"
-        android:checkable="true"
-        app:cornerRadius="@dimen/button_corner_radius"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:gravity="end"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro_fragment_options_title" />
+        app:layout_constraintTop_toBottomOf="@+id/intro_fragment_options_title">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/wasPositiveButton"
-        android:layout_width="0dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="8dp"
-        android:checkable="true"
-        android:text="@string/intro_fragment_was_positive_button"
-        android:textColor="@color/gray90"
-        app:cornerRadius="@dimen/button_corner_radius"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/positiveButton" />
+        <RadioButton
+            android:id="@+id/positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layoutDirection="rtl"
+            android:text="@string/intro_fragment_positive_button" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/notPositiveButton"
-        android:layout_width="0dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="8dp"
-        android:checkable="true"
-        android:text="@string/intro_fragment_not_positive_button"
-        android:textColor="@color/gray90"
-        app:cornerRadius="@dimen/button_corner_radius"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wasPositiveButton" />
+        <RadioButton
+            android:id="@+id/was_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layoutDirection="rtl"
+            android:text="@string/intro_fragment_was_positive_button" />
+
+        <RadioButton
+            android:id="@+id/negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layoutDirection="rtl"
+            android:text="@string/intro_fragment_not_positive_button" />
+
+    </RadioGroup>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/introFragmentNextButton"
         android:layout_width="0dp"
         android:layout_height="66dp"
+        style="@style/IntroNextButtonStyle"
         android:layout_marginBottom="16dp"
-        android:checkable="true"
         android:text="@string/intro_fragment_next_button"
-        android:textColor="@color/gray90"
-        app:backgroundTint="@color/orange"
-        app:cornerRadius="@dimen/button_corner_radius"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/gray90"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/main"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/main" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
