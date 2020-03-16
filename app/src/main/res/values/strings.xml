@@ -5,10 +5,11 @@
     <string name="Location_dialog_title">אשר גישה למיקומך</string>
     <string name="location_dialog_description">
         - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
-
+\n\n
 - מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
-
+\n\n
 - המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
     </string>
     <string name="positive_location_permission_button">כן, אני מעוניין</string>
+    <string name="skip_location_permission_button">לא, איני מעוניין כרגע</string>
 </resources>

@@ -52,7 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="66dp"
         android:layout_marginTop="8dp"
-        android:text="@string/positive_location_permission_button"
+        android:text="@string/skip_location_permission_button"
         android:textColor="@color/gray90"
         app:strokeColor="@color/orange"
         app:strokeWidth="2dp"
