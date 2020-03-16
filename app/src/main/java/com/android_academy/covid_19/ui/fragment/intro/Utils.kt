@@ -1,9 +1,7 @@
 package com.android_academy.covid_19.ui.fragment.intro
 
-import androidx.room.TypeConverter
+import android.widget.Button
 import com.android_academy.covid_19.R
-import kotlinx.android.synthetic.main.intro_fragment.view.*
-import java.util.Date
 
 object Utils {
     val ID_TYPE_MAP = mapOf<Int, String>(
@@ -13,4 +11,5 @@ object Utils {
     )
 
     fun getTypeByButton(buttonId: Int): String? = ID_TYPE_MAP[buttonId]
+
 }

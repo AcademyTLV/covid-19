@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.fragment.main.UsersLocationListViewModelImpl
 import com.android_academy.covid_19.ui.fragment.main.UsersLocationViewModel
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.intro_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,6 +42,12 @@ class IntroFragment : Fragment() {
     }
 
     private fun onChosenType(view: View) {
+        arrayOf<Button>(wasPositiveButton, notPositiveButton, positiveButton).forEach {
+            if (it != view){
+                (it as MaterialButton).isChecked = false
+            }
+        }
+
         Utils.getTypeByButton(view.id)?.let {
             viewModel.onButtonChosen(it)
         }
