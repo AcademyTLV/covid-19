@@ -11,6 +11,7 @@ import com.android_academy.covid_19.repository.InfectionDataRepo
 import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.ui.notification.CodeOrangeNotificationManager
 import com.android_academy.covid_19.util.InfectionCollisionMatcher
+import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.KoinComponent
@@ -38,15 +39,15 @@ class InfectedLocationsWorker(
             locationRepo.getLocation()
 
             // get my cached locations for last 14 days
-            Timber.d("[InfectedLocationsWorker], doWork(): locationRepo.getUserLocationsAsync()")
+            Timber.d("[$logTag], doWork(): locationRepo.getUserLocationsAsync()")
             val myLocations: List<UserLocationModel> = locationRepo.getUserLocationsAsync()
 
             // get infected locations from server
-            Timber.d("[InfectedLocationsWorker], doWork(): infectionDataRepo.getInfectionLocationsAsync")
+            Timber.d("[$logTag], doWork(): infectionDataRepo.getInfectionLocationsAsync")
             val infectedLocations = infectionDataRepo.getInfectionLocationsAsync(0, 0)
 
             // run colliding algorithm
-            Timber.d("[InfectedLocationsWorker], doWork(): collisionMatcher.isColliding")
+            Timber.d("[$logTag], doWork(): collisionMatcher.isColliding")
             val collidingUserLocations = collisionMatcher.isColliding(
                 infectedLocations,
                 myLocations,
@@ -56,13 +57,13 @@ class InfectedLocationsWorker(
 
             // if matches show notification
             if (collidingUserLocations.isNotEmpty()) {
-                Timber.d("[InfectedLocationsWorker], doWork(): collision is not empty. showing notification")
+                Timber.d("[$logTag], doWork(): collision is not empty. showing notification")
                 notificationManager.showCollisionFound(collidingUserLocations)
             }
 
             Result.success()
         } catch (e: Exception) {
-            Timber.e(e, "[InfectedLocationsWorker], doWork: failed with exception")
+            Timber.e(e, "[$logTag], doWork: failed with exception")
             Result.failure()
         }
     }

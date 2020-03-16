@@ -35,7 +35,7 @@ class InfectionDataRepoImpl(
         // here in the future we need to call for a server only for delta,
         // but currently we call for a complete data from server
         // val lastInfectedLocation =  dao.getLastUpdatedInfectedLocation()
-        val fromServer = service.getInfectedLocations("covid-19",null, "carrier", "il")
+        val fromServer = service.getInfectedLocations()
         Timber.d("Got infected locations from server from server: $fromServer")
         dao.saveInfectedLocations(fromServer.locations.map { it.toDBModel() })
         return fromServer.locations

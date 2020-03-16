@@ -8,9 +8,9 @@ interface InfectionDataService {
 
     @GET("/v1/events/{event_id}/locations")
     suspend fun getInfectedLocations(
-        @Path("event_id") eventId: String,
+        @Path("event_id") eventId: String = "covid-19",
         @Query("min_time") minTime: String? = null,
-        @Query("patient_status") patientStatus: String,
-        @Query("country") country: String
+        @Query("patient_status") patientStatus: String = "carrier",
+        @Query("country") country: String = "il"
     ): InfectedLocations
 }
