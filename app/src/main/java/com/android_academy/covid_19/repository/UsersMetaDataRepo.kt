@@ -24,7 +24,6 @@ class UserMetaDataRepo(
 
     override suspend fun setUserType(userType : String) {
         if (userType !in USER_TYPES) return
-        val user: RoomUserMetaDataEntity = getUserMetaData()
-        return usersMetaDataDao.setUser(user.copy(type = userType))
+        return usersMetaDataDao.setUser(RoomUserMetaDataEntity(type=userType))
     }
 }
