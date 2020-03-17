@@ -4,7 +4,6 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import androidx.core.content.ContextCompat
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.LocationMarkerData
@@ -16,7 +15,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import timber.log.Timber
 
 interface MapManager : OnMapReadyCallback {
 
@@ -55,15 +53,8 @@ class MapManagerImpl(
             return@setOnMarkerClickListener false
         }
 
-        val address = Geocoder(context).getFromLocationName("Israel", 1)
-        if (address == null) {
-            Timber.e(Throwable(), "[MapManagerImpl], onMapReady: Israel location not found")
-        } else {
-            val loc = address[0]
-
-            val pos = LatLng(loc.latitude, loc.longitude)
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 7.3F))
-        }
+        val pos = LatLng(31.784958, 34.921960)
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 7.3F))
 
         if (ContextCompat.checkSelfPermission(
                 context,

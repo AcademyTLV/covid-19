@@ -17,6 +17,7 @@ import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
 import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
+import com.android_academy.covid_19.ui.fragment.TimelinePermissionFragment
 import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
 import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.setSafeOnClickListener
@@ -129,6 +130,13 @@ class MainActivity : AppCompatActivity() {
                 LocationPermissionFragment.newInstance()
                     .show(supportFragmentManager, LocationPermissionFragment.TAG)
             }
+            MainNavigationTarget.TimelineBottomSheetExplanation -> {
+                // prevent showing if already shown
+                supportFragmentManager.findFragmentByTag(TimelinePermissionFragment.TAG)
+                    ?.run { return@Observer }
+                TimelinePermissionFragment.newInstance()
+                    .show(supportFragmentManager, TimelinePermissionFragment.TAG)
+            }
             LocationSettingsScreen -> {
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivityForResult(intent, LOCATION_SETTINGS_SCREEN_CODE)
@@ -148,12 +156,6 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         goToSettingsButton.setSafeOnClickListener {
             viewModel.onGoToSettingsClick()
-        }
-
-        button_trigger_timeline.setOnClickListener {
-            runWithPermissions(READ_EXTERNAL_STORAGE) {
-                viewModel.onTimelineTriggerClicked()
-            }
         }
     }
 }

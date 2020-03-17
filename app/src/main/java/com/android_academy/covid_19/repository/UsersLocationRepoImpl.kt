@@ -23,6 +23,7 @@ interface UsersLocationRepo {
     suspend fun getUserLocationsAsync(): List<UserLocationModel>
     suspend fun saveLocation(location: RoomUserLocationEntity)
     suspend fun cleanOldTimeLineProviderLocation()
+    suspend fun getLastTimeLineLocation(): RoomUserLocationEntity?
 }
 
 class UsersLocationRepoImpl(
@@ -61,6 +62,11 @@ class UsersLocationRepoImpl(
     override suspend fun cleanOldTimeLineProviderLocation() = withContext(Dispatchers.IO) {
         usersLocDao.deleteTimelineLocations()
     }
+
+    override suspend fun getLastTimeLineLocation(): RoomUserLocationEntity? =
+        withContext(Dispatchers.IO) {
+            usersLocDao.getTimelineLocations()?.firstOrNull()
+        }
 
     companion object {
         const val DISTANCE_THRESHOLD = 30

@@ -7,6 +7,7 @@
     <string name="ahtung">אוי! מצאנו מתאם לנגיף קורונה!</string>
     <string name="open_app">לחץ כאן כדי לראות פרטים</string>
     <string name="location_dialog_title">אשר גישה למיקומך</string>
+    <string name="timeline_dialog_title">אשר גישה להיסטוריה של מקומך</string>
     <string name="skip_location_permission_button">לא, איני מעוניין כרגע</string>
     <string name="location_dialog_description">
         - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
@@ -14,6 +15,13 @@
 - מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
 \n\n
 - המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
+    </string>
+    <string name="timeline_dialog_description">
+        כדאי לעשות הצלבות היסטוריות ל14 ימים אחרונים אנו צריכים את מידע מגוגל טיימליין שנאסף אוטומטי ע"י גוגל
+        \nהמידע הזה ישאר רק בטלפון ולא עובר לשום מקום אחר מלבד למכשיר שלך.
+       \n\nברגע שתלחץ על כפתור אנחנו נפתח את דפדפן
+        \nבמידע והינך מחובר עם חשבון גוגל שלך נוריד את היסטוריה מקומות ונשמור אותם בתיקיה \"הורדות\".
+        \nאפליקציה תבקש הרשאה לגשת לתיקיה הזאת ולקרוא את הקבצים האלו בשביל להצליב את המידע ומיקומים של נשאי נגיף.
     </string>
     <string name="filters_fragment_change_status_button">שנה סטאטוס</string>
     <string name="filters_fragment_start_time">שעת התחלה</string>
