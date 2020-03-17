@@ -37,7 +37,11 @@ sealed class MainNavigationTarget {
     object LocationSettingsScreen : MainNavigationTarget()
 }
 
-interface MainViewModel : MapManager.InteractionInterface {
+interface FilterDataModel {
+    fun setDateTimeFilter(dateTimeStart: Date, dateTimeEnd: Date)
+}
+
+interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
 
     val navigation: LiveData<MainNavigationTarget>
     val myLocations: LiveData<List<LocationMarkerData>>
@@ -78,6 +82,10 @@ class MainViewModelImpl(
     private var myLocationsJob: Job? = null
 
     private var coronaJob: Job? = null
+
+    private var dateTimeStart: Date? = null
+
+    private var dateTimeEnd: Date? = null
 
     override val error = SingleLiveEvent<Throwable>()
 
@@ -120,7 +128,6 @@ class MainViewModelImpl(
 
             // Request permissions
             locationPermissionCheck.value = true
-
         }
     }
 
@@ -172,6 +179,12 @@ class MainViewModelImpl(
     private fun startWorkers() {
         InfectedLocationsWorker.schedule()
         LocationUpdateWorker.schedule()
+    }
+
+    override fun setDateTimeFilter(dateTimeStart: Date, dateTimeEnd: Date) {
+        Timber.d("got date time start and end $dateTimeStart - $dateTimeEnd")
+        this.dateTimeStart = dateTimeStart
+        this.dateTimeEnd = dateTimeEnd
     }
 
     override fun onLoginClick() {

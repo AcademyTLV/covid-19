@@ -55,16 +55,16 @@ class MapManagerImpl(
             return@setOnMarkerClickListener false
         }
 
-        val address = Geocoder(context).getFromLocationName("Israel", 1);
+        val address = Geocoder(context).getFromLocationName("Israel", 1)
         if (address == null) {
             Timber.e(Throwable(), "[MapManagerImpl], onMapReady: Israel location not found")
         } else {
-            val loc = address[0];
+            val loc = address[0]
 
             val pos = LatLng(loc.latitude, loc.longitude)
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 7.3F))
         }
-        
+
         if (ContextCompat.checkSelfPermission(
                 context,
                 ACCESS_FINE_LOCATION
