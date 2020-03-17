@@ -98,11 +98,11 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
             // TODO: add open bottom sheet to change status
         }
 
-        emergency_call.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:101")
-            activity?.startActivity(intent)
-        }
+        // emergency_call.setOnClickListener {
+        //     val intent = Intent(Intent.ACTION_DIAL)
+        //     intent.data = Uri.parse("tel:101")
+        //     activity?.startActivity(intent)
+        // }
     }
 
     private fun openDatePicker() {

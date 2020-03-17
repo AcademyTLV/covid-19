@@ -13,49 +13,45 @@
         android:id="@+id/change_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/ic_change_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_person_black_24dp" />
-
-        <TextView
-            android:id="@+id/txt_change_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/ic_change_status"
-            android:text="@string/change_status"
-            android:textColor="#000000" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/emergency_call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ic_emergency_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_call_black_24dp" />
-
         <TextView
-            android:id="@+id/txt_emergency_call"
+            android:id="@+id/txt_change_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/ic_emergency_call"
-            android:text="@string/emergency_call"
+            android:layout_gravity="center_vertical"
+            android:text="@string/filters_fragment_change_status_button"
             android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/ic_change_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_toEndOf="@id/txt_change_status"
+            android:src="@drawable/ic_person_black_24dp" />
+
+
     </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/crossLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/filters_fragment_cross_location_button"
+        android:textColor="@color/gray90"
+        app:strokeColor="@color/orange"
+        app:strokeWidth="2dp"
+        app:cornerRadius="@dimen/button_corner_radius"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
@@ -73,8 +69,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/emergency_call"
+        app:layout_constraintEnd_toEndOf="@+id/change_status"
         app:layout_constraintTop_toBottomOf="@id/view">
+
+        <TextView
+            android:id="@+id/pick_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/ic_calender"
@@ -82,12 +86,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_calender_black_24dp" />
 
-        <TextView
-            android:id="@+id/pick_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -99,6 +97,17 @@
         app:layout_constraintStart_toStartOf="@id/view"
         app:layout_constraintTop_toBottomOf="@id/view">
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="1dp"
+            android:text="@string/filters_fragment_today"
+            android:textColor="@color/black" />
+
         <ImageView
             android:id="@+id/ic_today"
             android:layout_width="wrap_content"
@@ -106,14 +115,6 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_refresh_black_24dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="1dp"
-            android:text="@string/today_txt"
-            android:textColor="@color/black" />
     </LinearLayout>
 
     <TextView
