@@ -16,4 +16,7 @@ interface InfectionLocationsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveInfectedLocations(infectedLocations: List<RoomInfectedLocationEntity>)
+
+    @Query("DELETE FROM $INFECTED_LOCATIONS_TABLE_NAME")
+    fun deleteOldLocations()
 }

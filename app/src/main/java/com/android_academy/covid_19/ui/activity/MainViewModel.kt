@@ -26,7 +26,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 
 sealed class MainNavigationTarget {
     object IntroFragment : MainNavigationTarget()
@@ -126,11 +128,14 @@ class MainViewModelImpl(
             infectionDataRepo.getInfectionLocations()
                 .collect {
                     val markerDatas = it.map { infectedLocationModel ->
+                        val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
+                        var dates = "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(infectedLocationModel.endTime)}"
                         LocationMarkerData(
                             id = infectedLocationModel.id,
                             lon = infectedLocationModel.lon,
                             lat = infectedLocationModel.lat,
-                            title = infectedLocationModel.name ?: ""
+                            title = infectedLocationModel.name ?: "",
+                            snippet = dates
                         )
                     }
                     coronaLocations.value = markerDatas
@@ -144,11 +149,17 @@ class MainViewModelImpl(
             usersLocationRepo.getUserLocations()
                 .collect {
                     val markerDatas = it.map { userLocationModel ->
+                        val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
+                        var dates = dateTimeInstance.format(Date(userLocationModel.timeStart ?: userLocationModel.time!!))
+                        userLocationModel.timeEnd?.let { timeEnd ->
+                            dates = dates.plus(" - ${dateTimeInstance.format(Date(timeEnd))}")
+                        }
                         LocationMarkerData(
                             id = userLocationModel.id!!,
                             lon = userLocationModel.lon,
                             lat = userLocationModel.lat,
-                            title = userLocationModel.provider
+                            title = userLocationModel.provider,
+                            snippet = dates
                         )
                     }
                     myLocations.value = markerDatas
