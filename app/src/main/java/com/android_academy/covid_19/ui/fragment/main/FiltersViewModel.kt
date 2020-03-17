@@ -16,6 +16,7 @@ interface FiltersViewModel {
     val dateLiveData: LiveData<Date>
 
     fun setDate(date: Date = Date())
+    fun getDate():Date?
     fun setStartTime(hour: Int, minute: Int)
     fun setEndTime(hour: Int, minute: Int)
     fun initialize()
@@ -34,11 +35,15 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
     override fun initialize() {
         val calender = Calendar.getInstance()
         setStartTime(calender[Calendar.HOUR_OF_DAY], calender[Calendar.MINUTE])
-        setDate()
+        setDate(calender.time)
     }
 
     override fun setDate(date: Date) {
         dateLiveData.postValue(date)
+    }
+
+    override fun getDate(): Date? {
+        return dateLiveData.value;
     }
 
     override fun setStartTime(hour: Int, minute: Int) {
