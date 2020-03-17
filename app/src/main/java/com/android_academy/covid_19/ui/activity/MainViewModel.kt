@@ -25,6 +25,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -136,20 +137,33 @@ class MainViewModelImpl(
         coronaJob = viewModelScope.launch {
             infectionDataRepo.getInfectionLocations().distinctUntilChanged()
                 .collect {
-                    val markerDatas = it.map { infectedLocationModel ->
-                        val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
-                        var dates = "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(infectedLocationModel.endTime)}"
-                        LocationMarkerData(
-                            id = infectedLocationModel.id,
-                            lon = infectedLocationModel.lon,
-                            lat = infectedLocationModel.lat,
-                            title = infectedLocationModel.name ?: "",
-                            snippet = dates
-                        )
-                    }
+                    val markerDatas = it.filter { infectedLocationModel ->
+                            ((infectedLocationModel.startTime.after(dateTimeStart) &&
+                                (infectedLocationModel.startTime.before(dateTimeEnd))) ||
+                                ((infectedLocationModel.endTime.after(dateTimeStart)) &&
+                                    (infectedLocationModel.endTime.before(dateTimeEnd)))
+                                )
+                        }
+                        .map { infectedLocationModel ->
+                            val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
+                            var dates =
+                                "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(
+                                    infectedLocationModel.endTime
+                                )}"
+                            Timber.d("filtering : $dates")
+                            LocationMarkerData(
+                                id = infectedLocationModel.id,
+                                lon = infectedLocationModel.lon,
+                                lat = infectedLocationModel.lat,
+                                title = infectedLocationModel.name ?: "",
+                                snippet = dates
+                            )
+                        }
                     coronaLocations.value = markerDatas
                 }
         }
+        Timber.d( "corona locations count : ${coronaLocations.value?.size}")
+
     }
 
     private fun startObservingMyLocations() {
@@ -159,7 +173,11 @@ class MainViewModelImpl(
                 .collect {
                     val markerDatas = it.map { userLocationModel ->
                         val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
-                        var dates = dateTimeInstance.format(Date(userLocationModel.timeStart ?: userLocationModel.time!!))
+                        var dates = dateTimeInstance.format(
+                            Date(
+                                userLocationModel.timeStart ?: userLocationModel.time!!
+                            )
+                        )
                         userLocationModel.timeEnd?.let { timeEnd ->
                             dates = dates.plus(" - ${dateTimeInstance.format(Date(timeEnd))}")
                         }
@@ -185,6 +203,7 @@ class MainViewModelImpl(
         Timber.d("got date time start and end $dateTimeStart - $dateTimeEnd")
         this.dateTimeStart = dateTimeStart
         this.dateTimeEnd = dateTimeEnd
+        startObservingCoronaLocations()
     }
 
     override fun onLoginClick() {
