@@ -3,15 +3,16 @@ package com.android_academy.covid_19.ui.fragment.main
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
+import com.android_academy.covid_19.ui.activity.FilterDataModel
+import com.android_academy.covid_19.ui.activity.MainViewModelImpl
 import kotlinx.android.synthetic.main.filters_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -19,8 +20,12 @@ import java.util.Locale
 
 class FiltersFragment : Fragment(R.layout.filters_fragment) {
 
-    private val viewModel: FiltersViewModel by sharedViewModel<FiltersViewModelImpl>()
+    private val viewModel: FiltersViewModel by viewModel<FiltersViewModelImpl>()
+
+    private val mainFilterViewModel: FilterDataModel by sharedViewModel<MainViewModelImpl>()
+
     val fullDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
     val shortDateFormat = SimpleDateFormat("MMM, yyyy", Locale.getDefault())
 
     companion object {
@@ -46,6 +51,11 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         viewModel.endTimeLiveData.observe(viewLifecycleOwner, Observer {
             end_time.text = it
         })
+        viewModel.filterDatesSet.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                mainFilterViewModel.setDateTimeFilter(it.startDate, it.endDate)
+            }
+        })
 
         viewModel.dateLiveData.observe(viewLifecycleOwner, Observer {
             detailed_date.text = fullDateFormat.format(it)
@@ -64,30 +74,11 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         detailed_date.setOnClickListener { openDatePicker() }
 
         start_time.setOnClickListener {
-            val timePickerDialog = TimePickerDialog(
-                this.requireContext(),
-                OnTimeSetListener { view, hour, minute ->
-                    viewModel.setStartTime(hour, minute)
-                },
-                calendar[Calendar.HOUR_OF_DAY],
-                calendar[Calendar.MINUTE],
-                true
-            )
-
-            timePickerDialog.show()
+            openTimePicker(true)
         }
 
         end_time.setOnClickListener {
-            val timePickerDialog = TimePickerDialog(
-                this.requireContext(),
-                OnTimeSetListener { view, hour, minute ->
-                    viewModel.setEndTime(hour, minute)
-                },
-                calendar[Calendar.HOUR_OF_DAY],
-                calendar[Calendar.MINUTE],
-                true
-            )
-            timePickerDialog.show()
+            openTimePicker(false)
         }
 
         today.setOnClickListener {
@@ -108,7 +99,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
     private fun openDatePicker() {
         val calendar = Calendar.getInstance()
         val dateValue = viewModel.getDate()
-        if (dateValue!= null){
+        if (dateValue != null) {
             calendar.time = dateValue
         }
 
@@ -125,5 +116,32 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         )
         dpd.datePicker.maxDate = Date().time
         dpd.show()
+    }
+
+    private fun openTimePicker(isStartTime: Boolean) {
+        val calendar = Calendar.getInstance()
+        if (isStartTime) {
+            calendar.time = viewModel.getTimeStart()
+        } else{
+            calendar.time = viewModel.getTimeEnd()
+        }
+
+        val timePickerDialog = TimePickerDialog(
+            this.requireContext(),
+            OnTimeSetListener { view, hour, minute ->
+                if (isStartTime) {
+                    viewModel.setStartTime(hour, minute)
+                } else{
+                    viewModel.setEndTime(hour, minute)
+                }
+            },
+            calendar[Calendar.HOUR_OF_DAY],
+            calendar[Calendar.MINUTE],
+            true
+        )
+        timePickerDialog.updateTime(calendar[Calendar.HOUR_OF_DAY],
+            calendar[Calendar.MINUTE])
+
+        timePickerDialog.show()
     }
 }

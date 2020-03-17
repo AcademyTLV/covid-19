@@ -1,6 +1,5 @@
 package com.android_academy.covid_19.ui.activity
 
-import android.Manifest
 import android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION

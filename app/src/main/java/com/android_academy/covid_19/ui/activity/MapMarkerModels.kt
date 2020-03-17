@@ -5,5 +5,5 @@ data class LocationMarkerData(
     val lat: Double,
     val lon: Double,
     val title: String,
-    val snippet : String
+    val snippet: String
 )
