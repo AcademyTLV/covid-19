@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.filters_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class FiltersFragment : Fragment(R.layout.filters_fragment) {
@@ -53,13 +54,14 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
     }
 
     private fun initView() {
+
         var calendar = Calendar.getInstance()
 
         date.setOnClickListener {
-            openDatePicker(calendar)
+            openDatePicker()
         }
 
-        detailed_date.setOnClickListener { openDatePicker(calendar) }
+        detailed_date.setOnClickListener { openDatePicker() }
 
         start_time.setOnClickListener {
             val timePickerDialog = TimePickerDialog(
@@ -103,10 +105,17 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         // }
     }
 
-    private fun openDatePicker(calendar: Calendar) {
+    private fun openDatePicker() {
+        val calendar = Calendar.getInstance()
+        val dateValue = viewModel.getDate()
+        if (dateValue!= null){
+            calendar.time = dateValue
+        }
+
         val dpd = DatePickerDialog(
             this.requireContext(),
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog
+                .OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 calendar.set(year, monthOfYear, dayOfMonth)
                 viewModel.setDate(calendar.time)
             },
@@ -114,6 +123,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
             calendar[Calendar.MONTH],
             calendar[Calendar.DAY_OF_MONTH]
         )
+        dpd.datePicker.maxDate = Date().time
         dpd.show()
     }
 }

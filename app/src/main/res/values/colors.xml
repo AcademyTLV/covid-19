@@ -13,5 +13,8 @@
     <color name="black">#000000</color>
     <color name="orange">#ffc063</color>
     <color name="orange_30">#4dffc063</color>
+<!--    <color name="color_corona_circle">#1AA9ADFC</color>-->
+    <color name="color_corona_circle">#A9ADFC</color>
+    <color name="color_corona_stroke">@android:color/holo_red_dark</color>
     <color name="background">@android:color/white</color>
 </resources>

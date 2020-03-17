@@ -16,40 +16,29 @@ import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSet
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
 import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
 import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
+import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.setSafeOnClickListener
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.Circle
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 private const val LOCATION_SETTINGS_SCREEN_CODE = 1002
 
-private data class MarkerAndCircle(
-    val marker: Marker,
-    val circle: Circle
-)
-
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
-
-    private lateinit var map: GoogleMap
-
-    private val myLocations = mutableMapOf<Int, MarkerAndCircle>()
-
-    private val coronaLocations = mutableMapOf<Int, MarkerAndCircle>()
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModel<MainViewModelImpl> {
         parametersOf(
             hasLocationPermissions()
+        )
+    }
+
+    private val mapManager: MapManager by inject {
+        parametersOf(
+            viewModel as MapManager.InteractionInterface
         )
     }
 
@@ -75,14 +64,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        mapFragment.getMapAsync(mapManager)
     }
 
     private fun initObservers() {
         viewModel.apply {
             navigation.observe(this@MainActivity, onNavigationChanged())
-            myLocations.observe(this@MainActivity, Observer { onMyLocationsChanged(it) })
-            coronaLocations.observe(this@MainActivity, Observer { onCoronaChanged(it) })
+            myLocations.observe(this@MainActivity, Observer { mapManager.onMyLocationsChanged(it) })
+            coronaLocations.observe(this@MainActivity, Observer { mapManager.onCoronaChanged(it) })
             blockingUIVisible.observe(this@MainActivity, Observer {
                 showBlockUI(it)
             })
@@ -106,62 +95,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             })
         }
-    }
-
-    private fun onMyLocationsChanged(markerOptions: List<LocationMarkerData>?) {
-        markerOptions?.forEach { options ->
-            myLocations[options.id]?.let {
-                it.marker.remove()
-                it.circle.remove()
-            }
-            myLocations[options.id] =
-                MarkerAndCircle(
-                    marker = map.addMarker(createMyLocationMarkerOptions(options)),
-                    circle = map.addCircle(createMyLocationCircleOptions(options))
-                )
-        }
-    }
-
-    private fun onCoronaChanged(markerOptions: List<LocationMarkerData>?) {
-        markerOptions?.forEach { options ->
-            coronaLocations[options.id]?.let {
-                it.marker.remove()
-                it.circle.remove()
-            }
-            coronaLocations[options.id] =
-                MarkerAndCircle(
-                    marker = map.addMarker(createCoronaLocationMarkerOptions(options)),
-                    circle = map.addCircle(createCoronaLocationCircleOptions(options))
-                )
-        }
-    }
-
-    private fun createMyLocationCircleOptions(options: LocationMarkerData): CircleOptions {
-        return CircleOptions()
-            .center(LatLng(options.lat, options.lon))
-            .radius(50.0)
-            .fillColor(R.color.colorPrimaryDark_30)
-    }
-
-    private fun createCoronaLocationCircleOptions(options: LocationMarkerData): CircleOptions {
-        return CircleOptions()
-            .center(LatLng(options.lat, options.lon))
-            .radius(50.0)
-            .fillColor(R.color.orange_30)
-    }
-
-    private fun createMyLocationMarkerOptions(options: LocationMarkerData): MarkerOptions {
-        return MarkerOptions()
-            .position(LatLng(options.lat, options.lon))
-            .title(options.title)
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-    }
-
-    private fun createCoronaLocationMarkerOptions(options: LocationMarkerData): MarkerOptions {
-        return MarkerOptions()
-            .position(LatLng(options.lat, options.lon))
-            .title(options.title)
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
     }
 
     private fun showBlockUI(show: Boolean) {
@@ -219,18 +152,5 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         button_trigger_timeline.setOnClickListener {
             viewModel.onTimelineTriggerClicked()
         }
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
     }
 }
