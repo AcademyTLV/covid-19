@@ -95,6 +95,7 @@ class MapManagerImpl(
         return MarkerOptions()
             .position(LatLng(options.lat, options.lon))
             .title(options.title)
+            .snippet(options.snippet)
             .icon(BitmapDescriptorFactory.fromResource(R.drawable.user_location_icon))
     }
 
@@ -105,6 +106,7 @@ class MapManagerImpl(
         return MarkerOptions()
             .position(LatLng(options.lat, options.lon))
             .title(options.title)
+            .snippet(options.snippet)
             .icon(BitmapDescriptorFactory.fromResource(coronaIcon))
     }
 }
