@@ -35,6 +35,7 @@ class InfectionDataRepoImpl(
         // val lastInfectedLocation =  dao.getLastUpdatedInfectedLocation()
         val fromServer = service.getInfectedLocations()
         Timber.d("Got infected locations from server from server: $fromServer")
+        dao.deleteOldLocations()
         dao.saveInfectedLocations(fromServer.locations.map { it.toDBModel() })
         return fromServer.locations
     }

@@ -26,7 +26,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.SimpleTimeZone
 
 sealed class MainNavigationTarget {
     object IntroFragment : MainNavigationTarget()
@@ -144,11 +147,16 @@ class MainViewModelImpl(
             usersLocationRepo.getUserLocations()
                 .collect {
                     val markerDatas = it.map { userLocationModel ->
+                        val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
+                        var title = dateTimeInstance.format(Date(userLocationModel.timeStart ?: userLocationModel.time!!))
+                        userLocationModel.timeEnd?.let { timeEnd ->
+                            title = title.plus(" - ${dateTimeInstance.format(Date(timeEnd))}")
+                        }
                         LocationMarkerData(
                             id = userLocationModel.id!!,
                             lon = userLocationModel.lon,
                             lat = userLocationModel.lat,
-                            title = userLocationModel.provider
+                            title = "$title from ${userLocationModel.provider}"
                         )
                     }
                     myLocations.value = markerDatas
