@@ -24,6 +24,7 @@ import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -125,7 +126,7 @@ class MainViewModelImpl(
     private fun startObservingCoronaLocations() {
         if (coronaJob?.isActive == true) coronaJob?.cancel()
         coronaJob = viewModelScope.launch {
-            infectionDataRepo.getInfectionLocations()
+            infectionDataRepo.getInfectionLocations().distinctUntilChanged()
                 .collect {
                     val markerDatas = it.map { infectedLocationModel ->
                         val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
@@ -146,7 +147,7 @@ class MainViewModelImpl(
     private fun startObservingMyLocations() {
         if (myLocationsJob?.isActive == true) myLocationsJob?.cancel()
         myLocationsJob = viewModelScope.launch {
-            usersLocationRepo.getUserLocations()
+            usersLocationRepo.getUserLocations().distinctUntilChanged()
                 .collect {
                     val markerDatas = it.map { userLocationModel ->
                         val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()

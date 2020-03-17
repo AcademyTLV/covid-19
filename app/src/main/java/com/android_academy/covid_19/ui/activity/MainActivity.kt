@@ -1,7 +1,10 @@
 package com.android_academy.covid_19.ui.activity
 
 import android.Manifest
+import android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
@@ -102,8 +105,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestLocationPermissions(options: QuickPermissionsOptions) = runWithPermissions(
-        ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
+        ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, ACCESS_BACKGROUND_LOCATION,
         options = options
     ) {
         viewModel.onPermissionGranted()
@@ -150,7 +152,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         button_trigger_timeline.setOnClickListener {
-            viewModel.onTimelineTriggerClicked()
+            runWithPermissions(READ_EXTERNAL_STORAGE) {
+                viewModel.onTimelineTriggerClicked()
+            }
         }
     }
 }

@@ -1,12 +1,14 @@
 package com.android_academy.covid_19.ui.map
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
-import android.location.Address
+import android.content.pm.PackageManager
 import android.location.Geocoder
+import androidx.core.content.ContextCompat
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.LocationMarkerData
 import com.android_academy.covid_19.ui.map.MapManager.InteractionInterface
-import com.android_academy.covid_19.util.logTag
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -62,7 +64,17 @@ class MapManagerImpl(
             val pos = LatLng(loc.latitude, loc.longitude)
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 7.3F))
         }
-        googleMap.isMyLocationEnabled = true
+        
+        if (ContextCompat.checkSelfPermission(
+                context,
+                ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                context,
+                ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            googleMap.isMyLocationEnabled = true
+        }
         googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isMyLocationButtonEnabled = true
     }
