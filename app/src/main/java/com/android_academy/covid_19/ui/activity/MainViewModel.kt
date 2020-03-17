@@ -109,6 +109,9 @@ class MainViewModelImpl(
                 return@launch
             }
 
+            startObservingMyLocations()
+            startObservingCoronaLocations()
+
             // Verify permissions
             if (!hasLocationPermissions) {
                 navigation.value = PermissionsBottomSheetExplanation
@@ -118,8 +121,6 @@ class MainViewModelImpl(
             // Request permissions
             locationPermissionCheck.value = true
 
-            startObservingMyLocations()
-            startObservingCoronaLocations()
         }
     }
 
