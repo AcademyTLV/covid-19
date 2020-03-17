@@ -18,6 +18,7 @@ import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.IntroFragment
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
+import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.SingleLiveEvent
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -33,15 +34,15 @@ sealed class MainNavigationTarget {
     object LocationSettingsScreen : MainNavigationTarget()
 }
 
-interface MainViewModel {
+interface MainViewModel : MapManager.InteractionInterface {
 
     val navigation: LiveData<MainNavigationTarget>
     val myLocations: LiveData<List<LocationMarkerData>>
     val coronaLocations: LiveData<List<LocationMarkerData>>
     val blockingUIVisible: LiveData<Boolean>
     val error: LiveData<Throwable>
-
     val locationPermissionCheck: LiveData<Boolean>
+    val toast: LiveData<String>
 
     fun onLoginClick()
 
@@ -56,7 +57,9 @@ interface MainViewModel {
     fun onGoToSettingsClick()
 
     fun onReturnedFromLocationSettings(hasLocationPermissions: Boolean)
+
     fun onScreenBecameVisible()
+
     fun onTimelineTriggerClicked()
 }
 
@@ -74,6 +77,8 @@ class MainViewModelImpl(
     private var coronaJob: Job? = null
 
     override val error = SingleLiveEvent<Throwable>()
+
+    override val toast = SingleLiveEvent<String>()
 
     override val navigation = SingleLiveEvent<MainNavigationTarget>()
 
@@ -191,6 +196,10 @@ class MainViewModelImpl(
 
     override fun onTimelineTriggerClicked() {
         fireTimelineDownloadEvents()
+    }
+
+    override fun onUserHistoryLocationMarkerSelected(data: LocationMarkerData) {
+        toast.value = "User clicked ${data.title}"
     }
 
     private fun fireTimelineDownloadEvents() {
