@@ -6,6 +6,10 @@
     <color name="colorPrimaryDark_30">#4d3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="gray90">#0c1831</color>
+    <color name="pale_grey">#ece6fe</color>
+    <color name="pale_blue">#e4e5e7</color>
+    <color name="purpley">#7a4dff</color>
+    <color name="dark_blue_grey">#0c1831</color>
     <color name="black">#000000</color>
     <color name="orange">#ffc063</color>
     <color name="orange_30">#4dffc063</color>

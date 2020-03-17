@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -23,8 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="11dp"
             android:text="@string/filters_fragment_change_status_button"
-            android:textColor="#000000" />
+            android:textColor="@color/dark_blue_grey"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ic_change_status"
@@ -32,26 +34,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_toEndOf="@id/txt_change_status"
-            android:src="@drawable/ic_person_black_24dp" />
+            android:src="@drawable/ic_outline" />
 
 
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/crossLocationButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/filters_fragment_cross_location_button"
-        android:textColor="@color/gray90"
-        app:strokeColor="@color/orange"
-        app:strokeWidth="2dp"
-        app:cornerRadius="@dimen/button_corner_radius"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:textColor="@color/gray90"
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/button_corner_radius"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/orange"
+        app:strokeWidth="2dp" />
 
     <View
         android:id="@+id/view"
@@ -59,7 +64,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:background="#A5A5A5"
+        android:background="@color/pale_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/change_status" />
@@ -77,14 +82,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/black"
+            android:layout_marginEnd="11dp"
+            android:textColor="@color/dark_blue_grey"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/ic_calender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_calender_black_24dp" />
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_calendar" />
 
     </LinearLayout>
 
@@ -92,7 +99,7 @@
         android:id="@+id/today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@id/view"
         app:layout_constraintTop_toBottomOf="@id/view">
@@ -102,18 +109,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="5dp"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="1dp"
             android:text="@string/filters_fragment_today"
-            android:textColor="@color/black" />
+            android:textColor="@color/purpley" />
 
         <ImageView
             android:id="@+id/ic_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_refresh_black_24dp" />
+            android:src="@drawable/ic_refresh" />
 
     </LinearLayout>
 
@@ -122,9 +128,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_blue_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
@@ -133,7 +139,7 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="19dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -146,20 +152,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/dark_blue_grey" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
-            android:textColor="@color/black" />
+            android:textColor="@color/dark_blue_grey" />
 
         <TextView
             android:id="@+id/end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/dark_blue_grey" />
 
     </LinearLayout>
 
