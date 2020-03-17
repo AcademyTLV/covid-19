@@ -4,6 +4,8 @@ import android.Manifest
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View.GONE
@@ -45,7 +47,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val myLocations = mutableMapOf<Int, MarkerAndCircle>()
 
-    private val coronaLocations = mutableMapOf<Int, MarkerAndCircle>()
+    private val coronaLocations = mutableMapOf<Int, Marker>()
+
+    private var selectedCoronaLocation: Marker? = null
 
     private val viewModel: MainViewModel by viewModel<MainViewModelImpl> {
         parametersOf(
@@ -123,30 +127,44 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun onCoronaChanged(markerOptions: List<LocationMarkerData>?) {
+        val coronaIcon = getCoronaMarkerBitmap(selected = false)
         markerOptions?.forEach { options ->
             coronaLocations[options.id]?.let {
-                it.marker.remove()
-                it.circle.remove()
+                it.remove()
             }
-            coronaLocations[options.id] =
-                MarkerAndCircle(
-                    marker = map.addMarker(createCoronaLocationMarkerOptions(options)),
-                    circle = map.addCircle(createCoronaLocationCircleOptions(options))
-                )
+
+            val marker = map.addMarker(createCoronaLocationMarkerOptions(options, coronaIcon))
+            marker.tag = options
+            coronaLocations[options.id] = marker
         }
+    }
+
+    private fun getCoronaMarkerBitmap(selected: Boolean): Bitmap {
+        val drawable =
+            resources.getDrawable(if (selected) R.drawable.corona_circle_shape_selected else R.drawable.corona_circle_shape_not_selected)
+        val canvas = Canvas()
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        canvas.setBitmap(bitmap)
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        drawable.draw(canvas)
+        return bitmap
     }
 
     private fun createMyLocationCircleOptions(options: LocationMarkerData): CircleOptions {
         return CircleOptions()
             .center(LatLng(options.lat, options.lon))
-            .radius(50.0)
+            .radius(500.0)
             .fillColor(R.color.colorPrimaryDark_30)
     }
 
     private fun createCoronaLocationCircleOptions(options: LocationMarkerData): CircleOptions {
         return CircleOptions()
             .center(LatLng(options.lat, options.lon))
-            .radius(50.0)
+            .radius(500.0)
             .fillColor(R.color.orange_30)
     }
 
@@ -157,11 +175,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
     }
 
-    private fun createCoronaLocationMarkerOptions(options: LocationMarkerData): MarkerOptions {
+    private fun createCoronaLocationMarkerOptions(
+        options: LocationMarkerData,
+        coronaIcon: Bitmap
+    ): MarkerOptions {
         return MarkerOptions()
             .position(LatLng(options.lat, options.lon))
             .title(options.title)
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+            .icon(BitmapDescriptorFactory.fromBitmap(coronaIcon))
+            .alpha(0.1F)
     }
 
     private fun showBlockUI(show: Boolean) {
@@ -232,5 +254,38 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        map.setOnMarkerClickListener { clicked ->
+            redrawClickedCoronaMarker(clicked)
+        }
+    }
+
+    private fun redrawClickedCoronaMarker(clicked: Marker): Boolean {
+        if (clicked.tag == selectedCoronaLocation?.tag) return false
+
+        selectedCoronaLocation?.let {
+            selectMarker(it, false)
+        }
+
+        val new = selectMarker(clicked, true)
+        selectedCoronaLocation = new
+
+        return false
+    }
+
+    private fun selectMarker(marker: Marker, isSelect: Boolean): Marker {
+
+        // Add new marker on the map, based on old, but with unselected drawable
+        val selectedIcon = getCoronaMarkerBitmap(selected = isSelect)
+        val new = map.addMarker(
+            createCoronaLocationMarkerOptions(
+                marker.tag as LocationMarkerData,
+                selectedIcon
+            )
+        ).apply { tag = marker.tag }
+
+        // Remove from map
+        marker.remove()
+
+        return new
     }
 }

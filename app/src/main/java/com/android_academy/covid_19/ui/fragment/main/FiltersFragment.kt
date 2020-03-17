@@ -97,7 +97,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         }
 
         emergency_call.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL);
+            val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:101")
             activity?.startActivity(intent)
         }
