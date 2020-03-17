@@ -76,9 +76,9 @@
             android:gravity="center"
             android:button="@android:color/transparent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:layoutDirection="rtl"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/radio_button_intro"
             android:text="@string/intro_fragment_positive_button" />
 
@@ -87,9 +87,9 @@
             android:gravity="center"
             android:button="@android:color/transparent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:layoutDirection="rtl"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/radio_button_intro"
             android:text="@string/intro_fragment_was_positive_button" />
 
@@ -98,9 +98,9 @@
             android:gravity="center"
             android:button="@android:color/transparent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:layoutDirection="rtl"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/radio_button_intro"
             android:text="@string/intro_fragment_not_positive_button"
             />
@@ -116,7 +116,7 @@
         android:text="@string/intro_fragment_next_button"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:textColor="@color/gray90"
-        app:cornerRadius="8dp"
+        app:cornerRadius="@dimen/button_corner_radius"
         app:layout_constraintBottom_toBottomOf="@+id/main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
