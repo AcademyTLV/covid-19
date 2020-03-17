@@ -34,6 +34,7 @@ import java.util.Date
 sealed class MainNavigationTarget {
     object IntroFragment : MainNavigationTarget()
     object PermissionsBottomSheetExplanation : MainNavigationTarget()
+    object TimelineBottomSheetExplanation : MainNavigationTarget()
     object LocationSettingsScreen : MainNavigationTarget()
 }
 
@@ -120,7 +121,6 @@ class MainViewModelImpl(
 
             // Request permissions
             locationPermissionCheck.value = true
-
         }
     }
 
@@ -192,6 +192,12 @@ class MainViewModelImpl(
     override fun onPermissionGranted() {
         blockingUIVisible.value = false
         startWorkers()
+
+        viewModelScope.launch {
+            if (timelineProvider.shouldRequestData()) {
+                navigation.value = MainNavigationTarget.TimelineBottomSheetExplanation
+            }
+        }
     }
 
     override fun onGoToSettingsClick() {

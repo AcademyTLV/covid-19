@@ -24,4 +24,7 @@ interface UserLocationsDao {
 
     @Query("DELETE FROM ${DBConstants.USERS_LOCATIONS_TABLE_NAME} where provider = '$TIMELINE_PROVIDER'")
     fun deleteTimelineLocations()
+
+    @Query("SELECT * FROM ${DBConstants.USERS_LOCATIONS_TABLE_NAME} where provider = '$TIMELINE_PROVIDER' ORDER BY timeEnd desc")
+    fun getTimelineLocations() : List<RoomUserLocationEntity>?
 }
