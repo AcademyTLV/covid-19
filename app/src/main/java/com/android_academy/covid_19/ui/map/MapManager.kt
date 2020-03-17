@@ -87,6 +87,8 @@ class MapManagerImpl(
     }
 
     override fun onCoronaChanged(markerOptions: List<LocationMarkerData>?) {
+        map.clear()
+
         markerOptions?.forEach { options ->
             coronaLocations[options.id]?.let {
                 it.remove()
