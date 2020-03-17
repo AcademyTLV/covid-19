@@ -15,7 +15,7 @@
 \n\n
 - המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
     </string>
-    <string name="filters_fragment_change_status_button">שינוי סטאטוס</string>
+    <string name="filters_fragment_change_status_button">שנה סטאטוס</string>
     <string name="filters_fragment_start_time">שעת התחלה</string>
     <string name="filters_fragment_end_time">שעת סיום</string>
     <string name="filters_fragment_today">היום</string>
