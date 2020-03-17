@@ -58,14 +58,10 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         var calendar = Calendar.getInstance()
 
         date.setOnClickListener {
-            val dateValue = viewModel.getDate()
-            if (dateValue!= null){
-                calendar.time = dateValue
-            }
-            openDatePicker(calendar)
+            openDatePicker()
         }
 
-        detailed_date.setOnClickListener { openDatePicker(calendar) }
+        detailed_date.setOnClickListener { openDatePicker() }
 
         start_time.setOnClickListener {
             val timePickerDialog = TimePickerDialog(
@@ -109,7 +105,13 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         }
     }
 
-    private fun openDatePicker(calendar: Calendar) {
+    private fun openDatePicker() {
+        val calendar = Calendar.getInstance()
+        val dateValue = viewModel.getDate()
+        if (dateValue!= null){
+            calendar.time = dateValue
+        }
+
         val dpd = DatePickerDialog(
             this.requireContext(),
             DatePickerDialog
