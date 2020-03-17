@@ -30,5 +30,9 @@
     <string name="intro_fragment_next_button">הבא</string>
     <string name="intro_fragment_options2">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
     <string name="something_went_wrong">אוי אוי! קרתה שגיאה</string>
-
+    <string name="filters_fragment_change_status_button">שינוי סטאטוס</string>
+    <string name="filters_fragment_start_time">שעת התחלה</string>
+    <string name="filters_fragment_end_time">שעת סיום</string>
+    <string name="filters_fragment_today">היום</string>
+    <string name="filters_fragment_cross_location_button">הצלבת מיקום</string>
 </resources>
