@@ -8,6 +8,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android_academy.covid_19.CovidApplication
+import com.android_academy.covid_19.R
 import com.android_academy.covid_19.providers.InfectedLocationsWorker
 import com.android_academy.covid_19.providers.LocationUpdateWorker
 import com.android_academy.covid_19.providers.TimelineProvider
@@ -18,6 +20,7 @@ import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.IntroFragment
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
+import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePermissionGranted
 import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.SingleLiveEvent
 import com.android_academy.covid_19.util.logTag
@@ -37,6 +40,7 @@ sealed class MainNavigationTarget {
     object PermissionsBottomSheetExplanation : MainNavigationTarget()
     object TimelineBottomSheetExplanation : MainNavigationTarget()
     object LocationSettingsScreen : MainNavigationTarget()
+    object StoragePermissionGranted : MainNavigationTarget()
 }
 
 interface FilterDataModel {
@@ -59,17 +63,21 @@ interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
 
     fun onUserAcceptedLocationRequestExplanation()
 
-    fun onUserPermanentlyDeniedPermission()
+    fun onUserPermanentlyDeniedLocationPermission()
 
-    fun onPermissionGranted()
+    fun onLocationPermissionGranted()
 
-    fun onGoToSettingsClick()
+    fun onGoToLocationSettingsClick()
 
     fun onReturnedFromLocationSettings(hasLocationPermissions: Boolean)
 
     fun onScreenBecameVisible()
 
     fun onTimelineTriggerClicked()
+
+    fun onUserDeniedOneOfTheLocationPermissions()
+
+    fun onReturnedFromStorageSettings(hasStoragePermission: Boolean)
 }
 
 class MainViewModelImpl(
@@ -163,8 +171,7 @@ class MainViewModelImpl(
                     coronaLocations.value = markerDatas
                 }
         }
-        Timber.d( "corona locations count : ${coronaLocations.value?.size}")
-
+        Timber.d("corona locations count : ${coronaLocations.value?.size}")
     }
 
     private fun startObservingMyLocations() {
@@ -218,11 +225,11 @@ class MainViewModelImpl(
         locationPermissionCheck.value = true
     }
 
-    override fun onUserPermanentlyDeniedPermission() {
+    override fun onUserPermanentlyDeniedLocationPermission() {
         blockingUIVisible.value = true
     }
 
-    override fun onPermissionGranted() {
+    override fun onLocationPermissionGranted() {
         blockingUIVisible.value = false
         startWorkers()
 
@@ -233,7 +240,7 @@ class MainViewModelImpl(
         }
     }
 
-    override fun onGoToSettingsClick() {
+    override fun onGoToLocationSettingsClick() {
         navigation.value = LocationSettingsScreen
     }
 
@@ -248,6 +255,20 @@ class MainViewModelImpl(
 
     override fun onTimelineTriggerClicked() {
         fireTimelineDownloadEvents()
+    }
+
+    override fun onUserDeniedOneOfTheLocationPermissions() {
+        hasLocationPermissions = false
+        initData()
+    }
+
+    override fun onReturnedFromStorageSettings(hasStoragePermission: Boolean) {
+        if (hasStoragePermission) {
+            navigation.value = StoragePermissionGranted
+        } else {
+            toast.value =
+                getApplication<CovidApplication>().getString(R.string.need_storage_permission)
+        }
     }
 
     override fun onUserHistoryLocationMarkerSelected(data: LocationMarkerData) {

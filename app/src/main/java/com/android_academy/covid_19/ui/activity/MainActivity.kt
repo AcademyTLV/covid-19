@@ -3,19 +3,25 @@ package com.android_academy.covid_19.ui.activity
 import android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.annotation.TargetApi
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build
+import android.os.Build.VERSION_CODES.Q
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
+import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePermissionGranted
 import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
 import com.android_academy.covid_19.ui.fragment.TimelinePermissionFragment
 import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
@@ -24,6 +30,7 @@ import com.android_academy.covid_19.util.setSafeOnClickListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,13 +48,35 @@ class MainActivity : AppCompatActivity() {
 
     private val mapManager: MapManager by inject {
         parametersOf(
-            viewModel as MapManager.InteractionInterface
+            viewModel as MapManager.InteractionInterface,
+            lifecycleScope
         )
     }
 
     private fun hasLocationPermissions(): Boolean {
-        return checkCallingOrSelfPermission(ACCESS_FINE_LOCATION) == PERMISSION_GRANTED &&
-            checkCallingOrSelfPermission(ACCESS_FINE_LOCATION) == PERMISSION_GRANTED
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
+            hasLocationPermissionsPreQ() else
+            hasLocationPermissionsQ()
+    }
+
+    private fun hasLocationPermissionsQ(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            (ACCESS_COARSE_LOCATION)
+        ) == PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this, (ACCESS_FINE_LOCATION)) == PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                this,
+                (ACCESS_BACKGROUND_LOCATION)
+            ) == PERMISSION_GRANTED
+    }
+
+    private fun hasLocationPermissionsPreQ(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            (ACCESS_COARSE_LOCATION)
+        ) == PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this, (ACCESS_FINE_LOCATION)) == PERMISSION_GRANTED
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,31 +113,52 @@ class MainActivity : AppCompatActivity() {
             })
             locationPermissionCheck.observe(this@MainActivity, Observer {
                 it?.let {
-                    val options = QuickPermissionsOptions(
-                        handleRationale = true,
-                        rationaleMessage = getString(R.string.location_dialog_description),
-                        permanentlyDeniedMessage = getString(R.string.decline_permission_bottom_sheet_dialog_btn),
-                        rationaleMethod = { req -> req.proceed() },
-                        permanentDeniedMethod = { req ->
-                            req.cancel()
-                            viewModel.onUserPermanentlyDeniedPermission()
-                        }
-                    )
-                    requestLocationPermissions(options)
+                    askForegroundPermissions()
                 }
             })
         }
     }
 
-    private fun showBlockUI(show: Boolean) {
-        blockingUILayout.visibility = if (show) VISIBLE else GONE
+    private fun askForegroundPermissions() {
+        val foregroundPermissionsOptions = QuickPermissionsOptions(
+            permanentDeniedMethod = { req ->
+                viewModel.onUserPermanentlyDeniedLocationPermission()
+            },
+            permissionsDeniedMethod = { req ->
+                viewModel.onUserDeniedOneOfTheLocationPermissions()
+            }
+        )
+        runWithPermissions(
+            ACCESS_COARSE_LOCATION,
+            ACCESS_FINE_LOCATION, options = foregroundPermissionsOptions
+        ) {
+            if (Build.VERSION.SDK_INT < Q) {
+                viewModel.onLocationPermissionGranted()
+            } else {
+                askBackgroundPermissions()
+            }
+        }
     }
 
-    private fun requestLocationPermissions(options: QuickPermissionsOptions) = runWithPermissions(
-        ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, ACCESS_BACKGROUND_LOCATION,
-        options = options
-    ) {
-        viewModel.onPermissionGranted()
+    @TargetApi(Q)
+    private fun askBackgroundPermissions() {
+        val options = QuickPermissionsOptions(
+            permanentDeniedMethod = { req ->
+                viewModel.onUserPermanentlyDeniedLocationPermission()
+            },
+            permissionsDeniedMethod = { req ->
+                viewModel.onUserDeniedOneOfTheLocationPermissions()
+            }
+        )
+        runWithPermissions(
+            ACCESS_BACKGROUND_LOCATION, options = options
+        ) {
+            viewModel.onLocationPermissionGranted()
+        }
+    }
+
+    private fun showBlockUI(show: Boolean) {
+        blockingUILayout.visibility = if (show) VISIBLE else GONE
     }
 
     private fun onNavigationChanged(): Observer<in MainNavigationTarget> = Observer {
@@ -141,6 +191,9 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivityForResult(intent, LOCATION_SETTINGS_SCREEN_CODE)
             }
+            StoragePermissionGranted -> {
+                viewModel.onTimelineTriggerClicked()
+            }
         }
     }
 
@@ -155,7 +208,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         goToSettingsButton.setSafeOnClickListener {
-            viewModel.onGoToSettingsClick()
+            viewModel.onGoToLocationSettingsClick()
         }
+
+        // button_trigger_timeline.setOnClickListener {
+        //     val options = QuickPermissionsOptions(
+        //         handlePermanentlyDenied = true,
+        //         permanentDeniedMethod = { req ->
+        //             showStoragePermanentlyDeniedDialog(req)
+        //         }
+        //     )
+        //     runWithPermissions(READ_EXTERNAL_STORAGE, options = options) {
+        //         viewModel.onTimelineTriggerClicked()
+        //     }
+        // }
+    }
+
+    private fun showStoragePermanentlyDeniedDialog(req: QuickPermissionsRequest) {
+        AlertDialog.Builder(this@MainActivity)
+            .setTitle(R.string.storage_dialog_title)
+            .setMessage(R.string.storage_dialog_subtitle)
+            .setPositiveButton(R.string.storage_dialog_positive_btn) { dialog, _ ->
+                req.openAppSettings()
+            }
+            .setNegativeButton(R.string.storage_dialog_negative_btn) { dialog, _ ->
+                req.cancel()
+            }
+            .show()
+            .setCancelable(false)
     }
 }

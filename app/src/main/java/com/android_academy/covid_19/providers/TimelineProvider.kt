@@ -36,7 +36,7 @@ class TimelineProviderImpl(
     override fun checkForExistingKMLFiles() {
         scope.launch(Dispatchers.IO) {
 
-            if(isTimelineFresh()) return@launch
+            if (isTimelineFresh()) return@launch
 
             usersLocationRepo.cleanOldTimeLineProviderLocation()
 
@@ -59,12 +59,11 @@ class TimelineProviderImpl(
         }
     }
 
-    private suspend fun isTimelineFresh() : Boolean{
+    private suspend fun isTimelineFresh(): Boolean {
         val lastTimeLineLocation = usersLocationRepo.getLastTimeLineLocation()
         lastTimeLineLocation?.timeEnd?.let {
             val diff = Date().time.minus(it)
             return diff < DAYS_14
-
         } ?: return false
     }
 

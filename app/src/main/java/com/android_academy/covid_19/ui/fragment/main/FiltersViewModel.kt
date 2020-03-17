@@ -58,7 +58,6 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
         //         endDate = end
         //     )
         // }
-
     }
 
     override fun setDate(date: Date) {
@@ -69,7 +68,7 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
         calenderTime.time = dateTimeStart
 
         var calenderNew = Calendar.getInstance()
-        calenderNew.set( calenderDate.get(Calendar.YEAR), calenderDate.get(Calendar.MONTH), calenderDate.get(Calendar.DAY_OF_MONTH),
+        calenderNew.set(calenderDate.get(Calendar.YEAR), calenderDate.get(Calendar.MONTH), calenderDate.get(Calendar.DAY_OF_MONTH),
         calenderTime.get(Calendar.HOUR_OF_DAY), calenderTime.get(Calendar.MINUTE))
 
         dateTimeStart = calenderNew.time
@@ -77,7 +76,7 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
         calenderTime.time = dateTimeEnd
 
         calenderNew = Calendar.getInstance()
-        calenderNew.set( calenderDate.get(Calendar.YEAR), calenderDate.get(Calendar.MONTH), calenderDate.get(Calendar.DAY_OF_MONTH),
+        calenderNew.set(calenderDate.get(Calendar.YEAR), calenderDate.get(Calendar.MONTH), calenderDate.get(Calendar.DAY_OF_MONTH),
             calenderTime.get(Calendar.HOUR_OF_DAY), calenderTime.get(Calendar.MINUTE))
 
         dateTimeEnd = calenderNew.time
@@ -105,7 +104,7 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
         startTimeLiveData.postValue(formatTime(calender).toString())
 
-        if ((dateTimeEnd == null) || (dateTimeEnd?.before(dateTimeStart)!!)){
+        if ((dateTimeEnd == null) || (dateTimeEnd?.before(dateTimeStart)!!)) {
             calender.add(Calendar.HOUR, 1)
             dateTimeEnd = calender.time
 
@@ -123,7 +122,7 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
         sendFilter()
     }
 
-    private fun sendFilter(){
+    private fun sendFilter() {
         val start = dateTimeStart
         val end = dateTimeEnd
         if ((start != null) && (end != null)) {
@@ -136,5 +135,4 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     private fun formatTime(calender: Calendar) =
         SimpleDateFormat("HH:mm", Locale.getDefault()).format(calender.time)
-
 }
