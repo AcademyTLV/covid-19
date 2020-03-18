@@ -99,7 +99,6 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     override fun setStartTime(hour: Int, minute: Int) {
         val calender = Calendar.getInstance()
-
         calender.time = dateLiveData.value
         calender.set(Calendar.HOUR_OF_DAY, hour)
         calender.set(Calendar.MINUTE, minute)
