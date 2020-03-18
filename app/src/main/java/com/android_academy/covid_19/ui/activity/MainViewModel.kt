@@ -147,66 +147,6 @@ class MainViewModelImpl(
             infectionDataRepo.getInfectionLocations().distinctUntilChanged()
                 .collect {
                     val markerDatas = it.filter { infectedLocationModel ->
-                            // (
-                            //     infectedLocationModel.startTime.after(dateTimeStart) &&
-                            //         infectedLocationModel.startTime.before(dateTimeEnd)
-                            //     ) ||
-                            //     (
-                            //         infectedLocationModel.endTime.after(dateTimeStart) &&
-                            //             infectedLocationModel.endTime.before(dateTimeEnd)
-                            //         ) ||
-                            //     (
-                            //         infectedLocationModel.startTime.before(dateTimeStart) &&
-                            //             infectedLocationModel.endTime.after(dateTimeEnd)
-                            //         )
-                            // (true)
-
-                            // val check1 =
-                            //     (
-                            //         infectedLocationModel.startTime.after(dateTimeStart) &&
-                            //             infectedLocationModel.startTime.before(dateTimeEnd)
-                            //         )
-                            // val check2 =
-                            //     (
-                            //         infectedLocationModel.endTime.after(dateTimeStart) &&
-                            //             infectedLocationModel.endTime.before(dateTimeEnd)
-                            //         )
-                            // val check3 =
-                            //     (
-                            //         infectedLocationModel.startTime.before(dateTimeStart) &&
-                            //             infectedLocationModel.endTime.after(dateTimeEnd)
-                            //         )
-                            // Timber.d("corona locations : $check1 - $check2 - $check3")
-                            //
-                            // val res = check1 || check2 || check3
-                            // return res
-
-//                                (
-                            val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
-                            var dates =
-                                "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(
-                                    infectedLocationModel.endTime
-                                )}"
-                            Timber.d("corona filtering : $dates")
-                            var filterDates =
-                                "${dateTimeInstance.format(dateTimeStart)} - ${dateTimeInstance.format(dateTimeEnd)}"
-                            Timber.d("corona filtering : $filterDates")
-                            var result1 = (
-                                infectedLocationModel.startTime.after(dateTimeStart) &&
-                                    infectedLocationModel.startTime.before(dateTimeEnd)
-                                )
-                            var result2 =
-                                (
-                                    infectedLocationModel.endTime.after(dateTimeStart) &&
-                                        infectedLocationModel.endTime.before(dateTimeEnd)
-                                    )
-                            var result3 =
-                                (
-                                    infectedLocationModel.startTime.before(dateTimeStart) &&
-                                        infectedLocationModel.endTime.after(dateTimeEnd)
-                                    )
-                            Timber.d("corona filtering result : $result1 - $result2 - $result3 - $dates")
-
                             (
                                 infectedLocationModel.startTime.after(dateTimeStart) &&
                                     infectedLocationModel.startTime.before(dateTimeEnd)
