@@ -49,4 +49,15 @@
     <string name="filters_fragment_end_time">שעת סיום</string>
     <string name="filters_fragment_today">היום</string>
     <string name="filters_fragment_cross_location_button">הצלבת מיקום</string>
+
+    <string name="storage_dialog_title">אשר גישה לאחסון</string>
+    <string name="storage_dialog_subtitle">על מנת להוריד ולהשתמש בהיסטוריית מיקומים שלך, יש לאשר גישה לאחסון הטלפון</string>
+    <string name="storage_dialog_positive_btn">פתח הגדרות</string>
+    <string name="storage_dialog_negative_btn">לא מעוניין</string>
+
+    <string name="positive_location_permission_button">כן, אני מעוניין</string>
+    <string name="decline_permission_bottom_sheet_dialog_btn">לא ניתן להשתמש באפליקציה ללא הרשאת מיקום</string>
+    <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
+    <string name="need_storage_permission">יש לאשר גישה לאחסון במכשיר</string>
+
 </resources>
