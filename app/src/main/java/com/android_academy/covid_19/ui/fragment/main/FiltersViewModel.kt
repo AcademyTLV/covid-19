@@ -45,7 +45,6 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     override fun initialize() {
         val calender = Calendar.getInstance()
-        dateLiveData.value = calender.time
         setStartTime(calender[Calendar.HOUR_OF_DAY] - 1, calender[Calendar.MINUTE])
         setDate(calender.time)
 
@@ -99,8 +98,6 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     override fun setStartTime(hour: Int, minute: Int) {
         val calender = Calendar.getInstance()
-
-        calender.time = dateLiveData.value
         calender.set(Calendar.HOUR_OF_DAY, hour)
         calender.set(Calendar.MINUTE, minute)
         dateTimeStart = calender.time
@@ -118,7 +115,6 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     override fun setEndTime(hour: Int, minute: Int) {
         val calender = Calendar.getInstance()
-        calender.time = dateLiveData.value
         calender.set(Calendar.HOUR_OF_DAY, hour)
         calender.set(Calendar.MINUTE, minute)
         dateTimeEnd = calender.time
