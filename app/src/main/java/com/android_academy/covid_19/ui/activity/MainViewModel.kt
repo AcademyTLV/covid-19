@@ -148,18 +148,18 @@ class MainViewModelImpl(
                 .collect {
                     val markerDatas = it.filter { infectedLocationModel ->
                             (
-                                (
-                                    infectedLocationModel.startTime.after(dateTimeStart) &&
+                                infectedLocationModel.startTime.after(dateTimeStart) &&
                                     infectedLocationModel.startTime.before(dateTimeEnd)
-                                    ) ||
+                                ) ||
                                 (
                                     infectedLocationModel.endTime.after(dateTimeStart) &&
-                                    infectedLocationModel.endTime.before(dateTimeEnd)
+                                        infectedLocationModel.endTime.before(dateTimeEnd)
                                     ) ||
                                 (
                                     infectedLocationModel.startTime.before(dateTimeStart) &&
-                                    infectedLocationModel.endTime.after(dateTimeEnd))
-                                )
+                                        infectedLocationModel.endTime.after(dateTimeEnd)
+                                    )
+
                         }
                         .map { infectedLocationModel ->
                             val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
