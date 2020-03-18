@@ -8,6 +8,10 @@
     <string name="open_app">לחץ כאן כדי לראות פרטים</string>
     <string name="location_dialog_title">אשר גישה למיקומך</string>
     <string name="timeline_dialog_title">אשר גישה להיסטוריה של מקומך</string>
+    <string name="storage_dialog_title">אשר גישה לאחסון</string>
+    <string name="storage_dialog_subtitle">על מנת להוריד ולהשתמש בהיסטוריית מיקומים שלך, יש לאשר גישה לאחסון הטלפון</string>
+    <string name="storage_dialog_positive_btn">פתח הגדרות</string>
+    <string name="storage_dialog_negative_btn">לא מעוניין</string>
     <string name="skip_location_permission_button">לא, איני מעוניין כרגע</string>
     <string name="location_dialog_description">
         - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
@@ -41,9 +45,17 @@
     <string name="intro_fragment_next_button">הבא</string>
     <string name="intro_fragment_options2">האפליקציה שתעזור לכולנו לעצור את התפשטות וירוס הקורונה בישראל</string>
     <string name="something_went_wrong">אוי אוי! קרתה שגיאה</string>
+    <string name="location_dialog_description_short">
+        - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
+\n\n
+- מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
+\n\n
+- המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
+    </string>
     <string name="positive_location_permission_button">כן, אני מעוניין</string>
     <string name="decline_permission_bottom_sheet_dialog_btn">לא ניתן להשתמש באפליקציה ללא הרשאת מיקום</string>
     <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
+    <string name="need_storage_permission">יש לאשר גישה לאחסון במכשיר</string>
     <!--    <string name="title_activity_maps">Map</string>-->
     <!--    <string name="btn_login_to_google">Login To Google</string>-->
     <!--    <string name="channel_name">General Channel</string>-->

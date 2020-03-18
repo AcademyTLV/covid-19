@@ -122,7 +122,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         val calendar = Calendar.getInstance()
         if (isStartTime) {
             calendar.time = viewModel.getTimeStart()
-        } else{
+        } else {
             calendar.time = viewModel.getTimeEnd()
         }
 
@@ -131,7 +131,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
             OnTimeSetListener { view, hour, minute ->
                 if (isStartTime) {
                     viewModel.setStartTime(hour, minute)
-                } else{
+                } else {
                     viewModel.setEndTime(hour, minute)
                 }
             },

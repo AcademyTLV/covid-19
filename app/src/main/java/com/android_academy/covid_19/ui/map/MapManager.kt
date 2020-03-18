@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.CoroutineScope
 
 interface MapManager : OnMapReadyCallback {
 
@@ -28,7 +29,8 @@ interface MapManager : OnMapReadyCallback {
 
 class MapManagerImpl(
     private val interactionInterface: InteractionInterface,
-    private val context: Context
+    private val context: Context,
+    private val scope: CoroutineScope
 ) : MapManager {
 
     private lateinit var map: GoogleMap
