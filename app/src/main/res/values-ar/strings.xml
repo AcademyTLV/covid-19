@@ -1,4 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Covid-19</string>
+    <string name="app_name">"Covid-19"</string>
+    <string name="title_activity_maps">"خريطة"</string>
+    <string name="btn_login_to_google">"اتصل بجوجل"</string>
+    <string name="channel_name">"القناة العامة"</string>
+    <string name="channel_description">"تنبيهات أساسيّة هنا"</string>
+    <string name="ahtung">"للأسف! وجدنا ملاءَمة لفيروس الكورونا!"</string>
+    <string name="open_app">"اضغط هنا للتفاصيل"</string>
+    <string name="location_dialog_description">"لكي نتمكّن من ربط مكان تواجدك مع قائمة الأماكن التي كان فيها حاملو الكورونا، الرجاء إتاحة إمكانيّة الوصول إلى مكان تواجدك.
+سيتمّ التحقق من مكان تواجدك كلّ 15 دقيقة ويتمّ الاحتفاظ بالمعلومات بشكل آمن على هاتفك فقط.
+لن يتمّ إرسال المعلومات بشكل تلقائي لأيّ شخص، بما في ذلك لوزارة الصحّة."</string>
+    <string name="positive_location_permission_button">"نعم، أنا معني"</string>
+    <string name="skip_location_permission_button">"لا، أنا غير معني حاليًا"</string>
+    <string name="location_dialog_title">"أتِح لنا الإمكانيّة للوصول إلى مكان تواجدك"</string>
+    <string name="intro_fragment_title">"أهلا بك في اللون البرتقالي"</string>
+    <string name="intro_fragment_subtitle">"التطبيق الذي سيساعدنا جميعًا على منع انتشار فيروس الكورونا في إسرائيل"</string>
+    <string name="intro_fragment_description">"يعرض لك التطبيق تحديثات حقيقيّة عن الأماكن التي تواجد فيها مرضى الكورونا وأوقات تواجدهم فيها.
+التطبيق يمكّنك أيضًا من حفظ قائمة الأماكن التي زرتَها على جهازك، ومن ملاءَمة هذه الأماكن مع الأماكن المصرّح بها، وذلك لكي تعرف ما إذا كنتَ ضمن مجموعة الخطر، والتصرّف وفقً لذلك."</string>
+    <string name="intro_fragment_options_title">"اختر إحدى الإمكانيّات:"</string>
+    <string name="intro_fragment_positive_button">"تمّ تشخيصي كحامل COVID-19"</string>
+    <string name="intro_fragment_not_positive_button">"شفيت من المرض"</string>
+    <string name="intro_fragment_was_positive_button">"لم يتمّ تشخيصي كحامل للمرض"</string>
+    <string name="intro_fragment_next_button">"التالي"</string>
+    <string name="intro_fragment_options2">"التطبيق الذي سيساعدنا جميعًا على منع انتشار فيروس الكورونا في إسرائيل"</string>
+    <string name="something_went_wrong">"للأسف الشديد! وقع خطأ"</string>
+    <string name="timeline_dialog_title">"أتِح لنا الإمكانيّة للوصول إلى تاريخ مكان تواجدك"</string>
+    <string name="filters_fragment_change_status_button">"غيِّر الحالة"</string>
+    <string name="filters_fragment_start_time">"ساعة البداية"</string>
+    <string name="filters_fragment_end_time">"ساعة النهاية"</string>
+    <string name="filters_fragment_today">"اليوم"</string>
+    <string name="filters_fragment_cross_location_button">"ملاءَمة مكان التواجد"</string>
+    <string name="storage_dialog_title">"أتِح لنا الإمكانيّة للوصول إلى ذاكرة التخزين"</string>
+    <string name="storage_dialog_subtitle">"من أجل تحميل واستعمال تاريخ أماكن تواجدك، يجب إتاحة إمكانيّة الوصول إلى ذاكرة التخزين"</string>
+    <string name="storage_dialog_positive_btn">"افتح الإعدادات"</string>
+    <string name="storage_dialog_negative_btn">"غير معنٍ"</string>
+    <string name="decline_permission_bottom_sheet_dialog_btn">"لا يمكن استعمال الطبيق بجون إتاحة مكان التواجد"</string>
+    <string name="btn_enable_location_from_settings">"شغّل خدمة المكان في إعدادات الجهاز"</string>
+    <string name="need_storage_permission">"يجب إتاحة الإمكانيّة للوصول إلى ذاكرة التخزين في الجهاز"</string>
+    <string name="timeline_dialog_description">"يستحسن إجراء ملاءَمة التاريخ للـ 14 يومًا الأخير. نحن نحتاج إلى معلومات من جوجل تايملاينن والذي تمّ جمعها تلقائيًا من قِبل جوجل.
+
+
+ستبقى هذه المعلومات في الهاتف فقط، ولا تنتقل إلى أيّ مصدر آخر ما عدا هاتفك.
+
+
+في اللحظة التي تضعط فيها على زرّ، سنفتح المتصفّح.
+
+إذا كنت متصلًا من خلال حساب جوجل الخاص بك، سنقوم بتحميل تاريخ الأماكن وحفظه في ملف \"التحميلات\".
+
+
+سيطلب التطبيق إتاحة لهذا الملف وقراءة هذه المستندات من أجل ملاءمة المعلومات وأماكن تواجد حاملي الفيروس."</string>
+    <string name="location_dialog_description_short">"- لكي نتمكّن من ربط مكان تواجدك مع قائمة الأماكن التي كان فيها حاملو الكورونا، الرجاء إتاحة إمكانيّة الوصول إلى مكان تواجدك.
+
+
+
+- سيتمّ التحقق من مكان تواجدك كلّ 15 دقيقة ويتمّ الاحتفاظ بالمعلومات بشكل آمن على هاتفك فقط.
+
+
+
+
+
+- لن يتمّ إرسال المعلومات بشكل تلقائي لأيّ شخص، بما في ذلك لوزارة الصحّة."</string>
 </resources>
