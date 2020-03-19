@@ -80,9 +80,11 @@ class MapManagerImpl(
     }
 
     override fun onCoronaChanged(markerOptions: List<LocationMarkerData>?) {
-        if (::map.isInitialized) {
-            map.clear()
+        if (!::map.isInitialized) {
+            return
         }
+
+        map.clear()
 
         markerOptions?.forEach { options ->
             coronaLocations[options.id]?.let {
