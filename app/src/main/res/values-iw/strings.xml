@@ -34,4 +34,6 @@
     <string name="filters_fragment_end_time">שעת סיום</string>
     <string name="filters_fragment_today">היום</string>
     <string name="filters_fragment_cross_location_button">הצלבת מיקום</string>
+    <string name="fragment_confirmation_code_share_MOH">שתף עם משרד הבריאות</string>
+    <string name="fragment_confirmation_code_hint">הכנס קוד משרד הבריאות</string>
 </resources>

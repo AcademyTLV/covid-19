@@ -36,6 +36,10 @@
     <string name="positive_location_permission_button">כן, אני מעוניין</string>
     <string name="decline_permission_bottom_sheet_dialog_btn">לא ניתן להשתמש באפליקציה ללא הרשאת מיקום</string>
     <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
+    <string name="fragment_confirmation_code_explanation">שתפו את המקומות בהם שהיתם עם משרד הבריאות כדי שניתן יהיה לאתר במהירות חולים נוספים. מערכת צבע כתום תשתמש באופן אנונימי במיקומים כדי להתריע לחולים פוטנציאליים. כדי לשתף יש להכניס את קוד האימות שקיבלתם יחד עם תוצאות הבדיקה.</string>
+    <string name="fragment_confirmation_code_disclaimer">*חשוב להדגיש שלאפליקציית צבע כתום אין גישה בשום שלב לפרטי הזיהוי של המשתמשים</string>
+    <string name="fragment_confirmation_code_share_MOH">שתף עם משרד הבריאות</string>
+    <string name="fragment_confirmation_code_hint">הכנס קוד משרד הבריאות</string>
     <!--    <string name="title_activity_maps">Map</string>-->
     <!--    <string name="btn_login_to_google">Login To Google</string>-->
     <!--    <string name="channel_name">General Channel</string>-->
