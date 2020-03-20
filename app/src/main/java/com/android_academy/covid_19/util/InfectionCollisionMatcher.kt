@@ -11,7 +11,7 @@ interface InfectionCollisionMatcher {
         myLocations: List<UserLocationModel>,
         timeThreshold: Long,
         distanceThreshold: Int
-    ): List<UserLocationModel>
+    ): List<Pair<UserLocationModel, InfectedLocationModel>>
 }
 
 class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
@@ -21,13 +21,13 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         myLocations: List<UserLocationModel>,
         timeThreshold: Long,
         distanceThreshold: Int
-    ): List<UserLocationModel> {
-        val matches = mutableListOf<UserLocationModel>()
+    ): List<Pair<UserLocationModel, InfectedLocationModel>> {
+        val matches = mutableListOf<Pair<UserLocationModel,InfectedLocationModel>>()
         myLocations.forEach { myLocation ->
             coronaModels.forEach { corona ->
                 if (isTimeColliding(myLocation, corona, timeThreshold) &&
                     isLocationColliding(myLocation, corona, distanceThreshold)
-                ) matches.add(myLocation)
+                ) matches.add(myLocation to corona)
             }
         }
         return matches

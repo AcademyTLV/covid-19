@@ -3,6 +3,7 @@
 package com.android_academy.covid_19.di.module
 
 import com.android_academy.covid_19.db.CodeOrangeDB
+import com.android_academy.covid_19.db.dao.CollisionLocationsDao
 import com.android_academy.covid_19.db.dao.InfectionLocationsDao
 import com.android_academy.covid_19.db.dao.UserLocationsDao
 import com.android_academy.covid_19.db.dao.UserMetaDataDao
@@ -25,5 +26,9 @@ val dbModule = module {
 
     factory<UserLocationsDao> {
         get<CodeOrangeDB>().userLocationsDao()
+    }
+
+    factory<CollisionLocationsDao> {
+        get<CodeOrangeDB>().collisionLocationsDao()
     }
 }

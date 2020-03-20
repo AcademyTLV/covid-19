@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
+import timber.log.Timber
 
 interface MapManager : OnMapReadyCallback {
 
@@ -75,6 +76,7 @@ class MapManagerImpl(
     override fun onMyLocationsChanged(markerOptions: List<LocationMarkerData>?) {
         markerOptions?.forEach { options ->
             myLocations[options.id]?.remove()
+            Timber.d("[MapManagerImpl], onMyLocationsChanged(): adding user location marker $options")
             myLocations[options.id] = map.addMarker(createMyLocationMarkerOptions(options))
         }
     }

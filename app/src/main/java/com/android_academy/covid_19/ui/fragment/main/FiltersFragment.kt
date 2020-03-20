@@ -89,6 +89,10 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
             // TODO: add open bottom sheet to change status
         }
 
+        crossLocationButton.setOnClickListener {
+            mainFilterViewModel.onLocationMatchButtonClick()
+        }
+
         // emergency_call.setOnClickListener {
         //     val intent = Intent(Intent.ACTION_DIAL)
         //     intent.data = Uri.parse("tel:101")

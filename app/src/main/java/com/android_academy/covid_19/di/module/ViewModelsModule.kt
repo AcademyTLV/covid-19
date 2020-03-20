@@ -19,7 +19,8 @@ val viewModelsModule = module {
             hasLocationPermissions = hasLocationPermission,
             app = androidApplication(),
             usersLocationRepo = get(),
-            infectionDataRepo = get()
+            infectionDataRepo = get(),
+            collisionDataRepo = get()
         )
     }
 

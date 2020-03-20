@@ -6,10 +6,10 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.android_academy.covid_19.repository.CollisionDataRepo
 import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.repository.InfectionDataRepo
 import com.android_academy.covid_19.repository.UsersLocationRepoImpl
-import com.android_academy.covid_19.ui.notification.CodeOrangeNotificationManager
 import com.android_academy.covid_19.util.InfectionCollisionMatcher
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +30,7 @@ class InfectedLocationsWorker(
 
     private val collisionMatcher by inject<InfectionCollisionMatcher>()
 
-    private val notificationManager: CodeOrangeNotificationManager by inject()
+    private val collisionDataRepo: CollisionDataRepo by inject()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
@@ -57,8 +57,8 @@ class InfectedLocationsWorker(
 
             // if matches show notification
             if (collidingUserLocations.isNotEmpty()) {
-                Timber.d("[$logTag], doWork(): collision is not empty. showing notification")
-                notificationManager.showCollisionFound(collidingUserLocations)
+                Timber.d("[$logTag], doWork(): collision is not empty. calling for repo to take care")
+                collisionDataRepo.onCollisionsFound(collidingUserLocations)
             }
 
             Result.success()
@@ -74,6 +74,7 @@ class InfectedLocationsWorker(
 
         @JvmStatic
         fun schedule() {
+            Timber.d("[InfectedLocationsWorker], schedule(): going to ignite download data")
             val worker = PeriodicWorkRequestBuilder<InfectedLocationsWorker>(
                 DEFAULT_MIN_INTERVAL,
                 TimeUnit.MINUTES

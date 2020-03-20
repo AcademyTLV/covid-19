@@ -6,7 +6,9 @@ import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.android_academy.covid_19.db.dao.CollisionLocationsDao
 import com.android_academy.covid_19.db.dao.InfectionLocationsDao
+import com.android_academy.covid_19.db.dao.RoomCollisionLocationEntity
 import com.android_academy.covid_19.db.dao.RoomInfectedLocationEntity
 import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
 import com.android_academy.covid_19.db.dao.RoomUserMetaDataEntity
@@ -16,8 +18,8 @@ import com.android_academy.covid_19.db.util.Converters
 import com.android_academy.covid_19.db.util.DBConstants.DB_NAME
 
 @Database(
-    entities = [RoomInfectedLocationEntity::class, RoomUserLocationEntity::class, RoomUserMetaDataEntity::class],
-    version = 7
+    entities = [RoomInfectedLocationEntity::class, RoomUserLocationEntity::class, RoomUserMetaDataEntity::class, RoomCollisionLocationEntity::class],
+    version = 8
 )
 @TypeConverters(Converters::class)
 abstract class CodeOrangeDB : RoomDatabase() {
@@ -40,4 +42,5 @@ abstract class CodeOrangeDB : RoomDatabase() {
     abstract fun infectionPointsDao(): InfectionLocationsDao
     abstract fun userLocationsDao(): UserLocationsDao
     abstract fun userMetaDataDao(): UserMetaDataDao
+    abstract fun collisionLocationsDao(): CollisionLocationsDao
 }
