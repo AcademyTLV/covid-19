@@ -60,5 +60,10 @@
     <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
     <string name="need_storage_permission">יש לאשר גישה לאחסון במכשיר</string>
     <string name="status_dialog_title">Change status</string>
+    <string name="status_fragment_no_check">לא נבדקתי</string>
+    <string name="status_fragment_check_and_positive">נבדקתי ואובחנתי כנשא של COVID-19</string>
+    <string name="status_fragment_check_and_waiting">נבדקתי ומחכה לתשובה</string>
+    <string name="status_fragment_check_and_negative">נבדקתי ולא אובחנתי כנשא</string>
+    <string name="button_ok">אישור</string>
 
 </resources>
