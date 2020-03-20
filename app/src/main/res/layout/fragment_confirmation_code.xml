@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
+        android:id="@+id/locationIllustrationImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/explanation"
+        android:id="@+id/explanationText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="34dp"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@+id/confirmationCodeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
+        app:layout_constraintTop_toBottomOf="@+id/locationIllustrationImage"
         tools:text="@string/fragment_confirmation_code_explanation" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -55,7 +55,7 @@
         app:strokeWidth="2dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/disclaimer"
+        android:id="@+id/disclaimerText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
