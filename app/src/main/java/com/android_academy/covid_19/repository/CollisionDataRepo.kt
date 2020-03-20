@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 
 interface CollisionDataRepo {
     fun onCollisionsFound(collidingUserLocations: List<Pair<UserLocationModel, InfectedLocationModel>>)
-    fun getCollisions() : Flow<List<RoomCollisionLocationEntity>>
+    fun getCollisions(): Flow<List<RoomCollisionLocationEntity>>
+    fun deleteAll()
 }
 
 class CollisionDataRepoImpl(
@@ -22,62 +23,78 @@ class CollisionDataRepoImpl(
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    override fun onCollisionsFound(collidingUserLocations: List<Pair<UserLocationModel, InfectedLocationModel>>) {
+    override fun onCollisionsFound(foundCollidingUserLocations: List<Pair<UserLocationModel, InfectedLocationModel>>) {
         scope.launch {
             var isNewCollisions = false
-            collidingUserLocations.forEach { collisions ->
-                val collisionLocationsList = collisionLocationsDao.getCollisionLocationsList()
-                collisionLocationsList.forEach { existingCollisions ->
-                    isNewCollisions = addCollisionToStorage(collisions, existingCollisions)
-                }
+            val existingCollisionList = collisionLocationsDao.getCollisionLocationsList()
+
+            foundCollidingUserLocations.forEach { collisions ->
+                isNewCollisions = addCollisionToStorage(collisions, existingCollisionList)
             }
 
-            if(isNewCollisions) notificationManager.showCollisionFound()
+            if (isNewCollisions) notificationManager.showCollisionFound()
         }
     }
 
-    override fun getCollisions(): Flow<List<RoomCollisionLocationEntity>> = collisionLocationsDao.getCollisionLocations()
+    override fun getCollisions(): Flow<List<RoomCollisionLocationEntity>> =
+        collisionLocationsDao.getCollisionLocations()
+
+    override fun deleteAll() {
+        collisionLocationsDao.deleteAll()
+    }
 
     private fun addCollisionToStorage(
         collisions: Pair<UserLocationModel, InfectedLocationModel>,
-        existingCollisions: RoomCollisionLocationEntity
+        existingCollisions: List<RoomCollisionLocationEntity>
     ): Boolean {
-        var isAdded = false
         val userLocation = collisions.first
         val infectedLocation = collisions.second
-        if (isDifferent(userLocation, existingCollisions)) {
-            val location = RoomCollisionLocationEntity(
-                user_lat = userLocation.lat,
-                user_lon = userLocation.lon,
-                user_accuracy = userLocation.accuracy,
-                user_speed = userLocation.speed,
-                user_time = userLocation.time,
-                user_provider = userLocation.provider,
-                user_name = userLocation.name,
-                user_timeStart = userLocation.timeStart,
-                user_timeEnd = userLocation.timeEnd,
-                infected_startTime = infectedLocation.startTime,
-                infected_endTime = infectedLocation.startTime,
-                infected_lat = infectedLocation.lat,
-                infected_lon = infectedLocation.lon,
-                infected_radius = infectedLocation.radius,
-                infected_name = infectedLocation.name,
-                comments = infectedLocation.comments
-            )
-            collisionLocationsDao.saveCollisionLocation(location)
+        var isAdded = false
+        if (existingCollisions.isEmpty()) {
+            saveCollision(userLocation, infectedLocation)
+            isAdded = true
+        } else if (isDifferent(userLocation, existingCollisions)) {
+            saveCollision(userLocation, infectedLocation)
             isAdded = true
         }
         return isAdded
     }
 
+    private fun saveCollision(
+        userLocation: UserLocationModel,
+        infectedLocation: InfectedLocationModel
+    ) {
+        val location = RoomCollisionLocationEntity(
+            user_lat = userLocation.lat,
+            user_lon = userLocation.lon,
+            user_accuracy = userLocation.accuracy,
+            user_speed = userLocation.speed,
+            user_time = userLocation.time,
+            user_provider = userLocation.provider,
+            user_name = userLocation.name,
+            user_timeStart = userLocation.timeStart,
+            user_timeEnd = userLocation.timeEnd,
+            infected_startTime = infectedLocation.startTime,
+            infected_endTime = infectedLocation.startTime,
+            infected_lat = infectedLocation.lat,
+            infected_lon = infectedLocation.lon,
+            infected_radius = infectedLocation.radius,
+            infected_name = infectedLocation.name,
+            comments = infectedLocation.comments
+        )
+        collisionLocationsDao.saveCollisionLocation(location)
+    }
+
     private fun isDifferent(
         newUsersCollisions: UserLocationModel,
-        existingCollisions: RoomCollisionLocationEntity
+        existingCollisions: List<RoomCollisionLocationEntity>
     ): Boolean {
-        return newUsersCollisions.lat != existingCollisions.user_lat
-            || newUsersCollisions.lon != existingCollisions.user_lon
-            || newUsersCollisions.time != existingCollisions.user_time
-            || newUsersCollisions.timeStart != existingCollisions.user_timeStart
-            || newUsersCollisions.timeEnd != existingCollisions.user_timeEnd
+        return existingCollisions.any { existingCollision ->
+            newUsersCollisions.lat == existingCollision.user_lat
+                && newUsersCollisions.lon == existingCollision.user_lon
+                && newUsersCollisions.time == existingCollision.user_time
+                && newUsersCollisions.timeStart == existingCollision.user_timeStart
+                && newUsersCollisions.timeEnd == existingCollision.user_timeEnd
+        }
     }
 }

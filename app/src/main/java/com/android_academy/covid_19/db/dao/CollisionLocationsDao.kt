@@ -21,4 +21,7 @@ interface CollisionLocationsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveCollisionLocation(location: RoomCollisionLocationEntity)
+
+    @Query("DELETE FROM ${DBConstants.COLLISION_LOCATIONS_TABLE_NAME}")
+    fun deleteAll()
 }

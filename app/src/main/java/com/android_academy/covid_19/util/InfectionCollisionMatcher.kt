@@ -3,6 +3,8 @@ package com.android_academy.covid_19.util
 import android.location.Location
 import com.android_academy.covid_19.network.service.InfectedLocationModel
 import com.android_academy.covid_19.providers.UserLocationModel
+import timber.log.Timber
+import java.util.Date
 
 interface InfectionCollisionMatcher {
 
@@ -61,8 +63,20 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         // val coronaEndTime = DateTime(corona.endTime)
 
         // if location coming from fuse it's has only single time, but from timeline it's actually frame of beginning and end
-        val myStartTime = myLocation.timeStart ?: myLocation.time?.minus(8 * 60_000)
-        val myEndTime = myLocation.timeEnd ?: myLocation.time?.plus(8 * 60_000)
+        if(myLocation.provider == "fake" && corona.startTime == Date(1584144000000) && corona.name == "גן משחקים, בן גוריון 3, כפר גבירול רחובות"){
+            Timber.d("[InfectionCollisionMatcherImpl], isTimeColliding(): taking care of fake location")
+        }
+        val myStartTime = if(myLocation.timeStart != null && myLocation.timeStart != 0L){
+            myLocation.timeStart
+        } else {
+            myLocation.time?.minus(8 * 60_000)
+        }
+
+        val myEndTime = if(myLocation.timeEnd != null && myLocation.timeEnd != 0L){
+            myLocation.timeStart
+        } else {
+            myLocation.time?.plus(8 * 60_000)
+        }
 
         val coronaStartTime = corona.startTime.time - timeThreshold * 60 * 1_000
         val coronaEndTime = corona.endTime.time + timeThreshold * 60 * 1_000

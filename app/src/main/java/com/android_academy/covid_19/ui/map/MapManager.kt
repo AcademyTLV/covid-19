@@ -86,8 +86,6 @@ class MapManagerImpl(
             return
         }
 
-        map.clear()
-
         markerOptions?.forEach { options ->
             coronaLocations[options.id]?.let {
                 it.remove()
