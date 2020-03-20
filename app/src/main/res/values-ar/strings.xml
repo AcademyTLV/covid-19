@@ -39,4 +39,10 @@
     <string name="need_storage_permission">"الرجاء إتاحة الإمكانيّة للوصول إلى ذاكرة التخزين في الجهاز"</string>
     <string name="timeline_dialog_description">"حتى نتمكن من الملاءمة بين مسار فيروس كورونا وموقعك، نحتاج إلى البيانات من مخطط جوجل الزمني لآخر 14 يومًا، وسيتم تنزيل هذه المعلومات فقط على جهازك وتخزينها فقط ولن يتم إرسالها أو مشاركتها مع أي شخص. في اللحظة التي تضغط فيها على الزر سنفتح المتصفح. إذا كنت متصلاً من خلال حساب جوجل الخاص بك، فسنقوم بتنزيل الملف على جهازك وسنطلب الإذن لقراءة الملف من دليل التنزيلات من جهازك."</string>
     <string name="location_dialog_description_short">"لتتمكن من الربط بين مسار فيروس كورونا ومسارك، الرجاء إتاحة إمكانيّة الوصول إلى مكان تواجدك. سيتم التحقق من موقعك كل 15 دقيقة فقط وسيتم تخزينه على جهازك فقط بطريقة آمنة. لن يتم إرسال البيانات إلى أي شخص تلقائيًا ولا حتى إلى وزارة الصحة."</string>
+    <string name="status_dialog_title">"تغيير الحالة"</string>
+    <string name="status_fragment_no_check">"لم يتم التشخيص"</string>
+    <string name="status_fragment_check_and_waiting">"تم التشخيص وبإنتظار الإجابة"</string>
+    <string name="status_fragment_check_and_negative">"تم التشخيص والنتيجة سلبية"</string>
+    <string name="status_fragment_check_and_positive">"تم التشخيص ولدي الكورونا Covid-19"</string>
+    <string name="button_ok">"حسنًا"</string>
 </resources>
