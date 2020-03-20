@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_fragment_change_status"
+    android:padding="32dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.ChangeStatusFragment">
+
+    <ImageView
+        android:id="@+id/imageChangeStatusClose"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginEnd="24dp"
+        app:layout_goneMarginTop="24dp"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/changeStatusTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/status_dialog_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageChangeStatusClose" />
+
+    <RadioGroup
+        android:id="@+id/changeStatusRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="end"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeStatusTitle">
+
+        <RadioButton
+            android:id="@+id/statusCheckAndPositive"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radio_button_intro"
+            android:text="@string/status_fragment_check_and_positive" />
+
+        <RadioButton
+            android:id="@+id/statusCheckAndNegative"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radio_button_intro"
+            android:text="@string/status_fragment_check_and_negative" />
+
+        <RadioButton
+            android:id="@+id/statusCheckAndWaiting"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radio_button_intro"
+            android:text="@string/status_fragment_check_and_waiting"
+            />
+
+        <RadioButton
+            android:id="@+id/statusNoCheck"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radio_button_intro"
+            android:text="@string/status_fragment_no_check"
+            />
+
+    </RadioGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/changeStatusFragmentOkButton"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="16dp"
+        style="@style/IntroNextButtonStyle"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_ok"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/gray90"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:layout_constraintTop_toBottomOf="@+id/changeStatusRadioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

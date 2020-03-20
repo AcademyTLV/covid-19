@@ -86,7 +86,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         }
 
         change_status.setOnClickListener {
-            // TODO: add open bottom sheet to change status
+            mainFilterViewModel.showChangeStatus()
         }
 
         // emergency_call.setOnClickListener {

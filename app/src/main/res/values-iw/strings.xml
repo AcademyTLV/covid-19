@@ -59,5 +59,6 @@
     <string name="decline_permission_bottom_sheet_dialog_btn">לא ניתן להשתמש באפליקציה ללא הרשאת מיקום</string>
     <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
     <string name="need_storage_permission">יש לאשר גישה לאחסון במכשיר</string>
+    <string name="status_dialog_title">Change status</string>
 
 </resources>

@@ -55,5 +55,11 @@
         Your location will be taken only every 15 minutes and will be stored on the device only in a secured way.\n
         The data will be not be sent to anyone automatically not even to the Health Ministry.
     </string>
+    <string name="status_dialog_title">Change status</string>
+    <string name="status_fragment_no_check">Didn\'t check</string>
+    <string name="status_fragment_check_and_waiting">Got checked and waiting for answer</string>
+    <string name="status_fragment_check_and_negative">Got checked and the result is negative</string>
+    <string name="status_fragment_check_and_positive">Got checked and I have Covid-19</string>
+    <string name="button_ok">Ok</string>
 </resources>
 
