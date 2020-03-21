@@ -35,7 +35,7 @@
     <string name="filters_fragment_start_time">Start time</string>
     <string name="filters_fragment_end_time">End time</string>
     <string name="filters_fragment_today">Today</string>
-    <string name="filters_fragment_cross_location_button">Location crossing</string>
+    <string name="filters_fragment_cross_location_button">Matched locations</string>
     <string name="storage_dialog_title">Allow permission to storage</string>
     <string name="storage_dialog_subtitle">To be able to download and to use your location history we need permission to storage of the device to save the file</string>
     <string name="storage_dialog_positive_btn">Open settings</string>
@@ -61,5 +61,14 @@
     <string name="status_fragment_check_and_negative">Got checked and the result is negative</string>
     <string name="status_fragment_check_and_positive">Got checked and I have Covid-19</string>
     <string name="button_ok">Ok</string>
+    <string name="no_collision_title">No exposure to corona sick persons</string>
+    <string name="no_collision_text">if you have detected any symptoms (fever, dry cough) you should stay in isolation and contact MADA</string>
+    <string name="reach_health_authority">More details - Ministry of Health Website</string>
+    <string name="collision_explanation">You may have been exposed to the Corona virus area.</string>
+    <string name="explanation_substring">Please note, the message does not say you are infected.</string>
+    <string name="collision_secondary_explanation">Steps to take right now:</string>
+    <string name="collision_secondary_sub_explanation">Get into isolation, and measure body heat.\nIf you have any symptoms (fever, dry cough) you should contact MADA.</string>
+    <string name="ministry_of_health">Ministry of health</string>
+    <string name="call_101">Call 101</string>
 </resources>
 

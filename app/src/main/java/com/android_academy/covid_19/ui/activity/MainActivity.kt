@@ -23,6 +23,7 @@ import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSet
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePermissionGranted
 import com.android_academy.covid_19.ui.fragment.ChangeStatusFragment
+import com.android_academy.covid_19.ui.fragment.InfectionMatchFragment
 import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
 import com.android_academy.covid_19.ui.fragment.TimelinePermissionFragment
 import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
@@ -201,6 +202,13 @@ class MainActivity : AppCompatActivity() {
             }
             StoragePermissionGranted -> {
                 viewModel.onTimelineTriggerClicked()
+            }
+
+            MainNavigationTarget.InfectionMatchGallery -> {
+                supportFragmentManager.findFragmentByTag(InfectionMatchFragment.TAG)
+                    ?.run { return@Observer }
+                InfectionMatchFragment.newInstance()
+                    .show(supportFragmentManager, InfectionMatchFragment.TAG)
             }
         }
     }

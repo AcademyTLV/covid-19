@@ -10,10 +10,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android_academy.covid_19.CovidApplication
 import com.android_academy.covid_19.R
+import com.android_academy.covid_19.providers.CollisionLocationModel
 import com.android_academy.covid_19.providers.InfectedLocationsWorker
 import com.android_academy.covid_19.providers.LocationUpdateWorker
 import com.android_academy.covid_19.providers.TimelineProvider
 import com.android_academy.covid_19.providers.TimelineProviderImpl.Companion.TIMELINE_URL
+import com.android_academy.covid_19.providers.fromRoomEntity
+import com.android_academy.covid_19.repository.CollisionDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepo
 import com.android_academy.covid_19.repository.UserMetaDataRepo
 import com.android_academy.covid_19.repository.UsersLocationRepo
@@ -42,11 +45,13 @@ sealed class MainNavigationTarget {
     object LocationSettingsScreen : MainNavigationTarget()
     object StoragePermissionGranted : MainNavigationTarget()
     object ChangeStatusBottomSheet: MainNavigationTarget()
+    object InfectionMatchGallery : MainNavigationTarget()
 }
 
 interface FilterDataModel {
     fun setDateTimeFilter(dateTimeStart: Date, dateTimeEnd: Date)
     fun showChangeStatus()
+    fun onLocationMatchButtonClick()
 }
 
 interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
@@ -54,6 +59,7 @@ interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
     val navigation: LiveData<MainNavigationTarget>
     val myLocations: LiveData<List<LocationMarkerData>>
     val coronaLocations: LiveData<List<LocationMarkerData>>
+    val collisionLocations: LiveData<List<CollisionLocationModel>>
     val blockingUIVisible: LiveData<Boolean>
     val error: LiveData<Throwable>
     val locationPermissionCheck: LiveData<Boolean>
@@ -87,6 +93,7 @@ class MainViewModelImpl(
     private val timelineProvider: TimelineProvider,
     private val usersLocationRepo: UsersLocationRepo,
     private val infectionDataRepo: InfectionDataRepo,
+    private val collisionDataRepo: CollisionDataRepo,
     private var hasLocationPermissions: Boolean,
     private val app: Application
 ) : AndroidViewModel(app), MainViewModel {
@@ -108,6 +115,8 @@ class MainViewModelImpl(
     override val myLocations = MutableLiveData<List<LocationMarkerData>>()
 
     override val coronaLocations = MutableLiveData<List<LocationMarkerData>>()
+
+    override val collisionLocations = MutableLiveData<List<CollisionLocationModel>>()
 
     override val locationPermissionCheck = SingleLiveEvent<Boolean>()
 
@@ -131,6 +140,7 @@ class MainViewModelImpl(
 
             startObservingMyLocations()
             startObservingCoronaLocations()
+            startObservingCollisionLocations()
 
             // Verify permissions
             if (!hasLocationPermissions) {
@@ -140,6 +150,14 @@ class MainViewModelImpl(
 
             // Request permissions
             locationPermissionCheck.value = true
+        }
+    }
+
+    private fun startObservingCollisionLocations() {
+        viewModelScope.launch {
+            collisionDataRepo.getCollisions().distinctUntilChanged().collect { list ->
+                collisionLocations.value = list.map { fromRoomEntity(it) }
+            }
         }
     }
 
@@ -161,7 +179,6 @@ class MainViewModelImpl(
                                     infectedLocationModel.startTime.before(dateTimeStart) &&
                                         infectedLocationModel.endTime.after(dateTimeEnd)
                                     )
-
                         }
                         .map { infectedLocationModel ->
                             val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
@@ -189,6 +206,7 @@ class MainViewModelImpl(
         myLocationsJob = viewModelScope.launch {
             usersLocationRepo.getUserLocations().distinctUntilChanged()
                 .collect {
+                    Timber.d("[MainViewModelImpl], startObservingMyLocations(): getting location from repo. size: ${it.size}")
                     val markerDatas = it.map { userLocationModel ->
                         val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
                         var dates = dateTimeInstance.format(
@@ -226,6 +244,10 @@ class MainViewModelImpl(
 
     override fun showChangeStatus() {
         navigation.value = MainNavigationTarget.ChangeStatusBottomSheet
+    }
+
+    override fun onLocationMatchButtonClick() {
+        navigation.value = MainNavigationTarget.InfectionMatchGallery
     }
 
     override fun onLoginClick() {

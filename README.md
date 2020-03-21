@@ -13,3 +13,4 @@ Also many thanks to those who contributed to the translation of the app
 | English | Developers | Android Academy |
 | Hebrew | Developers | Android Academy |
 | Arabic | [Nasim Khoury](mailto:nasim@glocaltrans.com) | [GLOCAL - Translation & Content Solutions](www.glocaltrans.com) |
+| Arabic | [Yosif Masarweh](mailto:yosiftbt@gmail.com) |  |

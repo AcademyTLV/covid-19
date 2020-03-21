@@ -9,7 +9,6 @@
     <color name="pale_grey">#ece6fe</color>
     <color name="pale_blue">#e4e5e7</color>
     <color name="purpley">#7a4dff</color>
-    <color name="dark_blue_grey">#0c1831</color>
     <color name="black">#000000</color>
     <color name="orange">#ffc063</color>
     <color name="orange_30">#4dffc063</color>
@@ -17,4 +16,5 @@
     <color name="color_corona_circle">#A9ADFC</color>
     <color name="color_corona_stroke">@android:color/holo_red_dark</color>
     <color name="background">@android:color/white</color>
+    <color name="dark_blue_grey">#0c1831</color>
 </resources>

@@ -6,10 +6,11 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.android_academy.covid_19.repository.UsersLocationRepo
+import com.android_academy.covid_19.db.dao.RoomUserLocationEntity
+import com.android_academy.covid_19.repository.CollisionDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepo
+import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.repository.UsersLocationRepoImpl
-import com.android_academy.covid_19.ui.notification.CodeOrangeNotificationManager
 import com.android_academy.covid_19.util.InfectionCollisionMatcher
 import com.android_academy.covid_19.util.logTag
 import kotlinx.coroutines.Dispatchers
@@ -30,11 +31,12 @@ class InfectedLocationsWorker(
 
     private val collisionMatcher by inject<InfectionCollisionMatcher>()
 
-    private val notificationManager: CodeOrangeNotificationManager by inject()
+    private val collisionDataRepo: CollisionDataRepo by inject()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             Timber.d("Starting infected location work")
+
             // get my last location
             locationRepo.getLocation()
 
@@ -57,8 +59,8 @@ class InfectedLocationsWorker(
 
             // if matches show notification
             if (collidingUserLocations.isNotEmpty()) {
-                Timber.d("[$logTag], doWork(): collision is not empty. showing notification")
-                notificationManager.showCollisionFound(collidingUserLocations)
+                Timber.d("[$logTag], doWork(): collision is not empty. calling for repo to take care")
+                collisionDataRepo.onCollisionsFound(collidingUserLocations)
             }
 
             Result.success()
@@ -68,12 +70,45 @@ class InfectedLocationsWorker(
         }
     }
 
+    private suspend fun addDummyLocation() {
+        locationRepo.saveLocation(
+            RoomUserLocationEntity(
+                null,
+                31.8942296760001,
+                34.7741629940001,
+                0F,
+                0F,
+                1584144000000,
+                "fake",
+                "",
+                0,
+                0
+            )
+        )
+
+        locationRepo.saveLocation(
+            RoomUserLocationEntity(
+                null,
+                31.9740224,
+                34.7794211,
+                0F,
+                0F,
+                1584230400000,
+                "fake",
+                "",
+                0,
+                0
+            )
+        )
+    }
+
     companion object {
         private const val TAG = "InfectedLocationsWorker"
         private const val DEFAULT_MIN_INTERVAL = 60L
 
         @JvmStatic
         fun schedule() {
+            Timber.d("[InfectedLocationsWorker], schedule(): going to ignite download data")
             val worker = PeriodicWorkRequestBuilder<InfectedLocationsWorker>(
                 DEFAULT_MIN_INTERVAL,
                 TimeUnit.MINUTES
