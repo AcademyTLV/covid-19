@@ -36,7 +36,10 @@ class TimelineProviderImpl(
     override fun checkForExistingKMLFiles() {
         scope.launch(Dispatchers.IO) {
 
-            if (isTimelineFresh()) return@launch
+            if (isTimelineFresh()) {
+                Timber.d("[TimelineProviderImpl], checkForExistingKMLFiles(): Timeline updated recently. No need to re-import")
+                return@launch
+            }
 
             usersLocationRepo.cleanOldTimeLineProviderLocation()
 

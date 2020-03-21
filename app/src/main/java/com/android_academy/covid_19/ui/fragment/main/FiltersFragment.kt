@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.FilterDataModel
 import com.android_academy.covid_19.ui.activity.MainViewModelImpl
+import com.android_academy.covid_19.util.setSafeOnClickListener
 import kotlinx.android.synthetic.main.filters_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -87,6 +88,10 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
 
         change_status.setOnClickListener {
             // TODO: add open bottom sheet to change status
+        }
+
+        crossLocationButton.setSafeOnClickListener {
+            mainFilterViewModel.onLocationMatchButtonClick()
         }
 
         // emergency_call.setOnClickListener {

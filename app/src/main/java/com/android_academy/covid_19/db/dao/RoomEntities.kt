@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.android_academy.covid_19.db.util.DBConstants.INFECTED_LOCATIONS_TABLE_NAME
+import com.android_academy.covid_19.db.util.DBConstants.COLLISION_LOCATIONS_TABLE_NAME
 import com.android_academy.covid_19.db.util.DBConstants.USERS_LOCATIONS_TABLE_NAME
 import com.android_academy.covid_19.db.util.DBConstants.USERS_METADATA_TABLE_NAME
 import com.android_academy.covid_19.network.service.InfectedLocationModel
@@ -60,6 +61,46 @@ data class RoomUserLocationEntity(
     val timeStart: Long? = null,
     @ColumnInfo(name = "timeEnd")
     val timeEnd: Long? = null
+)
+
+@Entity(tableName = COLLISION_LOCATIONS_TABLE_NAME)
+data class RoomCollisionLocationEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null,
+    @ColumnInfo(name = "user_lat")
+    val user_lat: Double,
+    @ColumnInfo(name = "user_lon")
+    val user_lon: Double,
+    @ColumnInfo(name = "user_accuracy")
+    val user_accuracy: Float,
+    @ColumnInfo(name = "user_speed")
+    val user_speed: Float,
+    @ColumnInfo(name = "user_time")
+    val user_time: Long? = null,
+    @ColumnInfo(name = "user_provider")
+    val user_provider: String,
+    @ColumnInfo(name = "user_name")
+    val user_name: String? = null,
+    @ColumnInfo(name = "user_timeStart")
+    val user_timeStart: Long? = null,
+    @ColumnInfo(name = "user_timeEnd")
+    val user_timeEnd: Long? = null,
+    @ColumnInfo(name = "infected_start_time")
+    val infected_startTime: Date,
+    @ColumnInfo(name = "infected_end_time")
+    val infected_endTime: Date,
+    @ColumnInfo(name = "infected_lat")
+    val infected_lat: Double,
+    @ColumnInfo(name = "infected_lon")
+    val infected_lon: Double,
+    @ColumnInfo(name = "infected_radius")
+    val infected_radius: Double,
+    @ColumnInfo(name = "infected_name")
+    val infected_name: String?,
+    @ColumnInfo(name = "infected_comments")
+    val comments: String?,
+    @ColumnInfo(name = "ack_by_user")
+    val isAcknowledged : Boolean = false
 )
 
 @Entity(tableName = USERS_METADATA_TABLE_NAME)

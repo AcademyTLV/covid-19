@@ -2,6 +2,8 @@
 
 package com.android_academy.covid_19.di.module
 
+import com.android_academy.covid_19.repository.CollisionDataRepo
+import com.android_academy.covid_19.repository.CollisionDataRepoImpl
 import com.android_academy.covid_19.repository.UserMetaDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepoImpl
@@ -17,6 +19,13 @@ val reposModule = module {
         InfectionDataRepoImpl(
             dao = get(),
             service = get()
+        )
+    }
+
+    single<CollisionDataRepo> {
+        CollisionDataRepoImpl(
+            notificationManager = get(),
+            collisionLocationsDao = get()
         )
     }
 
