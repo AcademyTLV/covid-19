@@ -6,37 +6,35 @@
     android:id="@+id/filters_fragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/background"
     android:elevation="12dp">
 
     <RelativeLayout
         android:id="@+id/change_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/txt_change_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="11dp"
-            android:text="@string/filters_fragment_change_status_button"
-            android:textColor="@color/dark_blue_grey"
-            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ic_change_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_toEndOf="@id/txt_change_status"
             android:src="@drawable/ic_outline" />
 
-
+        <TextView
+            android:id="@+id/txt_change_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/ic_change_status"
+            android:text="@string/filters_fragment_change_status_button"
+            android:textColor="@color/dark_blue_grey"
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -44,8 +42,8 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:text="@string/filters_fragment_cross_location_button"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
@@ -53,7 +51,7 @@
         android:textSize="16sp"
         app:cornerRadius="@dimen/button_corner_radius"
         app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/orange"
         app:strokeWidth="2dp" />
@@ -69,48 +67,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/change_status" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/change_status"
+        app:layout_constraintStart_toStartOf="@+id/change_status"
         app:layout_constraintTop_toBottomOf="@id/view">
-
-        <TextView
-            android:id="@+id/pick_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="11dp"
-            android:textColor="@color/dark_blue_grey"
-            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/ic_calender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_calendar" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/pick_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="11dp"
+            android:layout_toEndOf="@id/ic_calender"
+            android:textColor="@color/dark_blue_grey"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@id/view"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="@id/view"
         app:layout_constraintTop_toBottomOf="@id/view">
 
-
         <TextView
+            android:id="@+id/todayTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="3dp"
-            android:layout_marginBottom="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@id/ic_today"
             android:text="@string/filters_fragment_today"
             android:textColor="@color/purpley" />
 
@@ -118,45 +118,48 @@
             android:id="@+id/ic_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_refresh" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/detailed_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:textColor="@color/dark_blue_grey"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/time"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/today">
-
 
         <TextView
             android:id="@+id/start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:textColor="@color/dark_blue_grey" />
 
+
         <TextView
+            android:id="@+id/dash_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="-"
             android:textColor="@color/dark_blue_grey" />
 
@@ -164,9 +167,8 @@
             android:id="@+id/end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:textColor="@color/dark_blue_grey" />
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
