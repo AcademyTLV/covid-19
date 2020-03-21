@@ -25,14 +25,14 @@ class CollisionDataRepoImpl(
 
     override fun onCollisionsFound(foundCollidingUserLocations: List<Pair<UserLocationModel, InfectedLocationModel>>) {
         scope.launch {
-            var isNewCollisions = false
+            var isNewCollisionAdded = false
             val existingCollisionList = collisionLocationsDao.getCollisionLocationsList()
 
             foundCollidingUserLocations.forEach { collisions ->
-                isNewCollisions = addCollisionToStorage(collisions, existingCollisionList)
+                isNewCollisionAdded = isNewCollisionAdded || addCollisionToStorage(collisions, existingCollisionList)
             }
 
-            if (isNewCollisions) notificationManager.showCollisionFound()
+            if (isNewCollisionAdded) notificationManager.showCollisionFound()
         }
     }
 

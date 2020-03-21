@@ -73,7 +73,7 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         }
 
         val myEndTime = if(myLocation.timeEnd != null && myLocation.timeEnd != 0L){
-            myLocation.timeStart
+            myLocation.timeEnd
         } else {
             myLocation.time?.plus(8 * 60_000)
         }

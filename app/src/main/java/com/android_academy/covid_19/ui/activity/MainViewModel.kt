@@ -164,19 +164,18 @@ class MainViewModelImpl(
             infectionDataRepo.getInfectionLocations().distinctUntilChanged()
                 .collect {
                     val markerDatas = it.filter { infectedLocationModel ->
-                            // (
-                            //     infectedLocationModel.startTime.after(dateTimeStart) &&
-                            //         infectedLocationModel.startTime.before(dateTimeEnd)
-                            //     ) ||
-                            //     (
-                            //         infectedLocationModel.endTime.after(dateTimeStart) &&
-                            //             infectedLocationModel.endTime.before(dateTimeEnd)
-                            //         ) ||
-                            //     (
-                            //         infectedLocationModel.startTime.before(dateTimeStart) &&
-                            //             infectedLocationModel.endTime.after(dateTimeEnd)
-                            //         )
-true
+                            (
+                                infectedLocationModel.startTime.after(dateTimeStart) &&
+                                    infectedLocationModel.startTime.before(dateTimeEnd)
+                                ) ||
+                                (
+                                    infectedLocationModel.endTime.after(dateTimeStart) &&
+                                        infectedLocationModel.endTime.before(dateTimeEnd)
+                                    ) ||
+                                (
+                                    infectedLocationModel.startTime.before(dateTimeStart) &&
+                                        infectedLocationModel.endTime.after(dateTimeEnd)
+                                    )
                         }
                         .map { infectedLocationModel ->
                             val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
