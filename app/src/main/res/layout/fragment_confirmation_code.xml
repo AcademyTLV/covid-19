@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/locationIllustrationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/ilustration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/explanationText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="start"
+        android:lineSpacingExtra="8sp"
+        android:textColor="@color/dark_blue_grey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/confirmationCodeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationIllustrationImage"
+        tools:text="@string/fragment_confirmation_code_explanation" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/confirmationCodeButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="512dp"
+        android:inputType="number"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="44dp"
+        android:hint="@string/fragment_confirmation_code_hint"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/gray90"
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:layout_constraintBottom_toTopOf="@+id/disclaimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/orange"
+        app:strokeWidth="2dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/disclaimerText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="44dp"
+        android:gravity="start"
+        android:lineSpacingExtra="8sp"
+        android:textColor="@color/dark_blue_grey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/shareMOHButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/fragment_confirmation_code_disclaimer" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shareMOHButton"
+        style="@style/IntroNextButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/fragment_confirmation_code_share_MOH"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/gray90"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

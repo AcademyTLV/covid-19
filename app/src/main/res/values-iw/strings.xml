@@ -49,6 +49,8 @@
     <string name="filters_fragment_end_time">שעת סיום</string>
     <string name="filters_fragment_today">היום</string>
     <string name="filters_fragment_cross_location_button">הצלבת מיקום</string>
+    <string name="fragment_confirmation_code_share_MOH">שתף עם משרד הבריאות</string>
+    <string name="fragment_confirmation_code_hint">הכנס קוד משרד הבריאות</string>
 
     <string name="storage_dialog_title">אשר גישה לאחסון</string>
     <string name="storage_dialog_subtitle">על מנת להוריד ולהשתמש בהיסטוריית מיקומים שלך, יש לאשר גישה לאחסון הטלפון</string>
@@ -75,6 +77,4 @@
     <string name="collision_secondary_sub_explanation">להיכנס לבידוד, ולמדוד את חום הגוף.\nאם זיהית תסמינים (חום, שיעול יבש) יש לפנות למד״א.</string>
     <string name="ministry_of_health">אתר משרד הבריאות</string>
     <string name="call_101">התקשר 101</string>
-
-
 </resources>
