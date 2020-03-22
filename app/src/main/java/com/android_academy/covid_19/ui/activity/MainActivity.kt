@@ -22,6 +22,7 @@ import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePermissionGranted
+import com.android_academy.covid_19.ui.fragment.ChangeStatusFragment
 import com.android_academy.covid_19.ui.fragment.InfectionMatchFragment
 import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
 import com.android_academy.covid_19.ui.fragment.TimelinePermissionFragment
@@ -181,6 +182,13 @@ class MainActivity : AppCompatActivity() {
                 LocationPermissionFragment.newInstance()
                     .show(supportFragmentManager, LocationPermissionFragment.TAG)
             }
+            MainNavigationTarget.ChangeStatusBottomSheet -> {
+                // prevent showing if already shown
+                supportFragmentManager.findFragmentByTag(ChangeStatusFragment.TAG)
+                    ?.run { return@Observer }
+                ChangeStatusFragment.newInstance()
+                    .show(supportFragmentManager, ChangeStatusFragment.TAG)
+            }
             MainNavigationTarget.TimelineBottomSheetExplanation -> {
                 // prevent showing if already shown
                 supportFragmentManager.findFragmentByTag(TimelinePermissionFragment.TAG)
@@ -218,6 +226,8 @@ class MainActivity : AppCompatActivity() {
         goToSettingsButton.setSafeOnClickListener {
             viewModel.onGoToLocationSettingsClick()
         }
+
+
 
         // button_trigger_timeline.setOnClickListener {
         //     val options = QuickPermissionsOptions(

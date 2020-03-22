@@ -24,6 +24,7 @@ import com.android_academy.covid_19.ui.activity.MainNavigationTarget.IntroFragme
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePermissionGranted
+import com.android_academy.covid_19.ui.fragment.ChangeStatusFragment
 import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.SingleLiveEvent
 import com.android_academy.covid_19.util.logTag
@@ -43,11 +44,13 @@ sealed class MainNavigationTarget {
     object TimelineBottomSheetExplanation : MainNavigationTarget()
     object LocationSettingsScreen : MainNavigationTarget()
     object StoragePermissionGranted : MainNavigationTarget()
+    object ChangeStatusBottomSheet: MainNavigationTarget()
     object InfectionMatchGallery : MainNavigationTarget()
 }
 
 interface FilterDataModel {
     fun setDateTimeFilter(dateTimeStart: Date, dateTimeEnd: Date)
+    fun showChangeStatus()
     fun onLocationMatchButtonClick()
 }
 
@@ -237,6 +240,10 @@ class MainViewModelImpl(
         this.dateTimeStart = dateTimeStart
         this.dateTimeEnd = dateTimeEnd
         startObservingCoronaLocations()
+    }
+
+    override fun showChangeStatus() {
+        navigation.value = MainNavigationTarget.ChangeStatusBottomSheet
     }
 
     override fun onLocationMatchButtonClick() {

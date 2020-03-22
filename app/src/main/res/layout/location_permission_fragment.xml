@@ -53,6 +53,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/skip_location_permission_button"
         android:textColor="@color/gray90"
+        android:enabled="false"
         app:strokeColor="@color/orange"
         app:strokeWidth="2dp"
         app:cornerRadius="@dimen/button_corner_radius"
