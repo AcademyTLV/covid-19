@@ -27,21 +27,18 @@ class ChangeStatusFragment : BottomSheetDialogFragment() {
         initObservers()
     }
 
-    fun initView(){
+    fun initView() {
         changeStatusFragmentOkButton.isEnabled = false
         changeStatusRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
             changeStatusFragmentOkButton.isEnabled = true
         }
 
-        imageChangeStatusClose.setOnClickListener{
+        imageChangeStatusClose.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-
         }
-
     }
 
-    fun initObservers(){
-
+    fun initObservers() {
     }
 
     companion object {

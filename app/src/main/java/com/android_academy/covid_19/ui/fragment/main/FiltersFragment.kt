@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.distinctUntilChanged
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.FilterDataModel
 import com.android_academy.covid_19.ui.activity.MainViewModelImpl
@@ -44,11 +45,12 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
                     datePickerBtn.text = formatDate(it)
                 }
             })
-            onDatesSet.observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    mainViewModel.onChangeFilterDate(it.first, it.second)
-                }
-            })
+            onDatesSet.distinctUntilChanged()
+                .observe(viewLifecycleOwner, Observer {
+                    it?.let {
+                        mainViewModel.onChangeFilterDate(it.first, it.second)
+                    }
+                })
             startTime.observe(viewLifecycleOwner, Observer {
                 it?.let { time ->
                     rangeSeekBar.silently(viewModel) {
@@ -94,6 +96,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
 
         val dpd = android.app.DatePickerDialog(
             this.requireContext(),
+            R.style.DatePickerTheme,
             viewModel,
             calendar[Calendar.YEAR],
             calendar[Calendar.MONTH],
@@ -118,7 +121,11 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         }
 
         changeStatusBtn.setSafeOnClickListener {
-            // TODO: add open bottom sheet to change status
+            mainViewModel.onChangeStatusButtonClick()
+        }
+
+        crossLocationBtn.setSafeOnClickListener {
+            mainViewModel.onLocationMatchButtonClick()
         }
 
         initTimeRangeStyling()

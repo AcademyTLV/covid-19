@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.android_academy.covid_19.db.util.DBConstants
-import com.android_academy.covid_19.providers.TimelineProviderImpl.Companion.TIMELINE_PROVIDER
 import kotlinx.coroutines.flow.Flow
 
 @Dao

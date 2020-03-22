@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.location_permission_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TimelinePermissionFragment : BottomSheetDialogFragment() {
+
     private val mainViewModel by sharedViewModel<MainViewModelImpl>()
 
     override fun onCreateView(

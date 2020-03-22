@@ -82,19 +82,32 @@ class FiltersViewModelImpl(
         val joda = initialDate.toJoda()
         val time_00_00 = joda
             .withTimeAtStartOfDay()
-        val time_01_00 = time_00_00
-            .plusHours(1)
 
         endTime.value = joda.toDate()
 
-        when {
-            joda.isAfter(time_00_00) && joda.isBefore(time_01_00) -> {
-                startTime.value = time_00_00.toDate()
-            }
-            else -> {
-                startTime.value = joda.minusHours(1).toDate()
-            }
-        }
+        /**
+         * Uncomment this code if we want to show 1 hour back
+         * */
+        // val time_01_00 = time_00_00
+        // .plusHours(1)
+        // val startTime: Date = when {
+        //     joda.isAfter(time_00_00) && joda.isBefore(time_01_00) -> {
+        //         time_00_00.toDate()
+        //     }
+        //     else -> {
+        //         joda.minusHours(1).toDate()
+        //     }
+        // }
+
+        // Initial time always from the start of the day
+        val startTime = time_00_00.toDate()
+        this@FiltersViewModelImpl.startTime.value = startTime
+
+        val progress = TimeRangeProgress(
+            end = getTimeRangeProgress(joda.toDate()),
+            start = getTimeRangeProgress(startTime)
+        )
+        this@FiltersViewModelImpl.progress.value = progress
     }
 
     private fun getTimeRangeProgress(date: Date): Float {
@@ -135,14 +148,14 @@ class FiltersViewModelImpl(
         rightValue: Float,
         isFromUser: Boolean
     ) {
-        updateLabel(leftValue, true)
-        updateLabel(rightValue, false)
+        val startTime = updateLabel(leftValue, true)
+        val endTime = updateLabel(rightValue, false)
         if (!isFromUser) {
-            Timber.tag("XXXX").d("onRangeChanged not from user")
+            updateDateTimesSet()
         }
     }
 
-    private fun updateLabel(currentValue: Float, isLeft: Boolean) {
+    private fun updateLabel(currentValue: Float, isLeft: Boolean): Date {
         var currentTime = startTime.value!!
             .toJoda()
             .withTimeAtStartOfDay()
@@ -155,6 +168,8 @@ class FiltersViewModelImpl(
         } else {
             endTime.value = currentTime.toDate()
         }
+
+        return currentTime.toDate()
     }
 
     override fun onStopTrackingTouch(view: RangeSeekBar, isLeft: Boolean) {

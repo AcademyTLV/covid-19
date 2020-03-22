@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 
 interface UsersLocationRepo {
     suspend fun getLocation()
-    suspend fun getUserLocations(): Flow<List<UserLocationModel>>
+    fun getUserLocationsFlow(): Flow<List<UserLocationModel>>
     suspend fun getUserLocationsAsync(): List<UserLocationModel>
     suspend fun saveLocation(location: RoomUserLocationEntity)
     suspend fun cleanOldTimeLineProviderLocation()
@@ -37,7 +37,7 @@ class UsersLocationRepoImpl(
         onLocationReceived(location)
     }
 
-    override suspend fun getUserLocations(): Flow<List<UserLocationModel>> {
+    override fun getUserLocationsFlow(): Flow<List<UserLocationModel>> {
         return usersLocDao.getUserLocations()
             .map { userLocations -> userLocations.map { fromRoomEntity(it) } }
     }

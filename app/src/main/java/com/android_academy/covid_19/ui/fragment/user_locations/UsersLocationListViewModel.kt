@@ -24,7 +24,7 @@ class UsersLocationListViewModelImpl(private val usersLocRepo: UsersLocationRepo
         observer: (List<UserLocationModel>) -> Unit
     ) {
         viewModelScope.launch {
-            usersLocRepo.getUserLocations().asLiveData().observe(lifecycleOwner, Observer {
+            usersLocRepo.getUserLocationsFlow().asLiveData().observe(lifecycleOwner, Observer {
                 observer.invoke(it)
             })
         }

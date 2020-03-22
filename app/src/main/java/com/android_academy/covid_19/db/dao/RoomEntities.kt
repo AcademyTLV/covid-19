@@ -100,7 +100,7 @@ data class RoomCollisionLocationEntity(
     @ColumnInfo(name = "infected_comments")
     val comments: String?,
     @ColumnInfo(name = "ack_by_user")
-    val isAcknowledged : Boolean = false
+    val isAcknowledged: Boolean = false
 )
 
 @Entity(tableName = USERS_METADATA_TABLE_NAME)

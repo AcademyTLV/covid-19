@@ -18,7 +18,7 @@ import java.util.Date
 class ExampleInstrumentedTest {
     @Test
     fun when_time_colliding_return_true() {
-        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584312974000, null, null,"","")
+        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584312974000, null, null, "", "")
         val coronaLocation =
             InfectedLocationModel(0, Date(1584309374000), Date(1584316574000), 0.0, 0.0, 0.0, "", "")
 
@@ -33,7 +33,7 @@ class ExampleInstrumentedTest {
 
     @Test
     fun when_no_time_colliding_return_empty() {
-        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584312974000,  null, null,"","")
+        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584312974000, null, null, "", "")
         val coronaLocation =
             InfectedLocationModel(0, Date(1584309627), Date(1584313227), 0.0, 0.0, 0.0, "", "")
         val colliding = InfectionCollisionMatcherImpl().isColliding(
@@ -48,7 +48,7 @@ class ExampleInstrumentedTest {
 
     @Test
     fun when_time_colliding_under_threshold_return_true() {
-        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584269100000,  null, null,"","")
+        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584269100000, null, null, "", "")
         val coronaLocation =
             InfectedLocationModel(0, Date(1584270000000), Date(1584273540000), 0.0, 0.0, 0.0, "", "")
         val colliding = InfectionCollisionMatcherImpl().isColliding(
@@ -63,7 +63,7 @@ class ExampleInstrumentedTest {
 
     @Test
     fun when_time_colliding_below_threshold_return_empty() {
-        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584267600000,  null, null,"","")
+        val userLocationModel = UserLocationModel(null, 0.0, 0.0, 0F, 0F, 1584267600000, null, null, "", "")
         val coronaLocation =
             InfectedLocationModel(0, Date(1584270000000), Date(1584273540000), 0.0, 0.0, 0.0, "", "")
         val colliding = InfectionCollisionMatcherImpl().isColliding(
@@ -79,7 +79,7 @@ class ExampleInstrumentedTest {
     @Test
     fun when_location_colliding_return_true() {
         val userLocationModel =
-            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000,  null, null,"","")
+            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, null, null, "", "")
         val coronaLocation =
             InfectedLocationModel(0, Date(1584309374000), Date(1584316574000), 32.065405, 34.857194, 0.0, "", "")
         val colliding = InfectionCollisionMatcherImpl().isColliding(
@@ -94,7 +94,7 @@ class ExampleInstrumentedTest {
     @Test
     fun when_location_colliding_under_threshold_return_true() {
         val userLocationModel =
-            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000,  null, null,"","")
+            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, null, null, "", "")
         val coronaLocation =
             InfectedLocationModel(0, Date(1584309374000), Date(1584316574000), 32.065332, 34.857194, 0.0, "", "")
 
@@ -110,7 +110,7 @@ class ExampleInstrumentedTest {
     @Test
     fun when_no_location_colliding_return_false() {
         val userLocationModel =
-            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000,   null, null,"","")
+            UserLocationModel(null, 32.065405, 34.857194, 0F, 0F, 1584312974000, null, null, "", "")
         val coronaLocation =
             InfectedLocationModel(0, Date(1584309374000), Date(1584316574000), 32.067423, 34.858986, 0.0, "", "")
         val colliding = InfectionCollisionMatcherImpl().isColliding(

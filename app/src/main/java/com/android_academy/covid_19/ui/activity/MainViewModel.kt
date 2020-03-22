@@ -6,7 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android_academy.covid_19.CovidApplication
 import com.android_academy.covid_19.R
@@ -15,6 +17,7 @@ import com.android_academy.covid_19.providers.InfectedLocationsWorker
 import com.android_academy.covid_19.providers.LocationUpdateWorker
 import com.android_academy.covid_19.providers.TimelineProvider
 import com.android_academy.covid_19.providers.TimelineProviderImpl.Companion.TIMELINE_URL
+import com.android_academy.covid_19.providers.UserLocationModel
 import com.android_academy.covid_19.providers.fromRoomEntity
 import com.android_academy.covid_19.repository.CollisionDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepo
@@ -24,15 +27,20 @@ import com.android_academy.covid_19.ui.activity.MainNavigationTarget.IntroFragme
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePermissionGranted
-import com.android_academy.covid_19.ui.fragment.ChangeStatusFragment
+import com.android_academy.covid_19.ui.fragment.main.toJoda
 import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.SingleLiveEvent
+import com.android_academy.covid_19.util.filter
 import com.android_academy.covid_19.util.logTag
+import com.android_academy.covid_19.util.map
+import com.android_academy.covid_19.util.switchMap
+import com.android_academy.covid_19.util.zipLiveData
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -44,12 +52,12 @@ sealed class MainNavigationTarget {
     object TimelineBottomSheetExplanation : MainNavigationTarget()
     object LocationSettingsScreen : MainNavigationTarget()
     object StoragePermissionGranted : MainNavigationTarget()
-    object ChangeStatusBottomSheet: MainNavigationTarget()
+    object ChangeStatusBottomSheet : MainNavigationTarget()
     object InfectionMatchGallery : MainNavigationTarget()
 }
 
 interface FilterDataModel {
-    fun showChangeStatus()
+    fun onChangeStatusButtonClick()
     fun onLocationMatchButtonClick()
     fun onChangeFilterDate(dateTimeStart: Date, dateTimeEnd: Date)
 }
@@ -98,13 +106,9 @@ class MainViewModelImpl(
     private val app: Application
 ) : AndroidViewModel(app), MainViewModel {
 
-    private var myLocationsJob: Job? = null
+    private var myLocationsLiveData: LiveData<List<LocationMarkerData>>? = null
 
-    private var coronaJob: Job? = null
-
-    private var dateTimeStart: Date? = null
-
-    private var dateTimeEnd: Date? = null
+    private var infectedMarkersLiveData: LiveData<List<LocationMarkerData>>? = null
 
     override val error = SingleLiveEvent<Throwable>()
 
@@ -112,15 +116,29 @@ class MainViewModelImpl(
 
     override val navigation = SingleLiveEvent<MainNavigationTarget>()
 
-    override val myLocations = MutableLiveData<List<LocationMarkerData>>()
+    override val myLocations = MediatorLiveData<List<LocationMarkerData>>()
 
-    override val coronaLocations = MutableLiveData<List<LocationMarkerData>>()
+    override val coronaLocations = MediatorLiveData<List<LocationMarkerData>>()
 
-    override val collisionLocations = MutableLiveData<List<CollisionLocationModel>>()
+    override val collisionLocations = collisionDataRepo
+        .getCollisions()
+        .map { it.map { fromRoomEntity(it) } }
+        .asLiveData()
 
     override val locationPermissionCheck = SingleLiveEvent<Boolean>()
 
     override val blockingUIVisible = MutableLiveData<Boolean>()
+
+    private val datesRange = MutableLiveData<Pair<Date, Date>>()
+
+    private val mapReady = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    private val prerequisites = zipLiveData(
+        mapReady.filter { it == true },
+        datesRange
+    )
 
     init {
         initData()
@@ -140,7 +158,6 @@ class MainViewModelImpl(
 
             startObservingMyLocations()
             startObservingCoronaLocations()
-            startObservingCollisionLocations()
 
             // Verify permissions
             if (!hasLocationPermissions) {
@@ -153,82 +170,125 @@ class MainViewModelImpl(
         }
     }
 
-    private fun startObservingCollisionLocations() {
-        viewModelScope.launch {
-            collisionDataRepo.getCollisions().distinctUntilChanged().collect { list ->
-                collisionLocations.value = list.map { fromRoomEntity(it) }
-            }
-        }
-    }
-
     private fun startObservingCoronaLocations() {
-        if (coronaJob?.isActive == true) coronaJob?.cancel()
-        coronaJob = viewModelScope.launch {
-            infectionDataRepo.getInfectionLocations().distinctUntilChanged()
-                .collect {
-                    Timber.tag("XXX").d("got infected locations from repo. Count: ${it.size}")
-                    val markerDatas = it.filter { infectedLocationModel ->
-                            (
-                                infectedLocationModel.startTime.after(dateTimeStart) &&
-                                    infectedLocationModel.startTime.before(dateTimeEnd)
-                                ) ||
-                                (
-                                    infectedLocationModel.endTime.after(dateTimeStart) &&
-                                        infectedLocationModel.endTime.before(dateTimeEnd)
-                                    ) ||
-                                (
-                                    infectedLocationModel.startTime.before(dateTimeStart) &&
-                                        infectedLocationModel.endTime.after(dateTimeEnd)
-                                    )
-                        }
-                        .map { infectedLocationModel ->
-                            val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
-                            var dates =
-                                "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(
-                                    infectedLocationModel.endTime
-                                )}"
-                            Timber.d("filtering : $dates")
-                            LocationMarkerData(
-                                id = infectedLocationModel.id,
-                                lon = infectedLocationModel.lon,
-                                lat = infectedLocationModel.lat,
-                                title = infectedLocationModel.name ?: "",
-                                snippet = dates
-                            )
-                        }
-                    coronaLocations.value = markerDatas
-                }
+        infectedMarkersLiveData?.let {
+            coronaLocations.removeSource(it)
         }
-        Timber.d("corona locations count : ${coronaLocations.value?.size}")
+
+        val infectedMarkersLiveData = prerequisites
+            .map { it.second }
+            .switchMap { dates ->
+                infectionDataRepo.getInfectionLocations()
+                    .map { infectedLocations ->
+                        Timber.tag("MainViewModelImpl")
+                            .d("got infected locations from repo. Count: ${infectedLocations.size}")
+                        val filterStartDateJoda = dates.first.toJoda()
+                        val filterEndDateJoda = dates.second.toJoda()
+
+                        return@map infectedLocations.filter { infectedLocation ->
+
+                                val infectedStart: DateTime = infectedLocation.startTime.toJoda()
+                                val infectedEnd: DateTime = infectedLocation.endTime.toJoda()
+
+                                return@filter infectedStart.isAfter(filterStartDateJoda) &&
+                                    infectedStart.isBefore(filterEndDateJoda) ||
+                                    infectedEnd.isAfter(filterStartDateJoda) &&
+                                    infectedEnd.isBefore(filterEndDateJoda)
+                            }
+                            .map { infectedLocationModel ->
+                                val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
+                                val dates =
+                                    "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(
+                                        infectedLocationModel.endTime
+                                    )}"
+                                Timber.tag("MainViewModelImpl").d("filtering : $dates")
+                                LocationMarkerData(
+                                    id = infectedLocationModel.id,
+                                    lon = infectedLocationModel.lon,
+                                    lat = infectedLocationModel.lat,
+                                    title = infectedLocationModel.name ?: "",
+                                    snippet = dates
+                                )
+                            }
+                    }
+                    .onEach {
+                        Timber.tag("MainViewModelImpl")
+                            .d("filtered infected locations from repo. Count: ${it.size}")
+                    }
+                    .asLiveData()
+            }
+
+        this@MainViewModelImpl.infectedMarkersLiveData = infectedMarkersLiveData
+        coronaLocations.addSource(infectedMarkersLiveData) {
+            coronaLocations.value = it
+        }
     }
 
     private fun startObservingMyLocations() {
-        if (myLocationsJob?.isActive == true) myLocationsJob?.cancel()
-        myLocationsJob = viewModelScope.launch {
-            usersLocationRepo.getUserLocations().distinctUntilChanged()
-                .collect {
-                    Timber.d("[MainViewModelImpl], startObservingMyLocations(): getting location from repo. size: ${it.size}")
-                    val markerDatas = it.map { userLocationModel ->
-                        val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
-                        var dates = dateTimeInstance.format(
-                            Date(
-                                userLocationModel.timeStart ?: userLocationModel.time!!
-                            )
-                        )
-                        userLocationModel.timeEnd?.let { timeEnd ->
-                            dates = dates.plus(" - ${dateTimeInstance.format(Date(timeEnd))}")
-                        }
-                        LocationMarkerData(
-                            id = userLocationModel.id!!,
-                            lon = userLocationModel.lon,
-                            lat = userLocationModel.lat,
-                            title = userLocationModel.provider,
-                            snippet = dates
-                        )
-                    }
-                    myLocations.value = markerDatas
-                }
+        myLocationsLiveData?.let {
+            myLocations.removeSource(it)
         }
+
+        val myLocationsLiveData = prerequisites
+            .map { it.second }
+            .switchMap { datesRange ->
+                usersLocationRepo.getUserLocationsFlow()
+                    .distinctUntilChanged()
+                    .map {
+                        Timber.tag("MainViewModelImpl")
+                            .d("got my locations from repo. size: ${it.size}")
+                        it.filter { userLocationModel ->
+                                val filterStartDateJoda = datesRange.first.toJoda()
+                                val filterEndDateJoda = datesRange.second.toJoda()
+
+                                val userStartDateJoda: DateTime = userLocationModel.timeStart?.let {
+                                    DateTime.now().withMillis(it)
+                                } ?: DateTime.now().withMillis(userLocationModel.time!!)
+                                    .minusMinutes(15)
+
+                                val userEndDateJoda = userLocationModel.timeEnd?.let {
+                                    DateTime.now().withMillis(it)
+                                } ?: DateTime.now().withMillis(userLocationModel.time!!)
+                                    .plusMinutes(15)
+
+                                return@filter userStartDateJoda.isAfter(filterStartDateJoda) &&
+                                    userStartDateJoda.isBefore(filterEndDateJoda) ||
+                                    userEndDateJoda.isAfter(filterStartDateJoda) &&
+                                    userEndDateJoda.isBefore(filterEndDateJoda)
+                            }
+                            .map { userLocationModel ->
+
+                                var datesSnippet = createMyLocationDatesSnippet(userLocationModel)
+                                LocationMarkerData(
+                                    id = userLocationModel.id!!,
+                                    lon = userLocationModel.lon,
+                                    lat = userLocationModel.lat,
+                                    title = userLocationModel.provider,
+                                    snippet = datesSnippet
+                                )
+                            }
+                    }.onEach {
+                        Timber.tag("MainViewModelImpl")
+                            .d("filtered my locations from repo. size: ${it.size}")
+                    }
+                    .asLiveData()
+            }
+
+        this@MainViewModelImpl.myLocationsLiveData = myLocationsLiveData
+        myLocations.addSource(myLocationsLiveData) {
+            myLocations.value = it
+        }
+    }
+
+    private fun createMyLocationDatesSnippet(userLocationModel: UserLocationModel): String {
+        val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
+        var dates = dateTimeInstance.format(
+            Date(userLocationModel.timeStart ?: userLocationModel.time!!)
+        )
+        userLocationModel.timeEnd?.let { timeEnd ->
+            dates = dates.plus(" - ${dateTimeInstance.format(Date(timeEnd))}")
+        }
+        return dates
     }
 
     private fun startWorkers() {
@@ -238,12 +298,10 @@ class MainViewModelImpl(
 
     override fun onChangeFilterDate(dateTimeStart: Date, dateTimeEnd: Date) {
         Timber.d("got date time start and end $dateTimeStart - $dateTimeEnd")
-        this.dateTimeStart = dateTimeStart
-        this.dateTimeEnd = dateTimeEnd
-        startObservingCoronaLocations()
+        datesRange.value = Pair(dateTimeStart, dateTimeEnd)
     }
 
-    override fun showChangeStatus() {
+    override fun onChangeStatusButtonClick() {
         navigation.value = MainNavigationTarget.ChangeStatusBottomSheet
     }
 
@@ -310,6 +368,10 @@ class MainViewModelImpl(
 
     override fun onUserHistoryLocationMarkerSelected(data: LocationMarkerData) {
         toast.value = "User clicked ${data.title}"
+    }
+
+    override fun onMapReady() {
+        mapReady.value = true
     }
 
     private fun fireTimelineDownloadEvents() {
