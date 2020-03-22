@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Covid-19"</string>
+    <string name="title_activity_maps">"خريطة"</string>
+    <string name="btn_login_to_google">"ادخل الى جوجل"</string>
+    <string name="channel_name">"القناة العامة"</string>
+    <string name="channel_description">"تنبيهات أساسيّة هنا"</string>
+    <string name="ahtung">"للأسف! وجدنا ملاءَمة لفيروس الكورونا!"</string>
+    <string name="open_app">"اضغط هنا للتفاصيل"</string>
+    <string name="location_dialog_description">"لكي نتمكّن من ربط مكان تواجدك مع قائمة الأماكن التي كان فيها حاملو الكورونا، الرجاء إتاحة إمكانيّة الوصول إلى مكان تواجدك.
+سيتمّ التحقق من مكان تواجدك كلّ 15 دقيقة ويتمّ الاحتفاظ بالمعلومات بشكل آمن على هاتفك فقط.
+لن يتمّ إرسال المعلومات بشكل تلقائي لأيّ شخص، بما في ذلك لوزارة الصحّة."</string>
+    <string name="positive_location_permission_button">"نعم، أنا معني"</string>
+    <string name="skip_location_permission_button">"لا، أنا غير معني حاليًا"</string>
+    <string name="location_dialog_title">"أتِح لنا الإمكانيّة للوصول إلى مكان تواجدك"</string>
+    <string name="intro_fragment_title">"أهلا بك في اللون البرتقالي"</string>
+    <string name="intro_fragment_subtitle">"التطبيق الذي سيساعدنا جميعًا على منع انتشار فيروس الكورونا في إسرائيل"</string>
+    <string name="intro_fragment_description">"يعرض لك التطبيق تحديثات حقيقيّة عن الأماكن التي تواجد فيها مرضى الكورونا وأوقات تواجدهم فيها.
+التطبيق يمكّنك أيضًا من حفظ قائمة الأماكن التي زرتَها على جهازك، ومن ملاءَمة هذه الأماكن مع الأماكن المصرّح بها، وذلك لكي تعرف ما إذا كنتَ ضمن مجموعة الخطر، والتصرّف وفقً لذلك."</string>
+    <string name="intro_fragment_options_title">"اختر إحدى الإمكانيّات:"</string>
+    <string name="intro_fragment_positive_button">"تمّ تشخيصي كحامل COVID-19"</string>
+    <string name="intro_fragment_not_positive_button">"شفيت من المرض"</string>
+    <string name="intro_fragment_was_positive_button">"لم يتمّ تشخيصي كحامل للمرض"</string>
+    <string name="intro_fragment_next_button">"التالي"</string>
+    <string name="intro_fragment_options2">"التطبيق الذي سيساعدنا جميعًا على منع انتشار فيروس الكورونا في إسرائيل"</string>
+    <string name="something_went_wrong">"للأسف الشديد! وقع خطأ"</string>
+    <string name="timeline_dialog_title">"الرجاء الموافقة على الوصول الى سجل مواقع تواجدك"</string>
+    <string name="filters_fragment_change_status_button">"غيِّر الحالة"</string>
+    <string name="filters_fragment_start_time">"ساعة البداية"</string>
+    <string name="filters_fragment_end_time">"ساعة النهاية"</string>
+    <string name="filters_fragment_today">"اليوم"</string>
+    <string name="filters_fragment_cross_location_button">"ملاءَمة مكان التواجد"</string>
+    <string name="storage_dialog_title">"أتِح لنا الإمكانيّة للوصول إلى ذاكرة التخزين"</string>
+    <string name="storage_dialog_subtitle">"حتى نتمكن من التنزيل واستخدام سجل المواقع، نحتاج إلى مصادقتك لتخزين الجهاز لحفظ الملف"</string>
+    <string name="storage_dialog_positive_btn">"افتح الإعدادات"</string>
+    <string name="storage_dialog_negative_btn">"غير معنٍ"</string>
+    <string name="decline_permission_bottom_sheet_dialog_btn">"لا يمكن استعمال الطبيق بدون إتاحة سجل المواقع"</string>
+    <string name="btn_enable_location_from_settings">"الرجاء قم بتشغيل خدمة المكان في إعدادات الجهاز"</string>
+    <string name="need_storage_permission">"الرجاء إتاحة الإمكانيّة للوصول إلى ذاكرة التخزين في الجهاز"</string>
+    <string name="timeline_dialog_description">"حتى نتمكن من الملاءمة بين مسار فيروس كورونا وموقعك، نحتاج إلى البيانات من مخطط جوجل الزمني لآخر 14 يومًا، وسيتم تنزيل هذه المعلومات فقط على جهازك وتخزينها فقط ولن يتم إرسالها أو مشاركتها مع أي شخص. في اللحظة التي تضغط فيها على الزر سنفتح المتصفح. إذا كنت متصلاً من خلال حساب جوجل الخاص بك، فسنقوم بتنزيل الملف على جهازك وسنطلب الإذن لقراءة الملف من دليل التنزيلات من جهازك."</string>
+    <string name="location_dialog_description_short">"لتتمكن من الربط بين مسار فيروس كورونا ومسارك، الرجاء إتاحة إمكانيّة الوصول إلى مكان تواجدك. سيتم التحقق من موقعك كل 15 دقيقة فقط وسيتم تخزينه على جهازك فقط بطريقة آمنة. لن يتم إرسال البيانات إلى أي شخص تلقائيًا ولا حتى إلى وزارة الصحة."</string>
+    <string name="status_dialog_title">"تغيير الحالة"</string>
+    <string name="status_fragment_no_check">"لم يتم التشخيص"</string>
+    <string name="status_fragment_check_and_waiting">"تم التشخيص وبإنتظار الإجابة"</string>
+    <string name="status_fragment_check_and_negative">"تم التشخيص والنتيجة سلبية"</string>
+    <string name="status_fragment_check_and_positive">"تم التشخيص ولدي الكورونا Covid-19"</string>
+    <string name="button_ok">"حسنًا"</string>
+</resources>

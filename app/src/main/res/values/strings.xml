@@ -4,7 +4,12 @@
     <string name="btn_login_to_google">התחבר לגוגל</string>
     <string name="channel_name">הערוץ הכללי</string>
     <string name="channel_description">התראות עיקריות כאן</string>
-    <string name="ahtung">אוי! מצאנו מתאם לנגיף קורונה!</string>
+    <string name="
+                  
+                  
+                  
+                  
+                  ">אוי! מצאנו מתאם לנגיף קורונה!</string>
     <string name="open_app">לחץ כאן כדי לראות פרטים</string>
     <string name="location_dialog_title">אשר גישה למיקומך</string>
     <string name="skip_location_permission_button">לא, איני מעוניין כרגע</string>
@@ -53,23 +58,68 @@
     <!--        We will take your location every 15 minutes and we will store it only on your device.\n-->
     <!--        The data will be not sent to anyone automatically not even to Ministry of Health.-->
     <!--    </string>-->
+    <string name="location_dialog_description">
+            To be able to verify if you were in places where people which are \n
+            infected with Corona virus please allow us to get location permission. \n
+            We will take your location every 15 minutes and we will store it only on your device.\n
+            The data will be not sent to anyone automatically not even to Ministry of Health.
+        </string>
 
-    <!--    <string name="positive_location_permission_button">Yes, I am interested</string>-->
-    <!--    <string name="skip_location_permission_button">No, I am not interested for the moment</string>-->
-    <!--    <string name="location_dialog_title">Please approve connection to your location</string>-->
-    <!--    <string name="intro_fragment_title">Welcome to the Orange color</string>-->
-    <!--    <string name="intro_fragment_subtitle">The app which will help us to stop spreading the Corona virus in Israel</string>-->
-    <!--    <string name="intro_fragment_description">-->
-    <!--        The application is showing confirmed places and times where and when people sick with Corona virus visited.-->
-    <!--        The application also allows you to store on in a secured mode and private the places where you visited and to connect to the places where the sick people where and to understand if you are in the potential sickness group.-->
-    <!--    </string>-->
-    <!--    <string name="intro_fragment_options_title">Please choose an option</string>-->
-    <!--    <string name="intro_fragment_positive_button">I have confirmed COVID-19</string>-->
-    <!--    <string name="intro_fragment_not_positive_button">I am healthy now</string>-->
-    <!--    <string name="intro_fragment_was_positive_button">I was not confirmed with COVID-19</string>-->
-    <!--    <string name="intro_fragment_next_button">Next</string>-->
-    <!--    <string name="intro_fragment_options2">The app which will help us to stop spreading the Corona virus in Israel</string>-->
-    <!--    <string name="something_went_wrong">Oops, something went wrong</string>-->
-
+    <string name="positive_location_permission_button">Yes, I am interested</string>
+    <string name="skip_location_permission_button">No, I am not interested for the moment</string>
+    <string name="location_dialog_title">Please approve connection to your location</string>
+    <string name="intro_fragment_title">Welcome to the Orange color</string>
+    <string name="intro_fragment_subtitle">The app which will help us to stop spreading the Corona virus in Israel</string>
+    <string name="intro_fragment_description">
+            The application is showing confirmed places and times where and when people sick with Corona virus visited.
+            The application also allows you to store on in a secured mode and private the places where you visited and to connect to the places where the sick people where and to understand if you are in the potential sickness group.
+        </string>
+    <string name="intro_fragment_options_title">Please choose an option</string>
+    <string name="intro_fragment_positive_button">I have confirmed COVID-19</string>
+    <string name="intro_fragment_not_positive_button">I am healthy now</string>
+    <string name="intro_fragment_was_positive_button">I was not confirmed with COVID-19</string>
+    <string name="intro_fragment_next_button">Next</string>
+    <string name="intro_fragment_options2">The app which will help us to stop spreading the Corona virus in Israel</string>
+    <string name="something_went_wrong">Oops, something went wrong</string>
+    <string name="timeline_dialog_title">Please approve connection to your location history</string>
+    <string name="filters_fragment_change_status_button">Change status</string>
+    <string name="filters_fragment_start_time">Start time</string>
+    <string name="filters_fragment_end_time">End time</string>
+    <string name="filters_fragment_today">Today</string>
+    <string name="filters_fragment_cross_location_button">Matched locations</string>
+    <string name="storage_dialog_title">Allow permission to storage</string>
+    <string name="storage_dialog_subtitle">To be able to download and to use your location history we need permission to storage of the device to save the file</string>
+    <string name="storage_dialog_positive_btn">Open settings</string>
+    <string name="storage_dialog_negative_btn">Not interested</string>
+    <string name="decline_permission_bottom_sheet_dialog_btn">It\'s not possible to use the app without location permission</string>
+    <string name="btn_enable_location_from_settings">Please start location services in the device settings</string>
+    <string name="need_storage_permission">Please approve using the storage of the device</string>
+    <string name="timeline_dialog_description">
+        To be able to cross between corona virus path and your location we need the data from Google timeline for last 14 days.\n
+        This information will be downloaded only to your device and stored only on it and will not be sent or shared with anyone.\n
+        When you will press the button we will open the browser\n
+        If you are connected with your Google account we will download the file to your device and we will ask for permission \n
+        to read the file from the downloads directory from your device.
+    </string>
+    <string name="location_dialog_description_short">
+        To be able to cross between corona virus path and your path please allow us to get your location.\n
+        Your location will be taken only every 15 minutes and will be stored on the device only in a secured way.\n
+        The data will be not be sent to anyone automatically not even to the Health Ministry.
+    </string>
+    <string name="status_dialog_title">Change status</string>
+    <string name="status_fragment_no_check">Didn\'t check</string>
+    <string name="status_fragment_check_and_waiting">Got checked and waiting for answer</string>
+    <string name="status_fragment_check_and_negative">Got checked and the result is negative</string>
+    <string name="status_fragment_check_and_positive">Got checked and I have Covid-19</string>
+    <string name="button_ok">Ok</string>
+    <string name="no_collision_title">No exposure to corona sick persons</string>
+    <string name="no_collision_text">if you have detected any symptoms (fever, dry cough) you should stay in isolation and contact MADA</string>
+    <string name="reach_health_authority">More details - Ministry of Health Website</string>
+    <string name="collision_explanation">You may have been exposed to the Corona virus area.</string>
+    <string name="explanation_substring">Please note, the message does not say you are infected.</string>
+    <string name="collision_secondary_explanation">Steps to take right now:</string>
+    <string name="collision_secondary_sub_explanation">Get into isolation, and measure body heat.\nIf you have any symptoms (fever, dry cough) you should contact MADA.</string>
+    <string name="ministry_of_health">Ministry of health</string>
+    <string name="call_101">Call 101</string>
 </resources>
 

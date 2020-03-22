@@ -8,8 +8,23 @@
     <string name="ahtung">אוי! מצאנו מתאם לנגיף קורונה!</string>
     <string name="open_app">לחץ כאן כדי לראות פרטים</string>
     <string name="location_dialog_title">אשר גישה למיקומך</string>
+    <string name="timeline_dialog_title">אשר גישה להיסטוריה של מקומך</string>
     <string name="skip_location_permission_button">לא, איני מעוניין כרגע</string>
     <string name="location_dialog_description">
+        - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
+\n\n
+- מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
+\n\n
+- המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
+    </string>
+    <string name="timeline_dialog_description">
+        כדאי לעשות הצלבות היסטוריות ל14 ימים אחרונים אנו צריכים את מידע מגוגל טיימליין שנאסף אוטומטי ע"י גוגל
+        \nהמידע הזה ישאר רק בטלפון ולא עובר לשום מקום אחר מלבד למכשיר שלך.
+       \n\nברגע שתלחץ על כפתור אנחנו נפתח את דפדפן
+        \nבמידע והינך מחובר עם חשבון גוגל שלך נוריד את היסטוריה מקומות ונשמור אותם בתיקיה \"הורדות\".
+        \nאפליקציה תבקש הרשאה לגשת לתיקיה הזאת ולקרוא את הקבצים האלו בשביל להצליב את המידע ומיקומים של נשאי נגיף.
+    </string>
+    <string name="location_dialog_description_short">
         - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
 \n\n
 - מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
@@ -36,4 +51,30 @@
     <string name="filters_fragment_cross_location_button">הצלבת מיקום</string>
     <string name="fragment_confirmation_code_share_MOH">שתף עם משרד הבריאות</string>
     <string name="fragment_confirmation_code_hint">הכנס קוד משרד הבריאות</string>
+
+    <string name="storage_dialog_title">אשר גישה לאחסון</string>
+    <string name="storage_dialog_subtitle">על מנת להוריד ולהשתמש בהיסטוריית מיקומים שלך, יש לאשר גישה לאחסון הטלפון</string>
+    <string name="storage_dialog_positive_btn">פתח הגדרות</string>
+    <string name="storage_dialog_negative_btn">לא מעוניין</string>
+
+    <string name="positive_location_permission_button">כן, אני מעוניין</string>
+    <string name="decline_permission_bottom_sheet_dialog_btn">לא ניתן להשתמש באפליקציה ללא הרשאת מיקום</string>
+    <string name="btn_enable_location_from_settings">הפעל שירותי מיקום בהגדרות המכשיר</string>
+    <string name="need_storage_permission">יש לאשר גישה לאחסון במכשיר</string>
+
+    <string name="status_dialog_title">שינוי סטטוס</string>
+    <string name="status_fragment_no_check">לא נבדקתי</string>
+    <string name="status_fragment_check_and_positive">נבדקתי ואובחנתי כנשא של COVID-19</string>
+    <string name="status_fragment_check_and_waiting">נבדקתי ומחכה לתשובה</string>
+    <string name="status_fragment_check_and_negative">נבדקתי ולא אובחנתי כנשא</string>
+    <string name="button_ok">אישור</string>
+    <string name="no_collision_title">לא נחשפת לאיזור בו שהה חולה קורונה</string>
+    <string name="no_collision_text">אם ובמידה זיהית תסמינים (חום,שיעול יבש) יש להכנס לבידוד ולפנות למד״א</string>
+    <string name="reach_health_authority">לפרטים נוספים באתר משרד הבריאות</string>
+    <string name="collision_explanation">ייתכן שנחשפת באזור לוירוס הקורונה.</string>
+    <string name="explanation_substring">שים לב, ההודעה אינה אומרת שנדבקת.</string>
+    <string name="collision_secondary_explanation">צעדים שכדאי לעשות כרגע:</string>
+    <string name="collision_secondary_sub_explanation">להיכנס לבידוד, ולמדוד את חום הגוף.\nאם זיהית תסמינים (חום, שיעול יבש) יש לפנות למד״א.</string>
+    <string name="ministry_of_health">אתר משרד הבריאות</string>
+    <string name="call_101">התקשר 101</string>
 </resources>

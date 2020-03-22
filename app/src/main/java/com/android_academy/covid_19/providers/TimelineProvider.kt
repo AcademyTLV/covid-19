@@ -8,12 +8,14 @@ import com.android_academy.covid_19.util.kml.KmlLineString
 import com.android_academy.covid_19.util.kml.KmlParser
 import com.android_academy.covid_19.util.kml.KmlPlacemark
 import com.android_academy.covid_19.util.kml.KmlPoint
+import com.android_academy.covid_19.util.logTag
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
+import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileFilter
@@ -24,6 +26,7 @@ import java.util.Locale
 
 interface TimelineProvider {
     fun checkForExistingKMLFiles()
+    suspend fun shouldRequestData(): Boolean
 }
 
 class TimelineProviderImpl(
@@ -32,6 +35,11 @@ class TimelineProviderImpl(
 ) : TimelineProvider {
     override fun checkForExistingKMLFiles() {
         scope.launch(Dispatchers.IO) {
+
+            if (isTimelineFresh()) {
+                Timber.d("[TimelineProviderImpl], checkForExistingKMLFiles(): Timeline updated recently. No need to re-import")
+                return@launch
+            }
 
             usersLocationRepo.cleanOldTimeLineProviderLocation()
 
@@ -52,6 +60,20 @@ class TimelineProviderImpl(
                 }
             }
         }
+    }
+
+    private suspend fun isTimelineFresh(): Boolean {
+        val lastTimeLineLocation = usersLocationRepo.getLastTimeLineLocation()
+        lastTimeLineLocation?.timeEnd?.let {
+            val diff = Date().time.minus(it)
+            return diff < DAYS_14
+        } ?: return false
+    }
+
+    override suspend fun shouldRequestData(): Boolean {
+        val lastTimeLineLocation = usersLocationRepo.getLastTimeLineLocation()
+        Timber.d("[$logTag], shouldRequestData(): lastTimelineLocation: $lastTimeLineLocation")
+        return lastTimeLineLocation == null
     }
 
     private suspend fun saveLocations(locationList: List<UserLocationModel>) {
@@ -137,6 +159,8 @@ class TimelineProviderImpl(
 
     companion object {
         const val TIMELINE_PROVIDER = "Timeline"
-        const val TIMELINE_URL = "https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i%s!2i%s!3i%s!2m3!1i%s!2i%s!3i%s"
+        const val TIMELINE_URL =
+            "https://www.google.com/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i%s!2i%s!3i%s!2m3!1i%s!2i%s!3i%s"
+        const val DAYS_14 = 14 * 24 * 60 * 60 * 1_000
     }
 }

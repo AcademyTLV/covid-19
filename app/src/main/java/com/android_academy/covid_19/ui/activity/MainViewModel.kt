@@ -8,16 +8,23 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android_academy.covid_19.CovidApplication
+import com.android_academy.covid_19.R
+import com.android_academy.covid_19.providers.CollisionLocationModel
 import com.android_academy.covid_19.providers.InfectedLocationsWorker
 import com.android_academy.covid_19.providers.LocationUpdateWorker
 import com.android_academy.covid_19.providers.TimelineProvider
 import com.android_academy.covid_19.providers.TimelineProviderImpl.Companion.TIMELINE_URL
+import com.android_academy.covid_19.providers.fromRoomEntity
+import com.android_academy.covid_19.repository.CollisionDataRepo
 import com.android_academy.covid_19.repository.InfectionDataRepo
 import com.android_academy.covid_19.repository.UserMetaDataRepo
 import com.android_academy.covid_19.repository.UsersLocationRepo
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.IntroFragment
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.LocationSettingsScreen
 import com.android_academy.covid_19.ui.activity.MainNavigationTarget.PermissionsBottomSheetExplanation
+import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePermissionGranted
+import com.android_academy.covid_19.ui.fragment.ChangeStatusFragment
 import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.SingleLiveEvent
 import com.android_academy.covid_19.util.logTag
@@ -34,11 +41,17 @@ import java.util.Date
 sealed class MainNavigationTarget {
     object IntroFragment : MainNavigationTarget()
     object PermissionsBottomSheetExplanation : MainNavigationTarget()
+    object TimelineBottomSheetExplanation : MainNavigationTarget()
     object LocationSettingsScreen : MainNavigationTarget()
+    object StoragePermissionGranted : MainNavigationTarget()
+    object ChangeStatusBottomSheet: MainNavigationTarget()
+    object InfectionMatchGallery : MainNavigationTarget()
 }
 
 interface FilterDataModel {
     fun setDateTimeFilter(dateTimeStart: Date, dateTimeEnd: Date)
+    fun showChangeStatus()
+    fun onLocationMatchButtonClick()
 }
 
 interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
@@ -46,6 +59,7 @@ interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
     val navigation: LiveData<MainNavigationTarget>
     val myLocations: LiveData<List<LocationMarkerData>>
     val coronaLocations: LiveData<List<LocationMarkerData>>
+    val collisionLocations: LiveData<List<CollisionLocationModel>>
     val blockingUIVisible: LiveData<Boolean>
     val error: LiveData<Throwable>
     val locationPermissionCheck: LiveData<Boolean>
@@ -57,17 +71,21 @@ interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
 
     fun onUserAcceptedLocationRequestExplanation()
 
-    fun onUserPermanentlyDeniedPermission()
+    fun onUserPermanentlyDeniedLocationPermission()
 
-    fun onPermissionGranted()
+    fun onLocationPermissionGranted()
 
-    fun onGoToSettingsClick()
+    fun onGoToLocationSettingsClick()
 
     fun onReturnedFromLocationSettings(hasLocationPermissions: Boolean)
 
     fun onScreenBecameVisible()
 
     fun onTimelineTriggerClicked()
+
+    fun onUserDeniedOneOfTheLocationPermissions()
+
+    fun onReturnedFromStorageSettings(hasStoragePermission: Boolean)
 }
 
 class MainViewModelImpl(
@@ -75,6 +93,7 @@ class MainViewModelImpl(
     private val timelineProvider: TimelineProvider,
     private val usersLocationRepo: UsersLocationRepo,
     private val infectionDataRepo: InfectionDataRepo,
+    private val collisionDataRepo: CollisionDataRepo,
     private var hasLocationPermissions: Boolean,
     private val app: Application
 ) : AndroidViewModel(app), MainViewModel {
@@ -96,6 +115,8 @@ class MainViewModelImpl(
     override val myLocations = MutableLiveData<List<LocationMarkerData>>()
 
     override val coronaLocations = MutableLiveData<List<LocationMarkerData>>()
+
+    override val collisionLocations = MutableLiveData<List<CollisionLocationModel>>()
 
     override val locationPermissionCheck = SingleLiveEvent<Boolean>()
 
@@ -119,6 +140,7 @@ class MainViewModelImpl(
 
             startObservingMyLocations()
             startObservingCoronaLocations()
+            startObservingCollisionLocations()
 
             // Verify permissions
             if (!hasLocationPermissions) {
@@ -131,25 +153,52 @@ class MainViewModelImpl(
         }
     }
 
+    private fun startObservingCollisionLocations() {
+        viewModelScope.launch {
+            collisionDataRepo.getCollisions().distinctUntilChanged().collect { list ->
+                collisionLocations.value = list.map { fromRoomEntity(it) }
+            }
+        }
+    }
+
     private fun startObservingCoronaLocations() {
         if (coronaJob?.isActive == true) coronaJob?.cancel()
         coronaJob = viewModelScope.launch {
             infectionDataRepo.getInfectionLocations().distinctUntilChanged()
                 .collect {
-                    val markerDatas = it.map { infectedLocationModel ->
-                        val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
-                        var dates = "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(infectedLocationModel.endTime)}"
-                        LocationMarkerData(
-                            id = infectedLocationModel.id,
-                            lon = infectedLocationModel.lon,
-                            lat = infectedLocationModel.lat,
-                            title = infectedLocationModel.name ?: "",
-                            snippet = dates
-                        )
-                    }
+                    val markerDatas = it.filter { infectedLocationModel ->
+                            (
+                                infectedLocationModel.startTime.after(dateTimeStart) &&
+                                    infectedLocationModel.startTime.before(dateTimeEnd)
+                                ) ||
+                                (
+                                    infectedLocationModel.endTime.after(dateTimeStart) &&
+                                        infectedLocationModel.endTime.before(dateTimeEnd)
+                                    ) ||
+                                (
+                                    infectedLocationModel.startTime.before(dateTimeStart) &&
+                                        infectedLocationModel.endTime.after(dateTimeEnd)
+                                    )
+                        }
+                        .map { infectedLocationModel ->
+                            val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
+                            var dates =
+                                "${dateTimeInstance.format(infectedLocationModel.startTime)} - ${dateTimeInstance.format(
+                                    infectedLocationModel.endTime
+                                )}"
+                            Timber.d("filtering : $dates")
+                            LocationMarkerData(
+                                id = infectedLocationModel.id,
+                                lon = infectedLocationModel.lon,
+                                lat = infectedLocationModel.lat,
+                                title = infectedLocationModel.name ?: "",
+                                snippet = dates
+                            )
+                        }
                     coronaLocations.value = markerDatas
                 }
         }
+        Timber.d("corona locations count : ${coronaLocations.value?.size}")
     }
 
     private fun startObservingMyLocations() {
@@ -157,9 +206,14 @@ class MainViewModelImpl(
         myLocationsJob = viewModelScope.launch {
             usersLocationRepo.getUserLocations().distinctUntilChanged()
                 .collect {
+                    Timber.d("[MainViewModelImpl], startObservingMyLocations(): getting location from repo. size: ${it.size}")
                     val markerDatas = it.map { userLocationModel ->
                         val dateTimeInstance = SimpleDateFormat.getDateTimeInstance()
-                        var dates = dateTimeInstance.format(Date(userLocationModel.timeStart ?: userLocationModel.time!!))
+                        var dates = dateTimeInstance.format(
+                            Date(
+                                userLocationModel.timeStart ?: userLocationModel.time!!
+                            )
+                        )
                         userLocationModel.timeEnd?.let { timeEnd ->
                             dates = dates.plus(" - ${dateTimeInstance.format(Date(timeEnd))}")
                         }
@@ -185,6 +239,15 @@ class MainViewModelImpl(
         Timber.d("got date time start and end $dateTimeStart - $dateTimeEnd")
         this.dateTimeStart = dateTimeStart
         this.dateTimeEnd = dateTimeEnd
+        startObservingCoronaLocations()
+    }
+
+    override fun showChangeStatus() {
+        navigation.value = MainNavigationTarget.ChangeStatusBottomSheet
+    }
+
+    override fun onLocationMatchButtonClick() {
+        navigation.value = MainNavigationTarget.InfectionMatchGallery
     }
 
     override fun onLoginClick() {
@@ -198,16 +261,22 @@ class MainViewModelImpl(
         locationPermissionCheck.value = true
     }
 
-    override fun onUserPermanentlyDeniedPermission() {
+    override fun onUserPermanentlyDeniedLocationPermission() {
         blockingUIVisible.value = true
     }
 
-    override fun onPermissionGranted() {
+    override fun onLocationPermissionGranted() {
         blockingUIVisible.value = false
         startWorkers()
+
+        viewModelScope.launch {
+            if (timelineProvider.shouldRequestData()) {
+                navigation.value = MainNavigationTarget.TimelineBottomSheetExplanation
+            }
+        }
     }
 
-    override fun onGoToSettingsClick() {
+    override fun onGoToLocationSettingsClick() {
         navigation.value = LocationSettingsScreen
     }
 
@@ -222,6 +291,20 @@ class MainViewModelImpl(
 
     override fun onTimelineTriggerClicked() {
         fireTimelineDownloadEvents()
+    }
+
+    override fun onUserDeniedOneOfTheLocationPermissions() {
+        hasLocationPermissions = false
+        initData()
+    }
+
+    override fun onReturnedFromStorageSettings(hasStoragePermission: Boolean) {
+        if (hasStoragePermission) {
+            navigation.value = StoragePermissionGranted
+        } else {
+            toast.value =
+                getApplication<CovidApplication>().getString(R.string.need_storage_permission)
+        }
     }
 
     override fun onUserHistoryLocationMarkerSelected(data: LocationMarkerData) {

@@ -45,6 +45,7 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     override fun initialize() {
         val calender = Calendar.getInstance()
+        dateLiveData.value = calender.time
         setStartTime(calender[Calendar.HOUR_OF_DAY] - 1, calender[Calendar.MINUTE])
         setDate(calender.time)
 
@@ -58,11 +59,30 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
         //         endDate = end
         //     )
         // }
-
     }
 
     override fun setDate(date: Date) {
         dateLiveData.postValue(date)
+        var calenderDate = Calendar.getInstance()
+        calenderDate.time = date
+        var calenderTime = Calendar.getInstance()
+        calenderTime.time = dateTimeStart
+
+        var calenderNew = Calendar.getInstance()
+        calenderNew.set(calenderDate.get(Calendar.YEAR), calenderDate.get(Calendar.MONTH), calenderDate.get(Calendar.DAY_OF_MONTH),
+        calenderTime.get(Calendar.HOUR_OF_DAY), calenderTime.get(Calendar.MINUTE))
+
+        dateTimeStart = calenderNew.time
+
+        calenderTime.time = dateTimeEnd
+
+        calenderNew = Calendar.getInstance()
+        calenderNew.set(calenderDate.get(Calendar.YEAR), calenderDate.get(Calendar.MONTH), calenderDate.get(Calendar.DAY_OF_MONTH),
+            calenderTime.get(Calendar.HOUR_OF_DAY), calenderTime.get(Calendar.MINUTE))
+
+        dateTimeEnd = calenderNew.time
+
+        sendFilter()
     }
 
     override fun getDate(): Date? {
@@ -79,36 +99,33 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     override fun setStartTime(hour: Int, minute: Int) {
         val calender = Calendar.getInstance()
+        calender.time = dateLiveData.value
         calender.set(Calendar.HOUR_OF_DAY, hour)
         calender.set(Calendar.MINUTE, minute)
         dateTimeStart = calender.time
 
         startTimeLiveData.postValue(formatTime(calender).toString())
 
-        if ((dateTimeEnd == null) || (dateTimeEnd?.before(dateTimeStart)!!)){
+        if ((dateTimeEnd == null) || (dateTimeEnd?.before(dateTimeStart)!!)) {
             calender.add(Calendar.HOUR, 1)
             dateTimeEnd = calender.time
 
             endTimeLiveData.postValue(formatTime(calender).toString())
         }
-
-        val start = dateTimeStart
-        val end = dateTimeEnd
-        if ((start != null) && (end != null)) {
-            filterDatesSet.value = FilterDates(
-                startDate = start,
-                endDate = end
-            )
-        }
+        sendFilter()
     }
 
     override fun setEndTime(hour: Int, minute: Int) {
         val calender = Calendar.getInstance()
+        calender.time = dateLiveData.value
         calender.set(Calendar.HOUR_OF_DAY, hour)
         calender.set(Calendar.MINUTE, minute)
         dateTimeEnd = calender.time
         endTimeLiveData.postValue(formatTime(calender).toString())
+        sendFilter()
+    }
 
+    private fun sendFilter() {
         val start = dateTimeStart
         val end = dateTimeEnd
         if ((start != null) && (end != null)) {
@@ -121,5 +138,4 @@ class FiltersViewModelImpl : ViewModel(), FiltersViewModel {
 
     private fun formatTime(calender: Calendar) =
         SimpleDateFormat("HH:mm", Locale.getDefault()).format(calender.time)
-
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.FilterDataModel
 import com.android_academy.covid_19.ui.activity.MainViewModelImpl
+import com.android_academy.covid_19.util.setSafeOnClickListener
 import kotlinx.android.synthetic.main.filters_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -86,7 +87,11 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         }
 
         change_status.setOnClickListener {
-            // TODO: add open bottom sheet to change status
+            mainFilterViewModel.showChangeStatus()
+        }
+
+        crossLocationButton.setSafeOnClickListener {
+            mainFilterViewModel.onLocationMatchButtonClick()
         }
 
         // emergency_call.setOnClickListener {
@@ -122,7 +127,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         val calendar = Calendar.getInstance()
         if (isStartTime) {
             calendar.time = viewModel.getTimeStart()
-        } else{
+        } else {
             calendar.time = viewModel.getTimeEnd()
         }
 
@@ -131,7 +136,7 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
             OnTimeSetListener { view, hour, minute ->
                 if (isStartTime) {
                     viewModel.setStartTime(hour, minute)
-                } else{
+                } else {
                     viewModel.setEndTime(hour, minute)
                 }
             },
