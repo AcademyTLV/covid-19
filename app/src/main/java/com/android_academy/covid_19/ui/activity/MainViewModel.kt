@@ -49,9 +49,9 @@ sealed class MainNavigationTarget {
 }
 
 interface FilterDataModel {
-    fun setDateTimeFilter(dateTimeStart: Date, dateTimeEnd: Date)
     fun showChangeStatus()
     fun onLocationMatchButtonClick()
+    fun onChangeFilterDate(dateTimeStart: Date, dateTimeEnd: Date)
 }
 
 interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
@@ -166,6 +166,7 @@ class MainViewModelImpl(
         coronaJob = viewModelScope.launch {
             infectionDataRepo.getInfectionLocations().distinctUntilChanged()
                 .collect {
+                    Timber.tag("XXX").d("got infected locations from repo. Count: ${it.size}")
                     val markerDatas = it.filter { infectedLocationModel ->
                             (
                                 infectedLocationModel.startTime.after(dateTimeStart) &&
@@ -235,7 +236,7 @@ class MainViewModelImpl(
         LocationUpdateWorker.schedule()
     }
 
-    override fun setDateTimeFilter(dateTimeStart: Date, dateTimeEnd: Date) {
+    override fun onChangeFilterDate(dateTimeStart: Date, dateTimeEnd: Date) {
         Timber.d("got date time start and end $dateTimeStart - $dateTimeEnd")
         this.dateTimeStart = dateTimeStart
         this.dateTimeEnd = dateTimeEnd

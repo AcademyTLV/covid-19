@@ -25,7 +25,6 @@ import com.android_academy.covid_19.ui.activity.MainNavigationTarget.StoragePerm
 import com.android_academy.covid_19.ui.fragment.ChangeStatusFragment
 import com.android_academy.covid_19.ui.fragment.InfectionMatchFragment
 import com.android_academy.covid_19.ui.fragment.LocationPermissionFragment
-import com.android_academy.covid_19.ui.fragment.TimelinePermissionFragment
 import com.android_academy.covid_19.ui.fragment.intro.IntroFragment
 import com.android_academy.covid_19.ui.map.MapManager
 import com.android_academy.covid_19.util.setSafeOnClickListener
@@ -191,10 +190,10 @@ class MainActivity : AppCompatActivity() {
             }
             MainNavigationTarget.TimelineBottomSheetExplanation -> {
                 // prevent showing if already shown
-                supportFragmentManager.findFragmentByTag(TimelinePermissionFragment.TAG)
-                    ?.run { return@Observer }
-                TimelinePermissionFragment.newInstance()
-                    .show(supportFragmentManager, TimelinePermissionFragment.TAG)
+                // supportFragmentManager.findFragmentByTag(TimelinePermissionFragment.TAG)
+                //     ?.run { return@Observer }
+                // TimelinePermissionFragment.newInstance()
+                //     .show(supportFragmentManager, TimelinePermissionFragment.TAG)
             }
             LocationSettingsScreen -> {
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)

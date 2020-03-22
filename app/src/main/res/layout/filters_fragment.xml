@@ -1,174 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/filters_fragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background"
+    android:background="#FFFFFF"
     android:elevation="12dp">
 
-    <RelativeLayout
-        android:id="@+id/change_status"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/changeStatusBtn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/ic_change_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_outline" />
-
-        <TextView
-            android:id="@+id/txt_change_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@id/ic_change_status"
-            android:text="@string/filters_fragment_change_status_button"
-            android:textColor="@color/dark_blue_grey"
-            android:textSize="16sp" />
-    </RelativeLayout>
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:drawableRight="@drawable/ic_outline"
+        android:text="@string/filters_fragment_change_status_button"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_blue_grey"
+        android:textSize="16sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/crossLocationButton"
+        android:id="@+id/crossLocationBtn"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="24dp"
         android:text="@string/filters_fragment_cross_location_button"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        android:textColor="@color/gray90"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_blue_grey"
         android:textSize="16sp"
         app:cornerRadius="@dimen/button_corner_radius"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/changeStatusBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/changeStatusBtn"
         app:strokeColor="@color/orange"
         app:strokeWidth="2dp" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="@color/pale_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_status" />
+        app:layout_constraintTop_toBottomOf="@+id/crossLocationBtn" />
 
-    <RelativeLayout
-        android:id="@+id/date"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/datePickerBtn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/change_status"
-        app:layout_constraintTop_toBottomOf="@id/view">
-
-        <ImageView
-            android:id="@+id/ic_calender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_calendar" />
-
-        <TextView
-            android:id="@+id/pick_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="11dp"
-            android:layout_toEndOf="@id/ic_calender"
-            android:textColor="@color/dark_blue_grey"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/today"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="@id/view"
-        app:layout_constraintTop_toBottomOf="@id/view">
-
-        <TextView
-            android:id="@+id/todayTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="3dp"
-            android:layout_toEndOf="@id/ic_today"
-            android:text="@string/filters_fragment_today"
-            android:textColor="@color/purpley" />
-
-        <ImageView
-            android:id="@+id/ic_today"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_refresh" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/detailed_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableRight="@drawable/ic_calendar"
         android:textColor="@color/dark_blue_grey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="@id/changeStatusBtn"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        tools:text="Mar, 20, 2020" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/time"
-        android:layout_width="0dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/todayBtn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="24dp"
+        android:drawableRight="@drawable/ic_refresh"
+        android:text="@string/filters_fragment_today"
+        android:textAllCaps="false"
+        android:textColor="@color/purpley"
+        app:layout_constraintBottom_toBottomOf="@id/datePickerBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/datePickerBtn" />
+
+    <LinearLayout
+        android:id="@+id/timeWrapperLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="@id/todayBtn"
+        app:layout_constraintTop_toBottomOf="@+id/todayBtn">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timeRangeButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_blue_grey"
+            android:visibility="gone"
+            tools:text="13:21  -  14:21" />
+
+    </LinearLayout>
+
+    <com.jaygoo.widget.RangeSeekBar
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:id="@+id/rangeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/today">
-
-        <TextView
-            android:id="@+id/start_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dark_blue_grey" />
-
-
-        <TextView
-            android:id="@+id/dash_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="-"
-            android:textColor="@color/dark_blue_grey" />
-
-        <TextView
-            android:id="@+id/end_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/dark_blue_grey" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintTop_toBottomOf="@+id/todayBtn"
+        app:layout_constraintVertical_bias="0"
+        app:rsb_indicator_background_color="@color/colorPrimaryDark"
+        app:rsb_indicator_padding_bottom="10dp"
+        app:rsb_indicator_padding_left="10dp"
+        app:rsb_indicator_padding_right="10dp"
+        app:rsb_indicator_padding_top="10dp"
+        app:rsb_indicator_radius="8dp"
+        app:rsb_indicator_show_mode="alwaysShow"
+        app:rsb_indicator_text_color="@color/pale_blue"
+        app:rsb_mode="range" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

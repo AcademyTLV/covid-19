@@ -1,16 +1,18 @@
 package com.android_academy.covid_19.ui.fragment.main
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.FilterDataModel
 import com.android_academy.covid_19.ui.activity.MainViewModelImpl
+import com.android_academy.covid_19.ui.fragment.main.FiltersViewModel.NavigationTarget
+import com.android_academy.covid_19.ui.fragment.main.FiltersViewModel.NavigationTarget.DatePicker
 import com.android_academy.covid_19.util.setSafeOnClickListener
+import com.jaygoo.widget.OnRangeChangedListener
+import com.jaygoo.widget.RangeSeekBar
 import kotlinx.android.synthetic.main.filters_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,23 +23,13 @@ import java.util.Locale
 
 class FiltersFragment : Fragment(R.layout.filters_fragment) {
 
+    private val mainViewModel: FilterDataModel by sharedViewModel<MainViewModelImpl>()
+
     private val viewModel: FiltersViewModel by viewModel<FiltersViewModelImpl>()
 
-    private val mainFilterViewModel: FilterDataModel by sharedViewModel<MainViewModelImpl>()
+    private val dateFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
 
-    val fullDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
-    val shortDateFormat = SimpleDateFormat("MMM, yyyy", Locale.getDefault())
-
-    companion object {
-        fun newInstance() =
-            FiltersFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.initialize()
-    }
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,75 +38,63 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
     }
 
     private fun initObservers() {
-        viewModel.startTimeLiveData.observe(viewLifecycleOwner, Observer {
-            start_time.text = it
-        })
-        viewModel.endTimeLiveData.observe(viewLifecycleOwner, Observer {
-            end_time.text = it
-        })
-        viewModel.filterDatesSet.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                mainFilterViewModel.setDateTimeFilter(it.startDate, it.endDate)
+        viewModel.apply {
+            date.observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    datePickerBtn.text = formatDate(it)
+                }
+            })
+            onDatesSet.observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    mainViewModel.onChangeFilterDate(it.first, it.second)
+                }
+            })
+            startTime.observe(viewLifecycleOwner, Observer {
+                it?.let { time ->
+                    rangeSeekBar.silently(viewModel) {
+                        leftSeekBar.setIndicatorText(timeFormat.format(time))
+                    }
+                }
+            })
+            endTime.observe(viewLifecycleOwner, Observer {
+                it?.let { time ->
+                    rangeSeekBar.silently(viewModel) {
+                        rightSeekBar.setIndicatorText(timeFormat.format(time))
+                    }
+                }
+            })
+            progress.observe(viewLifecycleOwner, Observer {
+                it?.let { progress ->
+                    rangeSeekBar.silently(viewModel) {
+                        setProgress(progress.start, progress.end)
+                    }
+                }
+            })
+            navigationTarget.observe(viewLifecycleOwner, Observer {
+                it?.let { onNavigationChanged(it) }
+            })
+        }
+    }
+
+    private fun formatDate(date: Date): String {
+        return dateFormat.format(date)
+    }
+
+    private fun onNavigationChanged(navigationTarget: NavigationTarget) {
+        when (navigationTarget) {
+            is DatePicker -> {
+                showDatePicker(navigationTarget.date)
             }
-        })
-
-        viewModel.dateLiveData.observe(viewLifecycleOwner, Observer {
-            detailed_date.text = fullDateFormat.format(it)
-            pick_date.text = shortDateFormat.format(it)
-        })
+        }
     }
 
-    private fun initView() {
-
-        var calendar = Calendar.getInstance()
-
-        date.setOnClickListener {
-            openDatePicker()
-        }
-
-        detailed_date.setOnClickListener { openDatePicker() }
-
-        start_time.setOnClickListener {
-            openTimePicker(true)
-        }
-
-        end_time.setOnClickListener {
-            openTimePicker(false)
-        }
-
-        today.setOnClickListener {
-            viewModel.initialize()
-        }
-
-        change_status.setOnClickListener {
-            mainFilterViewModel.showChangeStatus()
-        }
-
-        crossLocationButton.setSafeOnClickListener {
-            mainFilterViewModel.onLocationMatchButtonClick()
-        }
-
-        // emergency_call.setOnClickListener {
-        //     val intent = Intent(Intent.ACTION_DIAL)
-        //     intent.data = Uri.parse("tel:101")
-        //     activity?.startActivity(intent)
-        // }
-    }
-
-    private fun openDatePicker() {
+    private fun showDatePicker(date: Date) {
         val calendar = Calendar.getInstance()
-        val dateValue = viewModel.getDate()
-        if (dateValue != null) {
-            calendar.time = dateValue
-        }
+        calendar.time = date
 
-        val dpd = DatePickerDialog(
+        val dpd = android.app.DatePickerDialog(
             this.requireContext(),
-            DatePickerDialog
-                .OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                calendar.set(year, monthOfYear, dayOfMonth)
-                viewModel.setDate(calendar.time)
-            },
+            viewModel,
             calendar[Calendar.YEAR],
             calendar[Calendar.MONTH],
             calendar[Calendar.DAY_OF_MONTH]
@@ -123,30 +103,39 @@ class FiltersFragment : Fragment(R.layout.filters_fragment) {
         dpd.show()
     }
 
-    private fun openTimePicker(isStartTime: Boolean) {
-        val calendar = Calendar.getInstance()
-        if (isStartTime) {
-            calendar.time = viewModel.getTimeStart()
-        } else {
-            calendar.time = viewModel.getTimeEnd()
+    private fun initView() {
+
+        datePickerBtn.setSafeOnClickListener {
+            viewModel.onDatePickerClick()
         }
 
-        val timePickerDialog = TimePickerDialog(
-            this.requireContext(),
-            OnTimeSetListener { view, hour, minute ->
-                if (isStartTime) {
-                    viewModel.setStartTime(hour, minute)
-                } else {
-                    viewModel.setEndTime(hour, minute)
-                }
-            },
-            calendar[Calendar.HOUR_OF_DAY],
-            calendar[Calendar.MINUTE],
-            true
-        )
-        timePickerDialog.updateTime(calendar[Calendar.HOUR_OF_DAY],
-            calendar[Calendar.MINUTE])
+        timeRangeButton.setSafeOnClickListener {
+            viewModel.onTimeRangeBtnClick()
+        }
 
-        timePickerDialog.show()
+        todayBtn.setSafeOnClickListener {
+            viewModel.initialize()
+        }
+
+        changeStatusBtn.setSafeOnClickListener {
+            // TODO: add open bottom sheet to change status
+        }
+
+        initTimeRangeStyling()
     }
+
+    private fun initTimeRangeStyling() {
+        rangeSeekBar.apply {
+            setRange(0F, 24 * 60F - 1, 60F)
+            progressHeight = 5
+            progressColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+            setOnRangeChangedListener(viewModel)
+        }
+    }
+}
+
+fun <T> RangeSeekBar.silently(callback: OnRangeChangedListener, block: RangeSeekBar.() -> T) {
+    setOnRangeChangedListener(null)
+    block.invoke(this)
+    setOnRangeChangedListener(callback)
 }
