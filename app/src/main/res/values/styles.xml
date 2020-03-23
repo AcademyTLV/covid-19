@@ -22,4 +22,8 @@
         <item name="backgroundTint">@color/intro_fragment_next_button_tint_selector</item>
     </style>
 
+    <style name="DatePickerTheme" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

@@ -80,5 +80,6 @@
     <string name="collision_secondary_sub_explanation">Get into isolation, and measure body heat.\nIf you have any symptoms (fever, dry cough) you should contact MADA.</string>
     <string name="ministry_of_health">Ministry of health</string>
     <string name="call_101">Call 101</string>
+    <string name="time_range_placeholder">%s  -  %s</string>
 </resources>
 

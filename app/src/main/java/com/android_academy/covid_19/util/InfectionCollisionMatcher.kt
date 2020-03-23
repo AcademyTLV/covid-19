@@ -24,7 +24,7 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         timeThreshold: Long,
         distanceThreshold: Int
     ): List<Pair<UserLocationModel, InfectedLocationModel>> {
-        val matches = mutableListOf<Pair<UserLocationModel,InfectedLocationModel>>()
+        val matches = mutableListOf<Pair<UserLocationModel, InfectedLocationModel>>()
         myLocations.forEach { myLocation ->
             coronaModels.forEach { corona ->
                 if (isTimeColliding(myLocation, corona, timeThreshold) &&
@@ -63,16 +63,16 @@ class InfectionCollisionMatcherImpl : InfectionCollisionMatcher {
         // val coronaEndTime = DateTime(corona.endTime)
 
         // if location coming from fuse it's has only single time, but from timeline it's actually frame of beginning and end
-        if(myLocation.provider == "fake" && corona.startTime == Date(1584144000000) && corona.name == "גן משחקים, בן גוריון 3, כפר גבירול רחובות"){
+        if (myLocation.provider == "fake" && corona.startTime == Date(1584144000000) && corona.name == "גן משחקים, בן גוריון 3, כפר גבירול רחובות") {
             Timber.d("[InfectionCollisionMatcherImpl], isTimeColliding(): taking care of fake location")
         }
-        val myStartTime = if(myLocation.timeStart != null && myLocation.timeStart != 0L){
+        val myStartTime = if (myLocation.timeStart != null && myLocation.timeStart != 0L) {
             myLocation.timeStart
         } else {
             myLocation.time?.minus(8 * 60_000)
         }
 
-        val myEndTime = if(myLocation.timeEnd != null && myLocation.timeEnd != 0L){
+        val myEndTime = if (myLocation.timeEnd != null && myLocation.timeEnd != 0L) {
             myLocation.timeEnd
         } else {
             myLocation.time?.plus(8 * 60_000)

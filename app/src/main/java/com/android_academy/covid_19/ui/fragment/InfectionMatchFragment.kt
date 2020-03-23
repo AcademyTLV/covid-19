@@ -72,17 +72,15 @@ class CollisionAdapter(private val collisionLocations: List<CollisionLocationMod
             val infectedStartTime = SimpleDateFormat.getTimeInstance().format(it.infected_startTime)
             val infectedEndTime = SimpleDateFormat.getTimeInstance().format(it.infected_endTime)
             holder.locationTime.text = "$infectedStartTime - $infectedEndTime"
-            if(position == 0)
+            if (position == 0)
                 holder.previous.visibility = View.GONE
             else
                 holder.previous.visibility = View.VISIBLE
 
-
-            if(position == itemCount)
+            if (position == itemCount)
                 holder.next.visibility = View.GONE
             else
                 holder.next.visibility = View.VISIBLE
-
         }
     }
 

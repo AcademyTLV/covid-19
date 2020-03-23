@@ -25,6 +25,7 @@ interface MapManager : OnMapReadyCallback {
 
     interface InteractionInterface {
         fun onUserHistoryLocationMarkerSelected(data: LocationMarkerData)
+        fun onMapReady()
     }
 }
 
@@ -44,6 +45,7 @@ class MapManagerImpl(
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        interactionInterface.onMapReady()
         map.setOnMarkerClickListener { clicked ->
 
             if (clicked.tag == null || clicked.tag == selectedCoronaLocation?.tag) return@setOnMarkerClickListener false
@@ -82,23 +84,23 @@ class MapManagerImpl(
     }
 
     override fun onCoronaChanged(markerOptions: List<LocationMarkerData>?) {
-        if (!::map.isInitialized) {
-            return
-        }
+        markerOptions?.let { new ->
 
-        markerOptions?.forEach { options ->
-            coronaLocations[options.id]?.let {
-                it.remove()
+            coronaLocations.forEach {
+                it.value.remove()
             }
+            coronaLocations.clear()
 
-            val marker = map.addMarker(
-                createCoronaLocationMarkerOptions(
-                    options,
-                    R.drawable.not_selected_circle
+            new.forEach { options ->
+                val marker = map.addMarker(
+                    createCoronaLocationMarkerOptions(
+                        options,
+                        R.drawable.not_selected_circle
+                    )
                 )
-            )
-            marker.tag = options
-            coronaLocations[options.id] = marker
+                marker.tag = options
+                coronaLocations[options.id] = marker
+            }
         }
     }
 

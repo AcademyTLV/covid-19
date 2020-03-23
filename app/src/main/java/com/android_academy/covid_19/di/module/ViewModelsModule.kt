@@ -35,6 +35,8 @@ val viewModelsModule = module {
     }
 
     viewModel<FiltersViewModelImpl> {
-        FiltersViewModelImpl()
+        FiltersViewModelImpl(
+            application = androidApplication()
+        )
     }
 }

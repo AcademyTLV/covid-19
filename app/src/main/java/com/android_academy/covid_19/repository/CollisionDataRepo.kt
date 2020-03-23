@@ -90,11 +90,11 @@ class CollisionDataRepoImpl(
         existingCollisions: List<RoomCollisionLocationEntity>
     ): Boolean {
         return existingCollisions.any { existingCollision ->
-            newUsersCollisions.lat == existingCollision.user_lat
-                && newUsersCollisions.lon == existingCollision.user_lon
-                && newUsersCollisions.time == existingCollision.user_time
-                && newUsersCollisions.timeStart == existingCollision.user_timeStart
-                && newUsersCollisions.timeEnd == existingCollision.user_timeEnd
+            newUsersCollisions.lat == existingCollision.user_lat &&
+                newUsersCollisions.lon == existingCollision.user_lon &&
+                newUsersCollisions.time == existingCollision.user_time &&
+                newUsersCollisions.timeStart == existingCollision.user_timeStart &&
+                newUsersCollisions.timeEnd == existingCollision.user_timeEnd
         }
     }
 }

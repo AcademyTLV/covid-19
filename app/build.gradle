@@ -47,6 +47,10 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -60,6 +64,7 @@ dependencies {
     def loggingInterceptor = "3.9.1"
     def retrofit = "2.7.2"
     def timber = "4.7.1"
+    def joda = "2.10.3"
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
@@ -101,11 +106,9 @@ dependencies {
 
     /* Location */
     implementation "com.google.android.gms:play-services-location:17.0.0"
-
     implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha01'
-
     implementation 'com.google.maps.android:android-maps-utils:1.0.0'
 
 
@@ -125,4 +128,8 @@ dependencies {
 
     /* Logger */
     implementation "com.jakewharton.timber:timber:$timber"
+
+    /* Date Time*/
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
+    implementation "net.danlew:android.joda:$joda"
 }

@@ -227,8 +227,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.onGoToLocationSettingsClick()
         }
 
-
-
         // button_trigger_timeline.setOnClickListener {
         //     val options = QuickPermissionsOptions(
         //         handlePermanentlyDenied = true,
