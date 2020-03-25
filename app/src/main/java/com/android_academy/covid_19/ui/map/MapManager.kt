@@ -4,6 +4,7 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import androidx.core.content.ContextCompat
 import com.android_academy.covid_19.R
 import com.android_academy.covid_19.ui.activity.LocationMarkerData
@@ -22,6 +23,7 @@ interface MapManager : OnMapReadyCallback {
 
     fun onMyLocationsChanged(markerOptions: List<LocationMarkerData>?)
     fun onCoronaChanged(markerOptions: List<LocationMarkerData>?)
+    fun onCollisionChanged(markers: Pair<LocationMarkerData, LocationMarkerData>)
 
     interface InteractionInterface {
         fun onUserHistoryLocationMarkerSelected(data: LocationMarkerData)
@@ -102,6 +104,19 @@ class MapManagerImpl(
                 coronaLocations[options.id] = marker
             }
         }
+    }
+
+    override fun onCollisionChanged(markers: Pair<LocationMarkerData, LocationMarkerData>) {
+        map.clear()
+        map.addMarker(createMyLocationMarkerOptions(markers.first))
+        map.addMarker(
+            createCoronaLocationMarkerOptions(
+                markers.second,
+                R.drawable.not_selected_circle
+            )
+        )
+        map.setPadding(0,0,0, ((230 * Resources.getSystem().displayMetrics.density).toInt()))
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(markers.first.lat, markers.first.lon),14f))
     }
 
     private fun createMyLocationMarkerOptions(options: LocationMarkerData): MarkerOptions {

@@ -1,5 +1,6 @@
 package com.android_academy.covid_19.ui.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.infection_match_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 
-class InfectionMatchFragment : BottomSheetDialogFragment() {
+class InfectionMatchFragment() : BottomSheetDialogFragment() {
     private val mainViewModel by sharedViewModel<MainViewModelImpl>()
 
     override fun onCreateView(
@@ -37,11 +38,20 @@ class InfectionMatchFragment : BottomSheetDialogFragment() {
                 collisions_container.visibility = View.VISIBLE
                 collisions_container.orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 collisions_container.adapter = CollisionAdapter(it)
+                collisions_container.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+                    override fun onPageSelected(position: Int) {
+                        mainViewModel.onCollisionShown(it[position])
+                    }
+                })
             } else {
                 collisions_container.visibility = View.GONE
                 no_match_screen.visibility = View.VISIBLE
             }
         })
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        mainViewModel.onMatchDialogClosed()
     }
 
     companion object {
@@ -69,7 +79,7 @@ class CollisionAdapter(private val collisionLocations: List<CollisionLocationMod
 
         collisionLocations[position].also {
             holder.locationName.text = it.infected_name
-            val infectedStartTime = SimpleDateFormat.getTimeInstance().format(it.infected_startTime)
+            val infectedStartTime = SimpleDateFormat.getDateTimeInstance().format(it.infected_startTime)
             val infectedEndTime = SimpleDateFormat.getTimeInstance().format(it.infected_endTime)
             holder.locationTime.text = "$infectedStartTime - $infectedEndTime"
             if (position == 0)

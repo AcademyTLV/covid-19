@@ -53,7 +53,7 @@ class CollisionDataRepoImpl(
         if (existingCollisions.isEmpty()) {
             saveCollision(userLocation, infectedLocation)
             isAdded = true
-        } else if (isDifferent(userLocation, existingCollisions)) {
+        } else if (!isSame(userLocation, existingCollisions)) {
             saveCollision(userLocation, infectedLocation)
             isAdded = true
         }
@@ -85,7 +85,7 @@ class CollisionDataRepoImpl(
         collisionLocationsDao.saveCollisionLocation(location)
     }
 
-    private fun isDifferent(
+    private fun isSame(
         newUsersCollisions: UserLocationModel,
         existingCollisions: List<RoomCollisionLocationEntity>
     ): Boolean {

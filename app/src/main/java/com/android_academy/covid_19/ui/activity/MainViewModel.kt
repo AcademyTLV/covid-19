@@ -68,6 +68,7 @@ interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
     val myLocations: LiveData<List<LocationMarkerData>>
     val coronaLocations: LiveData<List<LocationMarkerData>>
     val collisionLocations: LiveData<List<CollisionLocationModel>>
+    val collisionShownLocations: LiveData<Pair<LocationMarkerData, LocationMarkerData>>
     val blockingUIVisible: LiveData<Boolean>
     val error: LiveData<Throwable>
     val locationPermissionCheck: LiveData<Boolean>
@@ -94,6 +95,9 @@ interface MainViewModel : MapManager.InteractionInterface, FilterDataModel {
     fun onUserDeniedOneOfTheLocationPermissions()
 
     fun onReturnedFromStorageSettings(hasStoragePermission: Boolean)
+
+    fun onCollisionShown(collisionLocationModel: CollisionLocationModel)
+    fun onMatchDialogClosed()
 }
 
 class MainViewModelImpl(
@@ -105,6 +109,8 @@ class MainViewModelImpl(
     private var hasLocationPermissions: Boolean,
     private val app: Application
 ) : AndroidViewModel(app), MainViewModel {
+
+    override val collisionShownLocations = SingleLiveEvent<Pair<LocationMarkerData, LocationMarkerData>>()
 
     private var myLocationsLiveData: LiveData<List<LocationMarkerData>>? = null
 
@@ -364,6 +370,32 @@ class MainViewModelImpl(
             toast.value =
                 getApplication<CovidApplication>().getString(R.string.need_storage_permission)
         }
+    }
+
+    override fun onCollisionShown(collisionLocationModel: CollisionLocationModel) {
+        val userMarker = LocationMarkerData(
+            id = 0,
+            lon = collisionLocationModel.user_lon,
+            lat = collisionLocationModel.user_lat,
+            title = collisionLocationModel.user_name ?: "",
+            snippet = SimpleDateFormat.getDateTimeInstance()
+                .format(Date(collisionLocationModel.user_time ?: 0))
+        )
+        val infectedMarker = LocationMarkerData(
+            id = 0,
+            lon = collisionLocationModel.infected_lon,
+            lat = collisionLocationModel.infected_lat,
+            title = collisionLocationModel.infected_name ?: "",
+            snippet = SimpleDateFormat.getDateTimeInstance()
+                .format(collisionLocationModel.infected_startTime) + " - " + SimpleDateFormat.getDateTimeInstance()
+                .format(collisionLocationModel.infected_endTime)
+        )
+        collisionShownLocations.value = userMarker to infectedMarker
+    }
+
+    override fun onMatchDialogClosed() {
+        startObservingCoronaLocations()
+        startObservingMyLocations()
     }
 
     override fun onUserHistoryLocationMarkerSelected(data: LocationMarkerData) {

@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity() {
             navigation.observe(this@MainActivity, onNavigationChanged())
             myLocations.observe(this@MainActivity, Observer { mapManager.onMyLocationsChanged(it) })
             coronaLocations.observe(this@MainActivity, Observer { mapManager.onCoronaChanged(it) })
+            collisionShownLocations.observe(this@MainActivity, Observer { mapManager.onCollisionChanged(it) })
             blockingUIVisible.observe(this@MainActivity, Observer {
                 showBlockUI(it)
             })
