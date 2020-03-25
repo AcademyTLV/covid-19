@@ -108,6 +108,12 @@ class MapManagerImpl(
 
     override fun onCollisionChanged(markers: Pair<LocationMarkerData, LocationMarkerData>) {
         map.clear()
+        myLocations.clear()
+        coronaLocations.forEach {
+            it.value.remove()
+        }
+        coronaLocations.clear()
+
         map.addMarker(createMyLocationMarkerOptions(markers.first))
         map.addMarker(
             createCoronaLocationMarkerOptions(

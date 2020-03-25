@@ -1,23 +1,17 @@
 <resources>
     <string name="app_name">Covid-19</string>
-    <string name="title_activity_maps">מפה</string>
-    <string name="btn_login_to_google">התחבר לגוגל</string>
-    <string name="channel_name">הערוץ הכללי</string>
-    <string name="channel_description">התראות עיקריות כאן</string>
-    <string name="ahtung">אוי! מצאנו מתאם לנגיף קורונה!</string>
-    <string name="open_app">לחץ כאן כדי לראות פרטים</string>
-    <string name="location_dialog_title">אשר גישה למיקומך</string>
-    <string name="location_dialog_description">
-        - בכדי שנוכל להצליב את מיקומיך עם רשימת המקומות בהם היו נשאי קורונה, אנא אשר לנו גישה למיקומך.
-\n\n
-- מיקומך ידגם בכל 15 דקות והמידע ישמר בצורה מאובטחת אך ורק על הטלפון שלך.
-\n\n
-- המידע לא ישלח בצורה אוטומטית לאף אחד, כולל לא למשרד הבריאות.
-    </string>
-    <string name="fragment_confirmation_code_explanation">שתפו את המקומות בהם שהיתם עם משרד הבריאות כדי שניתן יהיה לאתר במהירות חולים נוספים. מערכת צבע כתום תשתמש באופן אנונימי במיקומים כדי להתריע לחולים פוטנציאליים. כדי לשתף יש להכניס את קוד האימות שקיבלתם יחד עם תוצאות הבדיקה.</string>
-    <string name="fragment_confirmation_code_disclaimer">*חשוב להדגיש שלאפליקציית צבע כתום אין גישה בשום שלב לפרטי הזיהוי של המשתמשים</string>
-    <string name="fragment_confirmation_code_share_MOH">שתף עם משרד הבריאות</string>
-    <string name="fragment_confirmation_code_hint">הכנס קוד משרד הבריאות</string>
+        <string name="title_activity_maps">Map</string>
+    <string name="btn_login_to_google">Connect to Goolg</string>
+    <string name="channel_name">Main Channel</string>
+    <string name="channel_description">Main notifications here</string>
+    <string name="ahtung">Oh My! We found a Corona virus correlation!</string>
+    <string name="open_app">Click here to see a details</string>
+    <string name="location_dialog_title">Please approve connection to your location</string>
+    <string name="fragment_confirmation_code_explanation">
+Share the places you have been with the Ministry of Health so that more patients can be quickly located. An orange color system will use placements anonymously to alert potential patients. To share, please enter the verification code you received with the test result</string>
+    <string name="fragment_confirmation_code_disclaimer">*It\'s important to emphasize that the orange color app has no access to users\' identification information at any time</string>
+    <string name="fragment_confirmation_code_share_MOH">Share with the Ministry of Health</string>
+    <string name="fragment_confirmation_code_hint">Enter the Ministry of Health code</string>
     <!--    <string name="title_activity_maps">Map</string>-->
     <!--    <string name="btn_login_to_google">Login To Google</string>-->
     <!--    <string name="channel_name">General Channel</string>-->
@@ -60,6 +54,12 @@
         If you are connected with your Google account we will download the file to your device and we will ask for permission \n
         to read the file from the downloads directory from your device.
     </string>
+    <string name="location_dialog_description">
+            To be able to verify if you were in places where people which are \n
+            infected with Corona virus please allow us to get location permission. \n
+            We will take your location every 15 minutes and we will store it only on your device.\n
+            The data will be not sent to anyone automatically not even to Ministry of Health.
+        </string>
     <string name="location_dialog_description_short">
         To be able to cross between corona virus path and your path please allow us to get your location.\n
         Your location will be taken only every 15 minutes and will be stored on the device only in a secured way.\n
