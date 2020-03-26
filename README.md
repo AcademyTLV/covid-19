@@ -15,7 +15,7 @@ Data stored locally in SQLite and nothing is sent to any server. (We wanted to b
 
 **Contributors**
 
-The app is built with help of developers from [Android Academy in Tel Aviv](https://www.facebook.com/groups/android.academy.ils/) and [Nexar](https://www.getnexar.com) especially Big thanks to Artyom Okun, Eden Bugdary & Daniel Szasz for their help at nights and weekend with this project
+The app is built with help of developers from [Android Academy in Tel Aviv](https://www.facebook.com/groups/android.academy.ils/) and [Nexar](https://www.getnexar.com) especially Big thanks to Artyom Okun, Yonatan Levin, Eden Bugdary & Daniel Szasz for their help at nights and weekend with this project
 
 Also many thanks to those who contributed to the translation of the app
 |Language| Translator |  Organization |
