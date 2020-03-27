@@ -1,8 +1,11 @@
+
 # Code Orange (Covid 19)
 **The main goal**:  Help people to get know if they were in touch with an infected person using public APIs and users location (including history)
 
 **THIS IS AN OPEN-SOURCE PROJECT. **
+
 **Please take it, change it, use it as you like.**
+
 We build this project to help people get to know if there were in touch with infected people.
 
 We encourage anyone in the world not to wait for the government to build the app for them but use what we build and adapt to their country and API of infected persons.
