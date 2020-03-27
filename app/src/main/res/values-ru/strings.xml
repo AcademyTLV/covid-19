@@ -1,4 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Covid-19</string>
+    <string name="intro_fragment_title">Добро пожаловать в Оранжевый цвет</string>
+    <string name="intro_fragment_subtitle">Приложение, которое поможет нам остановить распространение коронавируса в Израиле</string>
+    <string name="intro_fragment_description">
+        Приложение отображает подтвержденные места и время, в которых могли находится инфицированные люди.
+        Так же оно позволяет Вам пребывать в большей безопасности, указывая места, где Вы находились и соотносить их с теми, где находились инфицированные, это поможет понять Вам находитесь ли вы в группе потенциальных зараженных или нет.
+    </string>
+    <string name="intro_fragment_options_title">Пожалуйста, выбирите один из вариантов</string>
+    <string name="intro_fragment_positive_button">У меня был диагностирован вирус</string>
+    <string name="intro_fragment_not_positive_button">Я выздоровел</string>
+    <string name="intro_fragment_was_positive_button">Я не был инфицирован</string>
+    <string name="intro_fragment_next_button">Далее</string>
+    <string name="timeline_dialog_title">Пожалуйста, подтвердите доступ к истории местоположений</string>
+    <string name="location_dialog_description">Для того чтобы убедиться, находились ли Вы в местах с инфицированными людьми, пожалуйста, разрешите нам получать Ваше местоположение.\n Мы будем осуществлять проверку каждые 15 минут и хранить историю только на Вашем устройстве.\nЭти данные больше никуда не будут переданы, даже в Министерство здравоохранения .</string>
+    <string name="positive_location_permission_button">Согласен</string>
+    <string name="skip_location_permission_button">Не заинтересован на данный момент</string>
+    <string name="location_dialog_title">Пожалуйста, подтвердите проверку местоположения</string>
+    <string name="decline_permission_bottom_sheet_dialog_btn">На данный момент невозможно использовать приложение без предоставления местоположения</string>
+    <string name="timeline_dialog_description">Чтобы сопоставить данные распространения вируса и Вашей истории местоположений, приложению нужен доступ к 14 дневной истории.\n Эта информация будет загружена и храниться только на Вашем устройство, без передачи кому-либо еще.\n После нажатия на кнопку, будет открыт браузер. Если вы уже подключены к Вашей учетной записи Google, то приложение загрузит файл с историей на Ваше устройство и запросит права доступа для чтения папки Загрузок.</string>
+    <string name="filters_fragment_cross_location_button">Подходящее</string>
+    <string name="filters_fragment_change_status_button">Изменить статус</string>
+    <string name="title_activity_maps">Карта</string>
+    <string name="btn_login_to_google">Подключить к Google</string>
+    <string name="channel_name">Главный канал</string>
+    <string name="channel_description">Основные уведомления</string>
+    <string name="ahtung">О нет! Мы нашли совпадение!</string>
+    <string name="open_app">Нажмите здесь, чтобы увидеть детали</string>
+    <string name="something_went_wrong">Упс! Что-то пошло не так</string>
+    <string name="filters_fragment_start_time">Время начала</string>
+    <string name="filters_fragment_end_time">Конечное время</string>
+    <string name="filters_fragment_today">Сегодня</string>
+    <string name="storage_dialog_title">Разрешить доступ к хранилищу</string>
+    <string name="storage_dialog_positive_btn">Открыть настройки</string>
+    <string name="storage_dialog_negative_btn">Не заинтересован</string>
+    <string name="btn_enable_location_from_settings">"Пожалуйста,  запустите определение местоположения в настройках устройства "</string>
+    <string name="need_storage_permission">Пожалуйста, подтвердите использование хранилища на Вашем устройстве</string>
+    <string name="status_dialog_title">Изменить статус</string>
+    <string name="status_fragment_no_check">Не проверял</string>
+    <string name="status_fragment_check_and_waiting">Ожидаю результатов</string>
+    <string name="status_fragment_check_and_negative">Результат отрицательный</string>
+    <string name="status_fragment_check_and_positive">Был инфицирован</string>
+    <string name="button_ok">ОК</string>
+    <string name="fragment_confirmation_code_share_MOH">Поделиться с Министерством здравоохранения</string>
+    <string name="fragment_confirmation_code_hint">Введить код Министерства здравоохранения</string>
+    <string name="no_collision_title">Не обнаружен контакт с инфицированными</string>
+    <string name="fragment_confirmation_code_disclaimer">*Важно заметить, что приложение Оранжевого цвета не имеет доступа к личной информации пользователей в любое время.</string>
+    <string name="call_101">Позвонить 101</string>
+    <string name="ministry_of_health">Министерством здравоохранения</string>
+    <string name="collision_secondary_sub_explanation">Изолируйтесь и следите за состоянием здоровья.\n При возникновении любых симптомов (жар, сухой кашель) Вам следует обратиться к MADA.</string>
+    <string name="collision_secondary_explanation">Действия, которые нужно предпринять прямо сейчас:</string>
+    <string name="explanation_substring">Обратите внимание, что в сообщении не говорится, что вы заражены.</string>
+    <string name="collision_explanation">Возможно, вы подвергались воздействию вируса.</string>
+    <string name="reach_health_authority">Больше информации - Министерство здравоохранения</string>
+    <string name="no_collision_text">При возникновении любых симптомов (жар, сухой кашель) Вам следует обратиться к MADA</string>
+    <string name="storage_dialog_subtitle">Для получения доступа к загрузке и Вашей истории местороложений, приложению нужен доступ к хранилищу устройства для сохранения файла</string>
+    <string name="intro_fragment_options2">Приложение, которое поможет нам остановить распространение коронавируса в Израиле</string>
+    <string name="location_dialog_description_short">Для того чтобы убедиться, находились ли Вы в местах с инфицированными людьми, пожалуйста, разрешите нам получать Ваше местоположение.\n Мы будем осуществлять проверку каждые 15 минут и хранить историю только на Вашем устройстве\n Эти данные больше никуда не будут переданы, даже в Министерство здравоохранения .</string>
 </resources>
