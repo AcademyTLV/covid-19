@@ -79,11 +79,16 @@ class FiltersViewModelImpl(
     }
 
     private fun initTimes(initialDate: Date) {
-        val joda = initialDate.toJoda()
-        val time_00_00 = joda
+        var endTime = initialDate.toJoda()
+        val time_00_00 = endTime
             .withTimeAtStartOfDay()
+        val time_01_00 = time_00_00
+            .plusHours(1)
 
-        endTime.value = joda.toDate()
+        // As minimum range is 1 hour we need to verify that end time is greater than 01:00
+        if (endTime.isBefore(time_01_00)) endTime = time_01_00
+
+        this@FiltersViewModelImpl.endTime.value = endTime.toDate()
 
         /**
          * Uncomment this code if we want to show 1 hour back
@@ -104,7 +109,7 @@ class FiltersViewModelImpl(
         this@FiltersViewModelImpl.startTime.value = startTime
 
         val progress = TimeRangeProgress(
-            end = getTimeRangeProgress(joda.toDate()),
+            end = getTimeRangeProgress(endTime.toDate()),
             start = getTimeRangeProgress(startTime)
         )
         this@FiltersViewModelImpl.progress.value = progress
