@@ -38,7 +38,7 @@ class InfectionMatchFragment() : BottomSheetDialogFragment() {
                 collisions_container.visibility = View.VISIBLE
                 collisions_container.orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 collisions_container.adapter = CollisionAdapter(it)
-                collisions_container.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+                collisions_container.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         mainViewModel.onCollisionShown(it[position])
                     }

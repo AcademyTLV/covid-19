@@ -121,8 +121,8 @@ class MapManagerImpl(
                 R.drawable.not_selected_circle
             )
         )
-        map.setPadding(0,0,0, ((230 * Resources.getSystem().displayMetrics.density).toInt()))
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(markers.first.lat, markers.first.lon),14f))
+        map.setPadding(0, 0, 0, ((230 * Resources.getSystem().displayMetrics.density).toInt()))
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(markers.first.lat, markers.first.lon), 14f))
     }
 
     private fun createMyLocationMarkerOptions(options: LocationMarkerData): MarkerOptions {
