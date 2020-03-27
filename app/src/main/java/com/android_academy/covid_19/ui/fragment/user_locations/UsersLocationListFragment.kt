@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.fragment_users_location_list_list.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
+//Currently unused. For debug purposes only.
 class UsersLocationListFragment : Fragment() {
     private val viewModel: UsersLocationViewModel by viewModel<UsersLocationListViewModelImpl>()
 
