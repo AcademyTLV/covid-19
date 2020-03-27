@@ -30,16 +30,16 @@ MainViewModel publish updates LiveData
 MainActivity/Fragment observes LiveData and showing UI accordingly to changes.
 
 #### Stack:
-**Kotlin**
-**Kotlin Coroutines** - for multithreading
-**Kotlin Flow** - for reactive observations
-**Koin** as DI
-**Google Play Services** for location updates
-**Google Map** - well, basically map
-**Retrofit 2** - API Requests
-**WorkManager** - background work for periodic location and infected data
-**Room** - wrapper over SQLite
-**Timber** - logs
+- **Kotlin**
+- **Kotlin Coroutines** - for multithreading
+- **Kotlin Flow** - for reactive observations
+- **Koin** as DI
+- **Google Play Services** for location updates
+- **Google Map** - well, basically map
+- **Retrofit 2** - API Requests
+- **WorkManager** - background work for periodic location and infected data
+- **Room** - wrapper over SQLite
+- **Timber** - logs
 
 Remarks:
 - Don't forget to update Google Maps API key to yours
