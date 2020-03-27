@@ -47,7 +47,7 @@ Remarks:
 
 **Contributors**
 
-The app is built with help of developers from [Android Academy in Tel Aviv](https://www.facebook.com/groups/android.academy.ils/) and [Nexar](https://www.getnexar.com) especially Big thanks to Artyom Okun, Yonatan Levin, Eden Bugdary & Daniel Szasz for their help at nights and weekend with this project
+The app is built with help of developers from [Android Academy in Tel Aviv](https://www.facebook.com/groups/android.academy.ils/) and [Nexar](https://www.getnexar.com) especially Big thanks to [Artyom Okun](https://www.linkedin.com/in/artyom-okun-22237771/ "Artyom Okun"), [Yonatan Levin](https://www.linkedin.com/in/levinyonatan/ "Yonatan Levin"), [Eden Bugdary](https://www.linkedin.com/in/eden-bugdary-306a2936/ "Eden Bugdary") & [Daniel Szasz](https://www.linkedin.com/in/danysz/ "Daniel Szasz") for their help at nights and weekend with this project
 
 Also many thanks to those who contributed to the translation of the app
 |Language| Translator |  Organization |
