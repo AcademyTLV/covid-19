@@ -132,4 +132,8 @@ dependencies {
     /* Date Time*/
     implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
     implementation "net.danlew:android.joda:$joda"
+
+    /* Responsive text size*/
+     implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
 }
